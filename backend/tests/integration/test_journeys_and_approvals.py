@@ -7,6 +7,7 @@ import pytest
 from sqlalchemy import select, update
 from sqlalchemy.exc import DBAPIError, IntegrityError
 
+from app.core.container import Container
 from app.db.models import Action, ActionApproval, Journey, JourneyEdge, JourneyNode
 from app.db.session import Database
 from app.domain.enums import (
@@ -126,23 +127,33 @@ async def test_add_journey_node_appends_once(app_db: Database, alice: Principal)
 
 
 async def test_demo_seed_creates_a_dependency_ordered_journey(
-    owner_db: Database, api: httpx.AsyncClient
+    owner_db: Database, api: httpx.AsyncClient, container: Container
 ) -> None:
-    report = await seed_demo_household(owner_db)
-    again = await seed_demo_household(owner_db)  # idempotent: rebuilt from scratch
+    report = await seed_demo_household(owner_db, adapters=container.adapters)
+    # idempotent: rebuilt from scratch
+    again = await seed_demo_household(owner_db, adapters=container.adapters)
     assert again.journey_nodes == report.journey_nodes > 5
+    assert again.documents == 5 and again.actions >= 1 and again.appointments == 2
 
     headers = auth(DEMO_PRINCIPAL)
     graph = (await api.get(f"/api/graph/journey/{again.journey_id}", headers=headers)).json()
     position = {n["id"]: n["position"] for n in graph["nodes"]}
     for edge in graph["edges"]:  # every prerequisite comes earlier in the plan
         assert position[edge["target_node_id"]] < position[edge["source_node_id"]]
-    with_prerequisites = {e["source_node_id"] for e in graph["edges"]}
+    status = {n["id"]: n["status"] for n in graph["nodes"]}
+    waiting = {e["source_node_id"] for e in graph["edges"] if status[e["target_node_id"]] != "done"}
     for node in graph["nodes"]:  # blocked exactly when something must happen first
-        expected = {"blocked"} if node["id"] in with_prerequisites else {"ready", "needs_info"}
-        assert node["status"] in expected, node["key"]
-    family = {n["key"]: n for n in graph["nodes"]}["service.family_residence_visa"]
+        if node["status"] == "done":
+            continue
+        ready = {"ready", "needs_info", "awaiting_approval"}
+        assert node["status"] in ({"blocked"} if node["id"] in waiting else ready), node["key"]
+    nodes = {n["key"]: n for n in graph["nodes"]}
+    family = nodes["service.family_residence_visa@spouse"]
     assert {b["kind"] for b in family["blockers"]} >= {"dependency"}
+    # His ADGM licence and registered lease settle those steps.
+    assert nodes["service.company_registration_adgm"]["status"] == "done"
+    assert nodes["service.tawtheeq"]["status"] == "done"
+    assert "service.commercial_license_mainland" not in nodes
 
     profile = (await api.get("/api/profile", headers=headers)).json()
     assert {m["relationship"] for m in profile["household"]} == {"spouse", "child"}
@@ -152,7 +163,6 @@ async def test_demo_seed_creates_a_dependency_ordered_journey(
     assert {
         "node_started",
         "tool_called",
-        "evidence_found",
         "document_generated",
         "action_prepared",
         "approval_required",

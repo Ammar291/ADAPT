@@ -416,10 +416,24 @@ class _Planner:
     def _choose(
         self, options: list[tuple[str, dict[str, Any] | None]], subject: str
     ) -> tuple[str | None, str]:
-        """Pick one OR-alternative: an option already done wins, then a met `when`."""
-        for option, _ in options:
-            if self._is_done(option, subject)[0]:
+        """Pick one OR-alternative: an option already done wins, then a met `when`.
+
+        Alternatives can produce the same document (both licence routes produce a
+        commercial licence), so holding it makes each look done: the one whose `when`
+        holds wins, e.g. the ADGM route for an ADGM company."""
+        done = [
+            (option, condition)
+            for option, condition in options
+            if self._is_done(option, subject)[0]
+        ]
+        for option, condition in done:
+            if (
+                condition
+                and eligibility.evaluate(condition, self.facts, allow_assumed=True).status == "met"
+            ):
                 return option, "already done"
+        if done:
+            return done[0][0], "already done"
         for option, condition in options:
             if (
                 condition

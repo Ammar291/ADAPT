@@ -551,17 +551,20 @@ async def run_simulation(
     changes: list[dict[str, Any]],
     on_complete: CompleteHook | None = None,
     base_overrides: dict[str, Any] | None = None,
+    base_defaults: dict[str, Any] | None = None,
 ) -> RunOutcome:
     """Copy the base journey's checkpointed state and run the what-if graph on the copy.
 
     The base thread is only read (`aget_state`), never updated, so the active journey
     and its checkpoint history are unchanged whatever the scenario does.
+    `base_defaults` fill in what the checkpoint doesn't have (a plan saved without a
+    checkpointed run has no checkpoint at all).
     """
     base = await journey_graph.aget_state({"configurable": {"thread_id": base_thread_id}})
     # The persisted plan wins over the checkpoint: it includes edits made since the run
     # (steps marked done, answers), and it is what the user sees as "my plan".
     state = build_simulation_state(
-        {**dict(base.values or {}), **(base_overrides or {})},
+        {**(base_defaults or {}), **dict(base.values or {}), **(base_overrides or {})},
         changes,
         base_journey_id=base_journey_id,
         base_run_id=base_run_id,

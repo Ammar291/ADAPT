@@ -6,6 +6,8 @@ forged ownership is rejected) and the HTTP API (another user's resources are 404
 
 from __future__ import annotations
 
+from dataclasses import replace
+from pathlib import Path
 from uuid import UUID, uuid4
 
 import httpx
@@ -13,6 +15,7 @@ import pytest
 from sqlalchemy import func, select, text
 from sqlalchemy.exc import DBAPIError
 
+from app.core.container import Container
 from app.db.models import (
     PRIVATE_TABLES,
     AgentRun,
@@ -26,9 +29,10 @@ from app.db.session import Database
 from app.domain.enums import GraphEdgeType, GraphType, RunKind, TwinNodeType
 from app.domain.principal import Principal
 from app.events.emitter import RunEventEmitter
+from app.main import create_app
 from app.repositories.graph import GovernanceGraphRepository, UserGraphRepository
 from app.repositories.runs import create_run, get_run
-from tests.integration.conftest import auth, make_principal
+from tests.integration.conftest import auth, make_principal, make_settings
 
 
 async def test_sample_household_sessions_never_share_private_graphs(api: httpx.AsyncClient) -> None:
@@ -53,6 +57,19 @@ async def test_sample_household_sessions_never_share_private_graphs(api: httpx.A
     bob_nodes = {n["id"] for n in bob_graph["nodes"]}
     assert alice_nodes and bob_nodes and alice_nodes.isdisjoint(bob_nodes)
     api.cookies.clear()
+
+
+async def test_seeded_demo_server_gives_every_new_visitor_the_sample_household(
+    container: Container, tmp_path: Path
+) -> None:
+    # A visitor who opens the seeded server without `?seed=sample` still gets the household.
+    seeded = replace(container, settings=make_settings(tmp_path, demo_seed_sample_household=True))
+    transport = httpx.ASGITransport(create_app(seeded.settings, seeded))
+    async with httpx.AsyncClient(transport=transport, base_url="http://testserver") as api:
+        response = await api.post("/api/auth/demo-session", json={})
+        assert response.status_code == 200, response.text
+        profile = (await api.get("/api/profile")).json()
+    assert profile["household"], "the sample household was not copied into the new account"
 
 
 ONBOARDING = {

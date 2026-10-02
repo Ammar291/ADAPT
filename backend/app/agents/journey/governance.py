@@ -105,8 +105,11 @@ class GovernanceSnapshot:
     # --- subgraphs ---------------------------------------------------------------------
     def reachable(self, roots: Iterable[str]) -> set[str]:
         """Every node a plan rooted at `roots` can touch: prerequisites, requirements,
-        producers of required documents, portals, authorities and eligibility rules."""
+        producers of required documents, portals, authorities and eligibility rules, plus
+        what those steps produce (holding a step's product means the step is done). A
+        product is not followed further: its other producers are not part of the plan."""
         seen: set[str] = set()
+        produced: set[str] = set()
         stack = [r for r in roots if r in self.nodes]
         while stack:
             key = stack.pop()
@@ -116,12 +119,14 @@ class GovernanceSnapshot:
             for edge in self._out.get(key, []):
                 if edge["relation"] in _FORWARD:
                     stack.append(edge["target"])
+                elif edge["relation"] == PRODUCES and edge["target"] in self.nodes:
+                    produced.add(edge["target"])
             if self.type_of(key) == "document":
                 stack.extend(self.producers_of(key))
             for edge in self._in.get(key, []):
                 if edge["relation"] in (PROVIDES, APPLIES_TO):
                     stack.append(edge["source"])
-        return seen
+        return seen | produced
 
     def context(self, roots: list[str], notes: list[str]) -> GovernanceContext:
         keys = self.reachable(roots)

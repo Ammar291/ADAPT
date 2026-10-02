@@ -73,9 +73,11 @@ async def main(with_demo: bool = True) -> None:
             await session.commit()
         logger.info("reference data seeded: %s", {k: str(v) for k, v in report.items()})
         if with_demo:
-            demo = await seed_demo_household(db)
+            demo = await seed_demo_household(db, adapters=adapters)
             logger.info(
-                "demo household seeded: journey with %d steps, %d actions, %d appointments",
+                "demo household seeded: %d documents, journey with %d steps, %d actions, "
+                "%d appointments",
+                demo.documents,
                 demo.journey_nodes,
                 demo.actions,
                 demo.appointments,

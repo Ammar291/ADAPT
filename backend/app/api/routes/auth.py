@@ -74,12 +74,14 @@ async def demo_session(
 
     identity = await _demo_provider.identify(display_name=body.display_name, locale=body.ui_locale)
     new_principal = await sign_in(container.db, identity)
-    if body.sample_household:
+    if body.sample_household or settings.demo_seed_sample_household:
         # Copy synthetic fixtures into a fresh account. Never issue a session for the
         # shared seed account: another visitor could have changed its private data.
         from app.seed.demo import seed_demo_household
 
-        await seed_demo_household(container.db, principal=new_principal)
+        await seed_demo_household(
+            container.db, adapters=container.adapters, principal=new_principal
+        )
     async with container.db.user_session(new_principal) as session:
         user = await accounts.get_user(session, new_principal.user_id, new_principal.tenant_id)
     assert user is not None

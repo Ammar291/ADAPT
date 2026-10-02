@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Two laptop-hosted live-AI demo servers, each meant to sit behind its own HTTPS tunnel:
 #   live    127.0.0.1:8090  every visitor gets a fresh private account
-#   seeded  127.0.0.1:8091  open /?seed=sample to land in the fictional sample household
+#   seeded  127.0.0.1:8091  every visitor gets a private copy of the fictional sample household
 #
 #   bash infra/demo/local-demo.sh [LIVE_PUBLIC_URL] [SEEDED_PUBLIC_URL]
 #
@@ -57,6 +57,7 @@ sys.exit(f"not live: {offline}" if offline else 0)
 
 write_env live 8090 8110 55442 56389 "${1:-}"
 write_env seeded 8091 8120 55452 56399 "${2:-}"
+echo "DEMO_SEED_SAMPLE_HOUSEHOLD=true" >>var/demo/seeded.env
 
 echo "==> Building images"
 compose live build
@@ -66,5 +67,5 @@ for name in live seeded; do
 done
 echo "==> live:   http://127.0.0.1:8090"
 check live 8110
-echo "==> seeded: http://127.0.0.1:8091/?seed=sample"
+echo "==> seeded: http://127.0.0.1:8091"
 check seeded 8120

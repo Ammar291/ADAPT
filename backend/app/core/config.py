@@ -91,6 +91,9 @@ class Settings(BaseSettings):
     session_ttl_hours: int = 24 * 7
     session_cookie_secure: bool | None = None  # defaults to True in production
     demo_auth_enabled: bool = True
+    # Seeded demo servers: every new demo account starts as a copy of the sample household,
+    # as if the visitor had opened `?seed=sample`.
+    demo_seed_sample_household: bool = False
     document_encryption_key: SecretStr | None = None
     # Lifetime of signed document-content links (the session is required as well).
     document_url_ttl_seconds: int = 300

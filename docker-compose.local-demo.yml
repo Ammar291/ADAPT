@@ -9,6 +9,7 @@ x-demo-environment: &demo-environment
   ADAPTER_WEB_SEARCH: live
   ADAPTER_ACTIONS: auto # preview-only government actions outside production
   DEMO_AUTH_ENABLED: "true"
+  DEMO_SEED_SAMPLE_HOUSEHOLD: ${DEMO_SEED_SAMPLE_HOUSEHOLD:-false}
   SESSION_COOKIE_SECURE: "true"
   CORS_ORIGINS: ${CORS_ORIGINS:?set CORS_ORIGINS to the public tunnel URL}
 

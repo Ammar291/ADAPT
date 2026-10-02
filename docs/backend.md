@@ -267,12 +267,15 @@ compares the list with the live policies.
    as `community_web`.
 3. **The fictional demo household** (`app/seed/demo.py`, `--no-demo` to skip). Arjun Mehta
    (founder of Mehta Analytics Ltd, setting up in ADGM), his wife Priya and daughter Aanya,
-   who join later. The seed covers the profile, household, goals, preferences, the user graph
-   with document holdings (the marriage certificate is not yet attested), a dependency-ordered
-   14-step journey with blockers, a completed journey run with its full event log, generated
-   documents (one approved, one draft), an action awaiting approval plus an official handoff,
-   and two planned (not booked) appointments. It has fixed ids and is rebuilt on every run.
-   Sign in with `POST /api/auth/demo-session {"sample_household": true}`.
+   who join later. The seed covers the profile, household, goals and preferences, then uploads
+   five SPECIMEN documents (passport, marriage certificate, ADGM licence, salary certificate,
+   tenancy contract) through the real encrypted storage and reading pipeline, offline. The
+   journey (22 steps), its plan snapshot, the draft cover letter, the prepared actions and the
+   run's event log come from running the journey agent's own nodes in scripted mode, so
+   What-if works on it. It also has two planned (not booked) appointments. The shared account
+   has fixed ids and is rebuilt on every run. Sign in with
+   `POST /api/auth/demo-session {"sample_household": true}`, or set
+   `DEMO_SEED_SAMPLE_HOUSEHOLD=true` so every new demo account starts as a copy.
 
 No real personal data is used. Nothing claims external success: actions are prepared or
 awaiting approval, and appointments are only planned.

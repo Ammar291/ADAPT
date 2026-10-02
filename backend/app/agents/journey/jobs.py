@@ -21,6 +21,7 @@ from app.adapters.llm import DemoLLM
 from app.agents.journey.context import JourneyContext, JourneyServices
 from app.agents.journey.demo import register_demo_responders
 from app.agents.journey.gates import review_announcer
+from app.agents.journey.governance import GovernanceSnapshot
 from app.agents.journey.graph import build_journey_graph, journey_input
 from app.agents.journey.integrations import KnowledgeEvidence, PlatformDocuments, PlatformResearch
 from app.agents.journey.nodes.human import plan_snapshot
@@ -186,6 +187,23 @@ def plan_overrides(plan: dict[str, Any]) -> dict[str, Any]:
     return overrides
 
 
+def plan_defaults(plan: dict[str, Any], governance: GovernanceSnapshot) -> dict[str, Any]:
+    """The rest of a what-if's base state, rebuilt from the persisted plan, for whatever
+    the base run's checkpoint lacks. A plan saved without a checkpointed run (the seeded
+    demo household's) has no checkpoint at all. The governance context is the subgraph of
+    the plan's root services, exactly as eligibility analysis builds it."""
+    if not plan.get("tasks"):
+        return {}
+    return {
+        "governance_context": governance.context(
+            list(plan.get("root_services") or []), list(plan.get("coverage_notes") or [])
+        ),
+        **{
+            key: list(plan.get(key) or []) for key in ("evidence", "generated_documents", "actions")
+        },
+    }
+
+
 async def run_what_if(
     ctx: dict[str, Any],
     *,
@@ -245,6 +263,7 @@ async def run_what_if(
             changes=changes,
             on_complete=save_scenario,
             base_overrides=plan_overrides(base.plan or {}),
+            base_defaults=plan_defaults(base.plan or {}, await store.governance()),
         )
     except ScenarioError as exc:
         await context.events.run_started(RunKind.WHAT_IF)

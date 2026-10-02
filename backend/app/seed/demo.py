@@ -1,29 +1,65 @@
 """The fictional demo household: a complete, consistent private dataset for one user.
 
 Everything here is invented for the demo — no real person's data. The household:
-Arjun Mehta (founder of "Mehta Analytics Ltd", setting up in ADGM), his wife Priya and
-their daughter Aanya, who join him later. The same persona appears on the clearly-marked
-SPECIMEN documents in `app.documents.specimens`.
+Arjun Mehta (founder of "Mehta Analytics Ltd", licensed in ADGM), his wife Priya and
+their daughter Aanya, who join him later. His documents are the clearly-marked SPECIMEN
+PDFs in `app.documents.specimens`.
 
-The seed is deterministic and idempotent: the demo account has fixed ids and is rebuilt
-from scratch on every run. It exercises every private table: profile, household, goals,
-preferences, the user graph (with links into the governance graph), a journey with
-dependency edges and blockers, a completed agent run with its event log, generated
-documents, actions awaiting approval and appointments. Nothing claims external success:
-actions are prepared or awaiting approval, appointments are only planned.
+Nothing is written straight into the private tables. The seed does what Arjun would do:
+
+1. onboarding: profile, household, goals, preferences and consents;
+2. documents: uploads his SPECIMEN PDFs into encrypted document storage, has the
+   document pipeline read them (with the local text-layer reader only, so nothing leaves
+   the server) and answers the questions the pipeline asks about what it read;
+3. planning: runs the journey agent's own nodes on his request, scripted (rule-based
+   request parser and drafting templates, no model, web or embeddings call). That
+   produces the plan snapshot, the journey steps and their dependencies, the drafts, the
+   prepared actions and the run with its event log, exactly as a scripted run would, so
+   what-ifs of this plan work like those of any other plan. The run doesn't pause at the
+   approval gate: approval-gated actions wait on the Approvals page instead;
+4. appointments: planned, never booked.
+
+The shared demo account has fixed ids and is rebuilt from scratch on every run; each
+visitor who asks for the sample household gets a private copy (`principal`). Nothing
+claims external success: actions are prepared or awaiting approval, appointments are
+only planned.
 """
 
 from __future__ import annotations
 
+import hashlib
 import logging
-from dataclasses import dataclass
-from datetime import UTC, date, datetime
+from collections.abc import Callable
+from dataclasses import dataclass, replace
+from datetime import date
 from typing import Any
-from uuid import UUID
+from uuid import UUID, uuid4
 
-from sqlalchemy import select, text
+from langgraph.checkpoint.memory import InMemorySaver
+from langgraph.graph import END, START, StateGraph
+from langgraph.graph.state import CompiledStateGraph
+from langgraph.runtime import Runtime
+from sqlalchemy import func, select, text, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.adapters.llm import DemoLLM
+from app.adapters.ocr import LocalTextReader
+from app.adapters.registry import Adapters
+from app.adapters.storage import DocumentStorage
+from app.agents.instrumentation import instrumented
+from app.agents.journey.context import JourneyContext, JourneyServices, ctx
+from app.agents.journey.demo import register_demo_responders
+from app.agents.journey.emit import emit
+from app.agents.journey.graph import journey_input
+from app.agents.journey.integrations import PlatformDocuments, PlatformResearch
+from app.agents.journey.nodes import JOURNEY_SEQUENCE
+from app.agents.journey.nodes.human import HUMAN_APPROVAL
+from app.agents.journey.ports import EvidenceHit
+from app.agents.journey.spec import spec_of
+from app.agents.journey.state import JourneyState
+from app.agents.journey.store_pg import PgJourneyStore
+from app.agents.journey.vocab import NodeId
+from app.agents.runner import execute_run
 from app.contracts.auth import UserPreferencesUpdate
 from app.contracts.profile import (
     HouseholdMemberIn,
@@ -37,43 +73,36 @@ from app.db.models import (
     ActionApproval,
     AgentRun,
     Appointment,
-    GeneratedDocument,
-    GraphNode,
     Journey,
-    JourneyEdge,
     JourneyNode,
     Tenant,
     User,
 )
+from app.db.models import AgentEvent as AgentEventRow
+from app.db.models.user_data import UserDocument
 from app.db.session import Database
+from app.documents import specimens
+from app.documents.catalogue import DocumentKind, DocumentStatus, DocumentSubject
+from app.documents.pipeline import DocumentPipeline
+from app.domain.actions import check_transition
 from app.domain.enums import (
-    ActionKind,
     ActionStatus,
     AppointmentStatus,
-    ApprovalStatus,
-    BlockerKind,
     ConsentStatus,
-    EvidenceKind,
-    GeneratedDocumentKind,
-    GeneratedDocumentStatus,
     GoalType,
-    GraphEdgeType,
     HouseholdRelationship,
-    JourneyEdgeType,
     JourneyStatus,
     PreferenceCategory,
     Priority,
     RelocationPlan,
     RunKind,
     RunStatus,
-    StepCategory,
-    StepStatus,
-    TwinNodeType,
 )
 from app.domain.principal import Principal
-from app.domain.provenance import Provenance
-from app.events.emitter import RunEventEmitter
-from app.repositories.graph import GovernanceGraphRepository, UserGraphRepository
+from app.events.emitter import MemoryEventSink
+from app.personalization import facts as twin_facts
+from app.personalization import review
+from app.repositories.graph import GovernanceGraphRepository
 from app.repositories.runs import create_run
 from app.services import profile as profile_service
 
@@ -85,7 +114,10 @@ DEMO_PROVIDER = "demo"
 DEMO_SUBJECT = "seed:demo-household"
 DEMO_PRINCIPAL = Principal(user_id=DEMO_USER_ID, tenant_id=DEMO_TENANT_ID, is_demo=True)
 JURISDICTION = "adgm"
+JOURNEY_TITLE = "Arjun's move to Abu Dhabi"
 
+# Names and income as printed on his documents, so reading them confirms the profile
+# instead of raising conflicts.
 ONBOARDING = OnboardingProfileRequest(
     display_name="Arjun (demo)",
     profile=ProfileFields(
@@ -97,7 +129,7 @@ ONBOARDING = OnboardingProfileRequest(
         persona="founder",
         company_name="Mehta Analytics Ltd",
         business_activity="Data analytics software and consulting",
-        monthly_income_aed=45000,
+        monthly_income_aed=32000,
         arrival_date=date(2026, 11, 15),
         target_city="Abu Dhabi",
         languages=["en", "hi"],
@@ -106,7 +138,7 @@ ONBOARDING = OnboardingProfileRequest(
     household=[
         HouseholdMemberIn(
             relationship=HouseholdRelationship.SPOUSE,
-            name="Priya",
+            name="Priya Mehta",
             date_of_birth=date(1992, 8, 30),
             nationality="IND",
             relocation_plan=RelocationPlan.LATER,
@@ -172,38 +204,58 @@ ONBOARDING = OnboardingProfileRequest(
     ),
 )
 
-# Documents the demo user has (user graph -> governance document types). The marriage
-# certificate is NOT attested yet, which is what blocks the family visa in the journey.
-HELD_DOCUMENTS: tuple[tuple[str, str, str], ...] = (
-    ("passport.self", TwinNodeType.PASSPORT.value, "document.passport"),
-    ("document.photo", TwinNodeType.DOCUMENT.value, "document.photo"),
-)
-UNATTESTED_MARRIAGE_CERTIFICATE = "document.marriage_certificate"
-
-GOAL_SERVICES = (
-    "service.company_registration_adgm",
-    "service.residence_visa_investor",
-    "service.family_residence_visa",
-    "service.tawtheeq",
-    "service.corporate_tax_registration",
+# What Arjun asked ADAPT. The plan's goals come from it, as in any journey run.
+PROMPT = (
+    "I'm the founder of Mehta Analytics and I've set up my company in ADGM. I'm moving to "
+    "Abu Dhabi in November and need my residence visa. My wife will join me later with our "
+    "daughter, and I want to sponsor their visas. We've rented a family apartment on Al "
+    "Reem Island."
 )
 
-CATEGORY_BY_SERVICE: dict[str, StepCategory] = {
-    "service.company_registration_adgm": StepCategory.BUSINESS,
-    "service.commercial_license_mainland": StepCategory.BUSINESS,
-    "service.trade_name_reservation": StepCategory.BUSINESS,
-    "service.initial_approval": StepCategory.BUSINESS,
-    "service.establishment_card": StepCategory.BUSINESS,
-    "service.corporate_tax_registration": StepCategory.FINANCE,
-    "service.entry_permit_investor": StepCategory.RESIDENCY,
-    "service.medical_fitness": StepCategory.HEALTH,
-    "service.health_insurance": StepCategory.HEALTH,
-    "service.emirates_id": StepCategory.RESIDENCY,
-    "service.residence_visa_investor": StepCategory.RESIDENCY,
-    "service.tawtheeq": StepCategory.HOUSING,
-    "service.mofa_attestation": StepCategory.FAMILY,
-    "service.family_residence_visa": StepCategory.FAMILY,
-}
+
+@dataclass(frozen=True)
+class SeedDocument:
+    filename: str
+    kind: DocumentKind
+    content: Callable[[], bytes]
+
+
+# His documents, all clearly-marked SPECIMEN PDFs. The licence and the registered lease
+# are what make company registration and Tawtheeq done in his plan.
+DOCUMENTS: tuple[SeedDocument, ...] = (
+    SeedDocument("passport-arjun-mehta.pdf", DocumentKind.PASSPORT, specimens.passport),
+    SeedDocument(
+        "marriage-certificate.pdf",
+        DocumentKind.MARRIAGE_CERTIFICATE,
+        specimens.marriage_certificate,
+    ),
+    SeedDocument(
+        "adgm-commercial-licence.pdf", DocumentKind.BUSINESS_DOCUMENT, specimens.business_document
+    ),
+    SeedDocument(
+        "salary-certificate.pdf", DocumentKind.EMPLOYMENT_LETTER, specimens.employment_letter
+    ),
+    SeedDocument("tenancy-contract.pdf", DocumentKind.TENANCY_DOCUMENT, specimens.tenancy_document),
+)
+# How Arjun answers what the pipeline asks him to check, by field: the marriage
+# certificate is not attested yet ("Attestation: Pending"); every other value it flagged
+# (dates whose day and month could be swapped) was read correctly.
+REVIEW_ANSWERS: dict[str, Any] = {"attested": False}
+
+# (title, journey steps to attach it to in order of preference, authority if the step
+# names none)
+APPOINTMENTS: tuple[tuple[str, tuple[str, ...], str], ...] = (
+    (
+        "Medical fitness screening",
+        ("appointment.visa_screening", "service.medical_fitness"),
+        "Department of Health - Abu Dhabi",
+    ),
+    (
+        "Emirates ID biometrics",
+        ("appointment.emirates_id_biometrics", "service.emirates_id"),
+        "ICP",
+    ),
+)
 
 
 @dataclass
@@ -214,12 +266,29 @@ class DemoSeedReport:
     run_id: UUID
     actions: int
     appointments: int
+    documents: int
 
 
-async def _reset(db: Database) -> None:
+# --- account -------------------------------------------------------------------------------
+
+
+async def _reset(db: Database, storage: DocumentStorage) -> None:
     async with db.public_session() as session:
+        keys = list(
+            (
+                await session.execute(
+                    select(UserDocument.storage_key).where(
+                        UserDocument.tenant_id == DEMO_TENANT_ID,
+                        UserDocument.storage_key.is_not(None),
+                    )
+                )
+            ).scalars()
+        )
         await session.execute(text("DELETE FROM tenants WHERE id = :id"), {"id": DEMO_TENANT_ID})
         await session.commit()
+    for key in keys:
+        if key:
+            await storage.delete(key)
 
 
 async def _create_account(session: AsyncSession) -> None:
@@ -239,487 +308,353 @@ async def _create_account(session: AsyncSession) -> None:
     await session.flush()
 
 
-async def _link_documents(session: AsyncSession) -> None:
-    """User-graph document holdings (no document contents: facts come from uploads)."""
-    graph = UserGraphRepository(session)
-    governance = GovernanceGraphRepository(session)
-    me = await graph.get_by_key("person.self")
-    if me is None:
-        return
-    targets = await governance.by_keys([gov for _, _, gov in HELD_DOCUMENTS])
-    for key, entity_type, gov_key in HELD_DOCUMENTS:
-        label = targets[gov_key].label if gov_key in targets else gov_key
-        node = await graph.upsert_node(entity_type=entity_type, key=key, label=label)
-        await graph.link(GraphEdgeType.HAS_DOCUMENT, me, node)
-        if gov_key in targets:
-            await graph.link(GraphEdgeType.INSTANCE_OF, node, targets[gov_key])
-    certificate = await graph.upsert_node(
-        entity_type=TwinNodeType.DOCUMENT.value,
-        key=UNATTESTED_MARRIAGE_CERTIFICATE,
-        label="Marriage certificate (not yet attested)",
-    )
-    await graph.link(GraphEdgeType.HAS_DOCUMENT, me, certificate)
+# --- documents ------------------------------------------------------------------------------
 
 
-def _provenance(node: GraphNode | None) -> dict[str, Any]:
-    if node is not None and node.provenance:
-        return dict(node.provenance)
-    return Provenance.ai("Planned by ADAPT from the governance graph.").model_dump(mode="json")
+def _reading(adapters: Adapters) -> Adapters:
+    """The SPECIMEN PDFs carry their text, so the local reader reads them exactly; the
+    vision model is never asked (no network call, nothing leaves the server)."""
+    return replace(adapters, ocr=LocalTextReader())
 
 
-async def _plan_journey(session: AsyncSession, principal: Principal) -> Journey:
-    """Seed-only traversal of the governance graph (the product planner is the journey
-    agent's). Orders the goal services and everything they depend on, resolving
-    OR-dependencies by the chosen jurisdiction."""
-    governance = GovernanceGraphRepository(session)
-    nodes = await governance.nodes()
-    by_id = {n.id: n for n in nodes}
-    by_key = {n.key: n for n in nodes}
-    edges = await governance.edges_between(list(by_id))
-    depends: dict[UUID, list[UUID]] = {}
-    satisfied_by: dict[UUID, list[UUID]] = {}
-    requires: dict[UUID, list[UUID]] = {}
-    for e in edges:
-        if e.relation == GraphEdgeType.DEPENDS_ON:
-            depends.setdefault(e.source_node_id, []).append(e.target_node_id)
-        elif e.relation == GraphEdgeType.SATISFIED_BY:
-            satisfied_by.setdefault(e.source_node_id, []).append(e.target_node_id)
-        elif e.relation == GraphEdgeType.REQUIRES:
-            requires.setdefault(e.source_node_id, []).append(e.target_node_id)
+async def _upload_documents(db: Database, principal: Principal, adapters: Adapters) -> list[UUID]:
+    """Upload and read each document as an upload is read (encrypted storage, then the
+    document pipeline), then answer its review questions. Returns the documents that need
+    nothing more from the person."""
+    pipeline = DocumentPipeline(db, principal, _reading(adapters))
+    ids: list[UUID] = []
+    for document in DOCUMENTS:  # the passport first: it names its holder
+        data = document.content()
+        storage_key = f"{principal.user_id}/{uuid4()}"
+        await adapters.storage.put(storage_key, data)
+        async with db.user_session(principal) as session:
+            row = UserDocument(
+                tenant_id=principal.tenant_id,
+                user_id=principal.user_id,
+                kind=document.kind,
+                declared_kind=document.kind,
+                subject=DocumentSubject.SELF,
+                filename=document.filename,
+                content_type="application/pdf",
+                size_bytes=len(data),
+                sha256=hashlib.sha256(data).hexdigest(),
+                storage_key=storage_key,
+                status=DocumentStatus.UPLOADED,
+            )
+            session.add(row)
+            await session.flush()
+            document_id = row.id
+            await session.commit()
+        await pipeline.run(document_id)
+        ids.append(document_id)
 
-    def resolve(node_id: UUID) -> UUID:
-        node = by_id[node_id]
-        if node.entity_type != "dependency":
-            return node_id
-        options = satisfied_by.get(node_id, [])
-        for option in options:
-            if (by_id[option].properties_json or {}).get("jurisdiction") == JURISDICTION:
-                return option
-        return options[0] if options else node_id
+    async with db.user_session(principal) as session:
+        # As on the Documents page, one fact at a time (PATCH /graph/user/facts/{id}). No
+        # journey is waiting on these documents yet, so no review listener is notified.
+        for task in await review.open_tasks(session, principal):
+            if task.fact_id is None:
+                continue  # nothing the persona can answer: it stays open for the visitor
+            if task.field in REVIEW_ANSWERS:
+                await twin_facts.update_fact(
+                    session, task.fact_id, value=REVIEW_ANSWERS[task.field]
+                )
+            else:
+                await twin_facts.update_fact(session, task.fact_id, confirm=True)
+        await session.commit()
+        waiting = {t.document_id for t in await review.open_tasks(session, principal)}
+    if waiting:
+        logger.warning("demo_documents_need_review", extra={"documents": len(waiting)})
+    return [i for i in ids if i not in waiting]
 
-    order: list[UUID] = []
-    parents: dict[UUID, list[UUID]] = {}
-    seen: set[UUID] = set()
 
-    def visit(node_id: UUID) -> None:
-        if node_id in seen:
+# --- planning ---------------------------------------------------------------------------------
+
+
+class _NoPassages:
+    """Evidence without retrieval (retrieval needs the embeddings model): every step cites
+    its governance node's official page, as when no passage matches."""
+
+    async def retrieve(
+        self, query: str, *, governance_keys: list[str], top_k: int
+    ) -> list[EvidenceHit]:
+        return []
+
+
+class _RunLog(MemoryEventSink):
+    """The seeded run's event log, written in one transaction when the run ends instead
+    of one transaction per event: nobody can be watching a run that is still being
+    created. The rows and the run's status are those `RunEventEmitter` would write."""
+
+    async def save(self, db: Database, principal: Principal) -> None:
+        if not self.events:
             return
-        seen.add(node_id)
-        deps = [resolve(t) for t in depends.get(node_id, [])]
-        parents[node_id] = deps
-        for dep in deps:
-            visit(dep)
-        order.append(node_id)
+        last = self.events[-1]
+        values: dict[str, Any] = {
+            "event_seq": len(self.events),
+            "started_at": self.events[0].ts,
+            "status": RunStatus.SUCCEEDED if last.event == "run_completed" else RunStatus.FAILED,
+            "finished_at": last.ts,
+        }
+        if last.event == "run_failed":
+            payload = last.model_dump(mode="json")
+            values["error"] = {k: payload.get(k) for k in ("code", "message", "retryable")}
+        async with db.user_session(principal) as session:
+            await session.execute(
+                update(AgentRun).where(AgentRun.id == self.run_id).values(**values)
+            )
+            session.add_all(
+                AgentEventRow(
+                    run_id=self.run_id,
+                    seq=event.seq,
+                    event=event.event,
+                    node=event.node,
+                    payload=event.model_dump(mode="json"),
+                    tenant_id=principal.tenant_id,
+                    user_id=principal.user_id,
+                )
+                for event in self.events
+            )
+            await session.commit()
 
-    for key in GOAL_SERVICES:
-        if key in by_key:
-            visit(by_key[key].id)
 
-    _, _, user_edges = await UserGraphRepository(session).graph()
-    held = {e.target_node_id for e in user_edges if e.relation == GraphEdgeType.INSTANCE_OF}
-
-    journey = Journey(
-        tenant_id=principal.tenant_id,
-        user_id=principal.user_id,
-        title="Arjun's move to Abu Dhabi",
-        status=JourneyStatus.ACTIVE,
-        summary="Company in ADGM first, then investor residency, then family sponsorship.",
-        goals=["establish_company", "residency", "sponsor_family", "find_housing"],
-        assumptions={"company.jurisdiction": JURISDICTION},
-        considerations=[
-            {
-                "id": "consideration.corporate_tax",
-                "title": "Corporate tax registration",
-                "detail": "New UAE companies must register for corporate tax with the FTA.",
-                "category": "finance",
-                "provenance": Provenance.ai(
-                    "Surfaced by ADAPT from the governance graph."
-                ).model_dump(mode="json"),
-            }
-        ],
-        plan={"generated_by": "seed", "jurisdiction": JURISDICTION},
+@instrumented(HUMAN_APPROVAL.id.value, HUMAN_APPROVAL.label)
+async def _ask_for_approval(state: dict[str, Any], runtime: Runtime[Any]) -> dict[str, Any]:
+    """HUMAN_APPROVAL without the pause. A seeded run can't be resumed (it keeps no
+    checkpoint), so each approval-gated action waits on its own, like an action prepared
+    outside a run: approving it hands it over to the official site straight away."""
+    context = ctx(runtime)
+    principal = context.principal
+    pending = [
+        a
+        for a in state.get("actions", [])
+        if a["status"] == ActionStatus.PREPARED and a["requires_human_approval"]
+    ]
+    if not pending:
+        return {"_summary": "Nothing needs your approval"}
+    awaiting: list[dict[str, Any]] = []
+    async with context.db.user_session(principal) as session:
+        for action in pending:
+            check_transition(
+                ActionStatus.PREPARED,
+                ActionStatus.AWAITING_APPROVAL,
+                source="agent",
+                requires_approval=True,
+                approved=False,
+                is_simulated=action["is_simulated"],
+            )
+            approval = ActionApproval(
+                tenant_id=principal.tenant_id,
+                user_id=principal.user_id,
+                action_id=UUID(action["id"]),
+                review_id=f"manual:{action['id']}",
+            )
+            session.add(approval)
+            await session.flush()
+            awaiting.append(
+                {
+                    **action,
+                    "status": ActionStatus.AWAITING_APPROVAL.value,
+                    "approval_id": str(approval.id),
+                }
+            )
+        await session.commit()
+    await context.svc.store.save_actions(
+        journey_id=state["journey_id"],
+        run_id=state["run_id"],
+        actions=awaiting,  # type: ignore[arg-type]
     )
-    session.add(journey)
-    await session.flush()
+    for action in awaiting:
+        await emit(
+            context,
+            "approval_required",
+            approval_id=action["approval_id"],
+            action_id=UUID(action["id"]),
+            title=action["title"],
+            summary=action["summary"],
+            item_count=len(awaiting),
+        )
+    return {"actions": awaiting, "_summary": f"{len(awaiting)} step(s) wait for your approval"}
 
-    created: dict[UUID, JourneyNode] = {}
-    for position, node_id in enumerate(order):
-        service = by_id[node_id]
-        blockers: list[dict[str, Any]] = []
-        for req_id in requires.get(node_id, []):
-            req = by_id.get(req_id)
-            if req is None or req.entity_type != "document" or req_id in held:
-                continue
-            kind = (
-                BlockerKind.ATTESTATION
-                if req.key == "document.marriage_certificate_attested"
-                else BlockerKind.MISSING_DOCUMENT
-            )
-            blockers.append(
-                {
-                    "kind": kind.value,
-                    "message": f"Needs: {req.label}",
-                    "resolution": "Upload it, or complete the step that produces it.",
-                    "related_node_key": None,
-                    "related_document": req.key,
-                }
-            )
-        waiting_on = [p for p in parents.get(node_id, []) if p in by_id]
-        if waiting_on:
-            status = StepStatus.BLOCKED
-            blockers.append(
-                {
-                    "kind": BlockerKind.DEPENDENCY.value,
-                    "message": "Waiting for: " + ", ".join(by_id[p].label for p in waiting_on),
-                    "resolution": None,
-                    "related_node_key": by_id[waiting_on[0]].key,
-                    "related_document": None,
-                }
-            )
-        elif blockers:
-            status = StepStatus.NEEDS_INFO
-        else:
-            status = StepStatus.READY
-        row = JourneyNode(
+
+def _planning_graph() -> CompiledStateGraph[Any, Any, Any, Any]:
+    """The journey graph without its pauses: execution only ever follows an approval, and
+    the approval gate is `_ask_for_approval`. Checkpoints stay in memory."""
+    graph = StateGraph(JourneyState, context_schema=JourneyContext)
+    previous = START
+    for node in JOURNEY_SEQUENCE:
+        name = spec_of(node).id
+        if name is NodeId.EXECUTION_OR_HANDOFF:
+            continue
+        step: Any = _ask_for_approval if name is NodeId.HUMAN_APPROVAL else node
+        graph.add_node(name.value, step)
+        graph.add_edge(previous, name.value)
+        previous = name.value
+    graph.add_edge(previous, END)
+    return graph.compile(checkpointer=InMemorySaver())
+
+
+async def _plan(
+    db: Database, principal: Principal, adapters: Adapters, document_ids: list[UUID]
+) -> tuple[UUID, UUID]:
+    documents = [str(d) for d in document_ids]
+    async with db.user_session(principal) as session:
+        journey = Journey(
             tenant_id=principal.tenant_id,
             user_id=principal.user_id,
-            journey_id=journey.id,
-            key=service.key,
-            kind="task",
-            title=service.label,
-            summary=service.summary or "",
-            category=CATEGORY_BY_SERVICE.get(service.key, StepCategory.DAILY_LIFE),
-            status=status,
-            position=position,
-            governance_node_id=service.id,
-            official_url=service.official_url,
-            blockers=blockers,
-            provenance=_provenance(service),
-            basis=[
-                {
-                    "key": "profile.assumptions",
-                    "label": "You chose ADGM for your company",
-                    "fact_refs": ["profile:user_profiles:assumptions"],
-                }
-            ]
-            if service.key == "service.company_registration_adgm"
-            else [],
+            title=JOURNEY_TITLE,
+            status=JourneyStatus.DRAFT,
         )
-        session.add(row)
-        created[node_id] = row
-    await session.flush()
-
-    for node_id, deps in parents.items():
-        for dep in deps:
-            if node_id in created and dep in created:
-                session.add(
-                    JourneyEdge(
-                        tenant_id=principal.tenant_id,
-                        user_id=principal.user_id,
-                        journey_id=journey.id,
-                        source_node_id=created[node_id].id,
-                        target_node_id=created[dep].id,
-                        relation=JourneyEdgeType.DEPENDS_ON,
-                    )
-                )
-    await session.flush()
-    return journey
-
-
-async def _journey_node(session: AsyncSession, journey: Journey, key: str) -> JourneyNode | None:
-    return (
-        await session.execute(
-            select(JourneyNode).where(JourneyNode.journey_id == journey.id, JourneyNode.key == key)
-        )
-    ).scalar_one_or_none()
-
-
-async def _documents_and_actions(
-    session: AsyncSession, principal: Principal, journey: Journey, run: AgentRun
-) -> tuple[list[GeneratedDocument], list[Action]]:
-    owner = {"tenant_id": principal.tenant_id, "user_id": principal.user_id}
-    governance = await GovernanceGraphRepository(session).by_keys(
-        ["service.company_registration_adgm", "service.tawtheeq", "service.family_residence_visa"]
-    )
-    adgm = governance.get("service.company_registration_adgm")
-    tawtheeq = governance.get("service.tawtheeq")
-    family = governance.get("service.family_residence_visa")
-    adgm_node = await _journey_node(session, journey, "service.company_registration_adgm")
-    family_node = await _journey_node(session, journey, "service.family_residence_visa")
-
-    now = datetime.now(UTC)
-    docs = [
-        GeneratedDocument(
-            **owner,
-            kind=GeneratedDocumentKind.CHECKLIST,
-            title="Documents to prepare before you fly",
-            body_markdown=(
-                "# Before you fly\n\n"
-                "- [x] Passport valid for at least six more months\n"
-                "- [ ] Marriage certificate attested in India, then by UAE MoFA after arrival\n"
-                "- [ ] Aanya's birth certificate, attested the same way\n"
-                "- [ ] Passport-style photos for everyone\n\n"
-                "_Confirm current requirements on the official pages linked in your journey._"
-            ),
-            status=GeneratedDocumentStatus.APPROVED,
-            approved_at=now,
-            journey_id=journey.id,
-            run_id=run.id,
-            provenance=_provenance(family),
-        ),
-        GeneratedDocument(
-            **owner,
-            kind=GeneratedDocumentKind.COVER_LETTER,
-            title="Cover letter: family residence visa for Priya and Aanya",
-            body_markdown=(
-                "To whom it may concern,\n\n"
-                "I, Arjun Mehta, founder of Mehta Analytics Ltd (ADGM), request residence visas "
-                "for my wife Priya and our daughter Aanya under my sponsorship. Our attested "
-                "marriage certificate, registered tenancy contract and proof of income are "
-                "attached.\n\n"
-                "Kind regards,\nArjun Mehta\n\n"
-                "_Draft prepared by ADAPT for your review. Fictional demo content._"
-            ),
-            status=GeneratedDocumentStatus.DRAFT,
-            journey_id=journey.id,
-            journey_node_id=family_node.id if family_node else None,
-            run_id=run.id,
-            provenance=Provenance.ai("Drafted by ADAPT; review before using it.").model_dump(
-                mode="json"
-            ),
-        ),
-    ]
-    session.add_all(docs)
-    await session.flush()
-
-    actions: list[Action] = []
-    if adgm is not None and adgm.official_url:
-        incorporate = Action(
-            **owner,
-            journey_id=journey.id,
-            journey_node_id=adgm_node.id if adgm_node else None,
-            run_id=run.id,
-            task_key="service.company_registration_adgm",
-            service_key=adgm.key,
-            type=ActionKind.GOVERNMENT_PORTAL,
-            status=ActionStatus.AWAITING_APPROVAL,
-            adapter="official_handoff",
-            title="Start ADGM incorporation for Mehta Analytics Ltd",
-            summary="Open the ADGM online registry with your company details ready to copy.",
-            consequences=[
-                "Opens the ADGM registry in a new tab. Nothing is submitted by ADAPT.",
-                "You complete and submit the application yourself on the official portal.",
-            ],
-            reversible=True,
-            requires_human_approval=True,
-            requires_user_authentication=False,
-            official_url=adgm.official_url,
-            payload={
-                "company_name": "Mehta Analytics Ltd",
-                "activity": "Data analytics software and consulting",
-            },
-            evidence=[{"source_url": adgm.official_url, "title": adgm.label}],
-            is_simulated=False,
-        )
-        session.add(incorporate)
+        session.add(journey)
         await session.flush()
-        session.add(
-            ActionApproval(
-                **owner, action_id=incorporate.id, run_id=run.id, status=ApprovalStatus.PENDING
-            )
-        )
-        actions.append(incorporate)
-    if tawtheeq is not None and tawtheeq.official_url:
-        lease = Action(
-            **owner,
-            journey_id=journey.id,
-            run_id=run.id,
-            task_key="service.tawtheeq",
-            service_key=tawtheeq.key,
-            type=ActionKind.OFFICIAL_HANDOFF,
-            status=ActionStatus.PREPARED,
-            adapter="official_handoff",
-            title="Register your tenancy contract (Tawtheeq)",
-            summary="Once you sign a lease, register it on TAMM. You sign in there with UAE PASS.",
-            consequences=[
-                "Opens TAMM in a new tab. ADAPT never sees or stores your UAE PASS credentials."
-            ],
-            reversible=True,
-            requires_human_approval=False,
-            requires_user_authentication=True,
-            official_url=tawtheeq.official_url,
-            is_simulated=False,
-        )
-        session.add(lease)
-        actions.append(lease)
-    await session.flush()
-    return docs, actions
-
-
-async def _appointments(
-    session: AsyncSession, principal: Principal, journey: Journey
-) -> list[Appointment]:
-    owner = {"tenant_id": principal.tenant_id, "user_id": principal.user_id}
-    keys = [
-        "appointment.medical_screening",
-        "appointment.biometrics",
-        "service.medical_fitness",
-        "service.emirates_id",
-    ]
-    governance = await GovernanceGraphRepository(session).by_keys(keys)
-    rows: list[Appointment] = []
-    for title, key, fallback, authority in (
-        (
-            "Medical fitness screening",
-            "appointment.medical_screening",
-            "service.medical_fitness",
-            "Department of Health - Abu Dhabi",
-        ),
-        ("Emirates ID biometrics", "appointment.biometrics", "service.emirates_id", "ICP"),
-    ):
-        node = governance.get(key) or governance.get(fallback)
-        journey_node = await _journey_node(session, journey, fallback)
-        rows.append(
-            Appointment(
-                **owner,
-                title=title,
-                service_key=node.key if node else fallback,
-                governance_node_id=node.id if node else None,
-                journey_id=journey.id,
-                journey_node_id=journey_node.id if journey_node else None,
-                authority=authority,
-                official_url=node.official_url if node else None,
-                status=AppointmentStatus.PLANNED,
-                notes="Not booked. Book on the official channel when your entry permit is issued.",
-            )
-        )
-    session.add_all(rows)
-    await session.flush()
-    return rows
-
-
-async def _replay_run(
-    db: Database,
-    principal: Principal,
-    run: AgentRun,
-    journey: Journey,
-    docs: list[GeneratedDocument],
-    actions: list[Action],
-) -> None:
-    """The event log of the (seeded) journey-planning run, in the streamed JSON format."""
-    events = RunEventEmitter(db, principal, run.id)
-    await events.run_started(RunKind.JOURNEY, agent="journey")
-    stages = [
-        ("profile_analysis", "Reviewing your profile", "Founder, moving with spouse and child"),
-        (
-            "document_analysis",
-            "Analyzing your documents",
-            "Passport found; marriage certificate not attested",
-        ),
-        ("requirements", "Finding the rules that apply", None),
-        ("dependency_analysis", "Ordering the steps", None),
-        ("document_preparation", "Drafting your documents", None),
-        ("action_preparation", "Preparing next actions", None),
-    ]
-    for index, (node, label, summary) in enumerate(stages):
-        await events.node_started(node, label)
-        if node == "document_analysis":
-            await events.tool_called(
-                "user_graph.documents",
-                call_id=f"call-{index}",
-                node=node,
-                summary="Checking which documents you hold",
-            )
-            await events.tool_result(
-                "user_graph.documents",
-                call_id=f"call-{index}",
-                ok=True,
-                node=node,
-                summary="2 documents linked",
-            )
-        if node == "requirements":
-            await events.evidence_found(
-                title="ICP — residence visas and Emirates ID",
-                source_url="https://icp.gov.ae",
-                authority="authority.icp",
-                evidence_kind=EvidenceKind.OFFICIAL_GUIDANCE,
-                node=node,
-            )
-        if node == "document_preparation":
-            for doc in docs:
-                await events.document_generated(
-                    document_id=doc.id, kind=doc.kind.value, title=doc.title, node=node
-                )
-        if node == "action_preparation":
-            for action in actions:
-                await events.action_prepared(
-                    action_id=action.id,
-                    action_type=action.type.value,
-                    title=action.title,
-                    status=action.status.value,
-                    requires_approval=action.requires_human_approval,
-                    node=node,
-                )
-            pending = [a for a in actions if a.status is ActionStatus.AWAITING_APPROVAL]
-            for action in pending:
-                await events.approval_required(
-                    approval_id=str(action.id),
-                    action_id=action.id,
-                    title=action.title,
-                    summary=action.summary,
-                    node="approval",
-                )
-        await events.node_completed(node, 120 + 40 * index, summary, label=label)
-    await events.run_completed(
-        summary="Your plan is ready: 1 action awaits your approval.", journey_id=journey.id
-    )
-
-
-async def seed_demo_household(
-    db: Database, *, principal: Principal | None = None
-) -> DemoSeedReport:
-    """Rebuild the demo household. `db` must use the owner role (seeding bypasses RLS)."""
-    reset_seed = principal is None
-    principal = principal or DEMO_PRINCIPAL
-    if reset_seed:
-        await _reset(db)
-    async with db.user_session(principal) as session:
-        if reset_seed:
-            await _create_account(session)
-        await profile_service.onboard(session, principal, ONBOARDING)
-        await _link_documents(session)
-        journey = await _plan_journey(session, principal)
+        journey_id = journey.id
+        # The run's request, as POST /journey records it. `deterministic` also makes its
+        # what-ifs scripted.
         run = await create_run(
             session,
             principal,
             RunKind.JOURNEY,
             agent="journey",
-            input={"seeded": True},
-            journey_id=journey.id,
+            input={
+                "prompt": PROMPT,
+                "language": "en",
+                "channel": "text",
+                "document_ids": documents,
+                "journey_id": str(journey_id),
+                "deterministic": True,
+                "seeded": True,
+            },
+            journey_id=journey_id,
         )
-        docs, actions = await _documents_and_actions(session, principal, journey, run)
-        appointments = await _appointments(session, principal, journey)
+        run_id, thread_id = run.id, run.thread_id
         await session.commit()
-        node_count = len(
-            (
-                await session.execute(
-                    text("SELECT id FROM journey_nodes WHERE journey_id = :id"), {"id": journey.id}
-                )
-            ).all()
+
+    events = _RunLog(run_id)
+    llm = DemoLLM()
+    register_demo_responders(llm)
+    context = JourneyContext(
+        principal=principal,
+        run_id=run_id,
+        events=events,
+        db=db,
+        adapters=adapters,
+        services=JourneyServices(
+            store=PgJourneyStore(db, principal),
+            documents=PlatformDocuments(db, principal, _reading(adapters), events),
+            evidence=_NoPassages(),
+            research=PlatformResearch(db, None, principal, adapters),  # none: no queue
+            actions=adapters.actions,
+            llm=llm,
+        ),
+    )
+    outcome = await execute_run(
+        graph=_planning_graph(),
+        ctx=context,
+        kind=RunKind.JOURNEY,
+        thread_id=thread_id,
+        graph_input=journey_input(
+            user_id=str(principal.user_id),
+            journey_id=str(journey_id),
+            run_id=str(run_id),
+            text=PROMPT,
+            document_ids=documents,
+        ),
+        summary_key="final_summary",
+    )
+    await events.save(db, principal)
+    if outcome.status != "completed":
+        raise RuntimeError(f"planning the demo household's journey {outcome.status}")
+    return journey_id, run_id
+
+
+# --- appointments -----------------------------------------------------------------------------
+
+
+async def _appointments(session: AsyncSession, principal: Principal, journey_id: UUID) -> int:
+    nodes = {
+        n.key: n
+        for n in (
+            await session.execute(select(JourneyNode).where(JourneyNode.journey_id == journey_id))
+        ).scalars()
+    }
+    governance = await GovernanceGraphRepository(session).by_keys(
+        [key for _, keys, _ in APPOINTMENTS for key in keys]
+    )
+    for title, keys, authority in APPOINTMENTS:
+        key = next((k for k in keys if k in nodes), keys[-1])
+        node, official = nodes.get(key), governance.get(key)
+        session.add(
+            Appointment(
+                tenant_id=principal.tenant_id,
+                user_id=principal.user_id,
+                title=title,
+                service_key=key,
+                governance_node_id=official.id if official else None,
+                journey_id=journey_id,
+                journey_node_id=node.id if node else None,
+                authority=(node.authority if node else None) or authority,
+                official_url=(node.official_url if node else None)
+                or (official.official_url if official else None),
+                status=AppointmentStatus.PLANNED,
+                notes="Not booked. Book on the official channel when your entry permit is issued.",
+            )
         )
-    await _replay_run(db, principal, run, journey, docs, actions)
+    await session.flush()
+    return len(APPOINTMENTS)
+
+
+# --- the household ----------------------------------------------------------------------------
+
+
+async def seed_demo_household(
+    db: Database, *, adapters: Adapters, principal: Principal | None = None
+) -> DemoSeedReport:
+    """Build the demo household for `principal` (a visitor's private copy) or, by default,
+    rebuild the shared demo account from scratch (that needs the owner role: the reset
+    bypasses RLS). `adapters` provide document storage and the action adapters; no model,
+    vision or web search is called, so seeding is quick and the same every time."""
+    reset_seed = principal is None
+    principal = principal or DEMO_PRINCIPAL
+    if reset_seed:
+        await _reset(db, adapters.storage)
     async with db.user_session(principal) as session:
-        status = (
+        if reset_seed:
+            await _create_account(session)
+        await profile_service.onboard(session, principal, ONBOARDING)
+        await session.commit()
+    documents = await _upload_documents(db, principal, adapters)
+    journey_id, run_id = await _plan(db, principal, adapters, documents)
+    async with db.user_session(principal) as session:
+        appointments = await _appointments(session, principal, journey_id)
+        await session.commit()
+        node_count = (
             await session.execute(
-                text("SELECT status FROM agent_runs WHERE id = :id"), {"id": run.id}
+                select(func.count())
+                .select_from(JourneyNode)
+                .where(JourneyNode.journey_id == journey_id)
             )
         ).scalar_one()
-    assert status == RunStatus.SUCCEEDED.value
+        action_count = (
+            await session.execute(
+                select(func.count()).select_from(Action).where(Action.journey_id == journey_id)
+            )
+        ).scalar_one()
+        document_count = (
+            await session.execute(
+                select(func.count())
+                .select_from(UserDocument)
+                .where(UserDocument.user_id == principal.user_id)
+            )
+        ).scalar_one()
+        status = (
+            await session.execute(select(AgentRun.status).where(AgentRun.id == run_id))
+        ).scalar_one()
+    assert status == RunStatus.SUCCEEDED, status
     return DemoSeedReport(
         user_id=principal.user_id,
-        journey_id=journey.id,
+        journey_id=journey_id,
         journey_nodes=node_count,
-        run_id=run.id,
-        actions=len(actions),
-        appointments=len(appointments),
+        run_id=run_id,
+        actions=action_count,
+        appointments=appointments,
+        documents=document_count,
     )

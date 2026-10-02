@@ -122,6 +122,29 @@ class TestPlanner:
         visa = next(t for t in result.tasks if t["key"] == "service.residence_visa_investor")
         assert visa["status"] == TaskStatus.DONE
 
+    def test_a_held_product_counts_as_done_in_the_plans_own_subgraph(self) -> None:
+        # The agent plans over the subgraph of its root services (`governance_context`):
+        # it includes what a step produces, so holding a registered lease completes it.
+        context = snapshot().context(["service.tawtheeq"], [])
+        result = plan(
+            GovernanceSnapshot.from_context(context),
+            facts(goals=["find_housing"], documents__tenancy_contract_registered=True),
+        )
+        lease = next(t for t in result.tasks if t["key"] == "service.tawtheeq")
+        assert lease["status"] == TaskStatus.DONE
+
+    def test_a_held_licence_completes_the_route_of_your_jurisdiction(self) -> None:
+        # Both licence routes produce a commercial licence: holding one completes the route
+        # that matches the company's jurisdiction, not the first alternative by name.
+        adgm = {**FOUNDER, "company__jurisdiction": "adgm"}
+        result = plan(snapshot(), facts(**adgm, documents__commercial_license=True))
+        registration = next(
+            t for t in result.tasks if t["key"] == "service.company_registration_adgm"
+        )
+        assert registration["status"] == TaskStatus.DONE
+        assert "service.commercial_license_mainland" not in keys(result)
+        assert result.alternatives[0]["chosen"] == "service.company_registration_adgm"
+
     def test_goals_without_governance_coverage_are_notes_not_tasks(self) -> None:
         result = plan(snapshot(), facts(goals=["residency", "schooling"]))
         assert result.tasks == []
