@@ -81,7 +81,7 @@ def upgrade() -> None:
         ("appointments", "confirmed_requires_reference", BOOKING_RECEIPT),
     ):
         full_name = f"ck_{table}_{name}"
-        op.drop_constraint(full_name, table, type_="check")
+        op.drop_constraint(op.f(full_name), table, type_="check")
         op.create_check_constraint(op.f(full_name), table, expression)
     op.execute("""
         CREATE OR REPLACE FUNCTION actions_require_approved_approval() RETURNS trigger
@@ -140,7 +140,7 @@ def downgrade() -> None:
         ),
     ):
         full_name = f"ck_{table}_{name}"
-        op.drop_constraint(full_name, table, type_="check")
+        op.drop_constraint(op.f(full_name), table, type_="check")
         op.create_check_constraint(op.f(full_name), table, expression)
     op.drop_column("appointments", "booking_confirmation")
     op.execute("""
