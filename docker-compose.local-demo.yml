@@ -1,0 +1,26 @@
+# Laptop-hosted live-AI demo: run two stacks side by side, each behind its own HTTPS
+# tunnel. Used by infra/demo/local-demo.sh, which passes per-stack ports and public URLs
+# with --env-file. Images get their own tag so the regular dev stack's images stay intact.
+x-demo-environment: &demo-environment
+  ADAPTER_LLM: live
+  ADAPTER_EMBEDDINGS: live
+  ADAPTER_OCR: live
+  ADAPTER_VOICE: live
+  ADAPTER_WEB_SEARCH: live
+  ADAPTER_ACTIONS: auto # preview-only government actions outside production
+  DEMO_AUTH_ENABLED: "true"
+  SESSION_COOKIE_SECURE: "true"
+  CORS_ORIGINS: ${CORS_ORIGINS:?set CORS_ORIGINS to the public tunnel URL}
+
+services:
+  migrate:
+    image: adapt-backend:demo
+    environment: *demo-environment
+  backend:
+    image: adapt-backend:demo
+    environment: *demo-environment
+  worker:
+    image: adapt-backend:demo
+    environment: *demo-environment
+  frontend:
+    image: adapt-frontend:demo
