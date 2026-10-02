@@ -235,6 +235,16 @@ async def test_dedicated_sdk_resource_returns_only_ephemeral_credential(settings
     assert create.call_args.kwargs["session"]["model"] == MODEL
 
 
+async def test_unstarted_session_expiry_is_unknown_not_expired(settings):
+    # The provider answers expires_at 0 until the WebRTC call starts. Reporting 0 made the
+    # browser treat every new session as already expired and reconnect in a loop.
+    expires = int(time.time()) + 120
+    payload = {"value": "ek-new", "expires_at": expires, "session": {"expires_at": 0}}
+    client = SimpleNamespace(realtime=SimpleNamespace(), post=AsyncMock(return_value=payload))
+    result = await OpenAITranslationProvider(settings, client).credential("a", "en", "hi")
+    assert result.session_expires_at is None
+
+
 async def test_router_auth_no_store_lifecycle_and_upload_validation(settings, principal):
     app = FastAPI()
     app.state.container = SimpleNamespace(settings=settings, redis=Store())

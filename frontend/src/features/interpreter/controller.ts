@@ -127,7 +127,8 @@ export class InterpreterController {
       this.update({ state: "listening", notice: session.mode === "demo" ? "Demo: scripted samples. Your microphone is off." : null });
       this.gate(); this.emit("interpreter_started");
       this.interval = setInterval(() => this.monitor(), 50);
-      this.scheduleExpiry(Math.min(session.expires_at, ...session.streams.map((s) => s.session_expires_at ?? session.expires_at)), epoch);
+      // A 0 or missing stream expiry is unknown, not expired: fall back to the session's.
+      this.scheduleExpiry(Math.min(session.expires_at, ...session.streams.map((s) => s.session_expires_at || session.expires_at)), epoch);
     } catch (error) { if (epoch === this.epoch) this.fail(error); }
   }
   private scheduleExpiry(expires: number, epoch: number): void {
@@ -306,7 +307,7 @@ export class InterpreterController {
         await this.connectStreams(session, epoch);
         if (epoch !== this.epoch) return;
         this.reconnecting = false;
-        this.scheduleExpiry(Math.min(session.expires_at, ...session.streams.map((s) => s.session_expires_at ?? session.expires_at)), epoch);
+        this.scheduleExpiry(Math.min(session.expires_at, ...session.streams.map((s) => s.session_expires_at || session.expires_at)), epoch);
         this.update({ state: this.snapshot.paused ? "paused" : "listening", notice: null }); this.gate(); return;
       } catch (error) {
         this.closeConnections();

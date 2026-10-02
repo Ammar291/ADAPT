@@ -74,6 +74,15 @@ describe("interpreter lifecycle", () => {
     h.callbacks[0]!.event({ type: "session.input_transcript.delta", delta: "Hello" }); h.controller.pause();
     await h.controller.reconnect(); expect(h.api.reconnect).toHaveBeenCalledWith("session-1", expect.any(AbortSignal)); expect(h.controller.getSnapshot().state).toBe("paused"); expect(h.sent.every((t) => !t.enabled)).toBe(true); expect(h.controller.getSnapshot().transcripts.a.original).toBe("Hello"); expect(h.closes[0]).toHaveBeenCalled(); h.controller.end();
   });
+  it("treats a provider stream expiry of 0 as unknown instead of reconnecting at once", async () => {
+    vi.useFakeTimers(); const h = harness();
+    const unstarted = (id: string) => { const s = session(id); return { ...s, streams: s.streams.map((stream) => ({ ...stream, session_expires_at: 0 })) }; };
+    vi.mocked(h.api.create).mockResolvedValue(unstarted("session-1")); vi.mocked(h.api.reconnect).mockResolvedValue(unstarted("renewed"));
+    await h.controller.start({ source: "en", target: "hi" }, { headphones: true }); await vi.advanceTimersByTimeAsync(10_000);
+    expect(h.api.reconnect).not.toHaveBeenCalled(); expect(h.controller.getSnapshot().state).toBe("listening");
+    await h.controller.reconnect(); await vi.advanceTimersByTimeAsync(10_000);
+    expect(h.api.reconnect).toHaveBeenCalledTimes(1); h.controller.end();
+  });
   it("stops and releases the microphone after bounded reconnect failure", async () => {
     vi.useFakeTimers(); const h = harness(); await h.controller.start({ source: "en", target: "hi" }, { headphones: true });
     vi.mocked(h.api.reconnect).mockRejectedValue(new Error("Network unavailable"));

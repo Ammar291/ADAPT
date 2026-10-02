@@ -107,6 +107,11 @@ class OpenAITranslationProvider:
                         "/realtime/translations/client_secrets", cast_to=dict, body=body
                     )
                 )
+            session_expires = (
+                result.session.get("expires_at")
+                if isinstance(result.session, dict)
+                else result.session.expires_at
+            )
             return StreamCredential(
                 speaker=speaker,
                 source=source,
@@ -114,11 +119,8 @@ class OpenAITranslationProvider:
                 transport="webrtc",
                 client_secret=result.value,
                 credential_expires_at=result.expires_at,
-                session_expires_at=(
-                    result.session.get("expires_at")
-                    if isinstance(result.session, dict)
-                    else result.session.expires_at
-                ),
+                # The provider reports 0 until the call starts: unknown, never "expired".
+                session_expires_at=session_expires or None,
                 webrtc_url=WEBRTC_URL,
             )
         except ValidationError:
