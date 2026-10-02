@@ -1,7 +1,7 @@
 import { tr, localize, useLocale } from "@/i18n";
 import { ArrowUpRight, LockKeyhole, Search } from "lucide-react";
 import { Link, NavLink } from "react-router";
-import { useApprovals, useSession } from "@/lib/api/hooks";
+import { useApprovals, useGeneratedDocuments, useSession } from "@/lib/api/hooks";
 import { useUiStore } from "@/stores/ui";
 import { cn } from "@/lib/cn";
 import { initials } from "@/lib/format";
@@ -40,8 +40,11 @@ export function Sidebar() {
   useLocale();
   const session = useSession();
   const approvals = useApprovals("pending");
+  const drafts = useGeneratedDocuments();
   const name = session.data?.displayName?.trim() || tr("copy.your_account_4ab2910");
   const pending = approvals.data?.length ?? 0;
+  const draftsToReview = drafts.data?.filter((d) => d.status === "draft").length ?? 0;
+  const badges: Record<string, number> = { "/approvals": pending, "/documents": draftsToReview };
   const openSearch = useUiStore((s) => s.setSearchOpen);
 
   return (
@@ -55,7 +58,7 @@ export function Sidebar() {
         <div className="flex flex-col gap-0.5">
           <p className="px-3 pb-2 text-[10px] font-medium uppercase tracking-[0.14em] text-[#91a6ae]">{tr("copy.your_move_44470e5")}</p>
           {mainNav.map((item) => (
-            <SidebarLink key={item.to} item={item} badge={item.to === "/documents" ? pending : undefined} />
+            <SidebarLink key={item.to} item={item} badge={badges[item.to]} />
           ))}
         </div>
         <div className="flex flex-col gap-0.5">

@@ -295,7 +295,7 @@ export function ReviewPanel({
             ))}
             <p className="flex items-center gap-2 text-sm text-muted">
               <ShieldCheck className="size-4 text-primary" aria-hidden />
-              {tr("copy.waiting_for_your_review_to_load_it_also_appears__b19e7bf")}</p>
+              {tr("copy.waiting_for_your_review_to_load_it_also_appears__59a10f0")}</p>
           </div>
         ) : review.data.gate === "action_approval" ? (
           <ActionApprovals review={review.data} />

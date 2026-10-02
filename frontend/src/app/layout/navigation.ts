@@ -4,6 +4,7 @@ import {
   CircleUserRound,
   Compass,
   FileText,
+  Hand,
   House,
   Landmark,
   Languages,
@@ -27,6 +28,7 @@ export interface NavItem {
 export const mainNav: NavItem[] = [
   { to: "/home", label: tr("copy.home_70f8bb9", { lng: "en" }), icon: House, hint: tr("copy.what_to_do_next_8ce2518", { lng: "en" }) },
   { to: "/journey", label: tr("copy.journey_e40c092", { lng: "en" }), icon: Route, hint: tr("copy.every_step_in_order_612e31a", { lng: "en" }) },
+  { to: "/approvals", label: tr("copy.approvals_deb9d03", { lng: "en" }), icon: Hand, hint: tr("copy.waiting_for_your_approval_5095847", { lng: "en" }) },
   { to: "/discover", label: tr("copy.discover_4827ea2", { lng: "en" }), icon: Compass, hint: tr("copy.communities_events_and_culture_4ed9c67", { lng: "en" }) },
   { to: "/documents", label: tr("copy.documents_687c828", { lng: "en" }), icon: FileText, hint: tr("copy.your_documents_and_drafts_a021eab", { lng: "en" }) },
 ];
@@ -46,8 +48,8 @@ export const accountNav: NavItem[] = [
   { to: "/settings", label: tr("copy.settings_c7f73bb", { lng: "en" }), icon: Settings, hint: tr("copy.language_privacy_appearance_1365886", { lng: "en" }) },
 ];
 
-/** The mobile bottom bar shows exactly these five. */
-export const bottomNav: NavItem[] = [...mainNav, accountNav[0]!];
+/** The mobile bottom bar shows exactly these five; Approvals is reached from Home and the menu. */
+export const bottomNav: NavItem[] = [...mainNav.filter((item) => item.to !== "/approvals"), accountNav[0]!];
 
 export const allNav = [...mainNav, ...toolsNav, ...accountNav];
 

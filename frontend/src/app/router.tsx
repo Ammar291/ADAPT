@@ -17,7 +17,7 @@ function page(load: () => Promise<{ default: React.ComponentType }>): Pick<Route
 const demoRoutes: RouteObject[] = [
   { path: "/interpreter", ...page(() => import("@/features/interpreter/InterpreterPage")), errorElement: <RouteError />, hydrateFallbackElement: loading },
   { path: "/demo/founder-arrival", ...page(() => import("@/features/demo/HeroDemoPage")), errorElement: <RouteError />, hydrateFallbackElement: loading },
-  ...Object.entries({ "/home": 9, "/plan": 9, "/documents": 1, "/knowledge/me": 2, "/twin": 2, "/knowledge/governance": 3, "/services": 3, "/agents": 4, "/journey": 5, "/discover": 7, "/simulate": 8, "/what-if": 8, "/assistant": 0 }).map(([path, scene]) => ({ path, element: <Navigate to={`/demo/founder-arrival?scene=${scene}`} replace /> })),
+  ...Object.entries({ "/home": 9, "/plan": 9, "/documents": 1, "/approvals": 1, "/knowledge/me": 2, "/twin": 2, "/knowledge/governance": 3, "/services": 3, "/agents": 4, "/journey": 5, "/discover": 7, "/simulate": 8, "/what-if": 8, "/assistant": 0 }).map(([path, scene]) => ({ path, element: <Navigate to={`/demo/founder-arrival?scene=${scene}`} replace /> })),
   { path: "*", element: <Navigate to="/demo/founder-arrival" replace /> },
 ];
 
@@ -45,6 +45,7 @@ export const router = createBrowserRouter(config.demoMode ? demoRoutes : [
       },
       { path: "agents", handle: { layout: "full" }, ...page(() => import("@/features/agents/AgentsPage")) },
       { path: "documents", handle: { layout: "wide" }, ...page(() => import("@/features/documents/DocumentsPage")) },
+      { path: "approvals", handle: { layout: "wide" }, ...page(() => import("@/features/approvals/ApprovalsPage")) },
       { path: "discover", handle: { layout: "wide" }, ...page(() => import("@/features/discover/DiscoverPage")) },
       { path: "simulate", handle: { layout: "wide" }, ...page(() => import("@/features/simulate/SimulatePage")) },
       { path: "assistant", handle: { layout: "full" }, ...page(() => import("@/features/assistant/AssistantPage")) },

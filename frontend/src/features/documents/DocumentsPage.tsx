@@ -1,29 +1,29 @@
 import { tr, localize, useLocale } from "@/i18n";
 /**
- * Documents: what the user uploaded and what ADAPT read from it, drafts ADAPT wrote for
- * them, and actions waiting for their approval.
+ * Documents: what the user uploaded and what ADAPT read from it, and drafts ADAPT wrote for
+ * them. Actions waiting for approval live on their own page (/approvals).
  *
  * Deep links: `?upload=<kind>` opens the uploader with that kind chosen, `?draft=<id>` opens
- * a draft, `?tab=drafts|approvals` picks a tab, `?doc=<id>` opens a document.
+ * a draft, `?tab=drafts` picks a tab, `?doc=<id>` opens a document. The old
+ * `?tab=approvals` redirects to /approvals.
  */
 import { Camera, LockKeyhole, Upload } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useSearchParams } from "react-router";
+import { Navigate, useSearchParams } from "react-router";
 import { Button } from "@/components/ui/Button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Controls";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { toast } from "@/components/ui/Toast";
 import { DOCUMENT_KIND_LABEL, type DocumentKind, type UserDocument } from "@/domain/documents";
-import { useApprovals, useDocuments, useGeneratedDocuments } from "@/lib/api/hooks";
+import { useDocuments, useGeneratedDocuments } from "@/lib/api/hooks";
 import { cn } from "@/lib/cn";
-import { ApprovalsTab } from "./components/ApprovalsTab";
 import { DocumentsTab, type UploadRequest } from "./components/DocumentsTab";
 import { DraftsTab } from "./components/DraftsTab";
 import { DOCUMENT_KINDS, Uploader } from "./components/Uploader";
 import { SPLIT_MIN_WIDTH, useElementWidth, useIsTouch } from "./hooks";
 import { parseDocumentKind } from "./lib/documents";
 
-const TABS = ["documents", "drafts", "approvals"] as const;
+const TABS = ["documents", "drafts"] as const;
 type Tab = (typeof TABS)[number];
 
 interface UploaderSession {
@@ -58,7 +58,6 @@ export default function DocumentsPage() {
   const touch = useIsTouch();
   const documents = useDocuments();
   const drafts = useGeneratedDocuments();
-  const approvals = useApprovals("pending");
   // The uploader is unmounted when it closes, so a picked File never outlives the sheet.
   const [uploader, setUploader] = useState<UploaderSession | null>(null);
   const sessions = useRef(0);
@@ -133,15 +132,16 @@ export default function DocumentsPage() {
 
   const docCount = documents.data?.length;
   const draftCount = drafts.data?.filter((d) => d.status === "draft").length;
-  const approvalCount = approvals.data?.length;
   // The empty state carries its own upload buttons; don't repeat them in the header.
   const noDocumentsYet = tab === "documents" && docCount === 0;
+
+  if (requestedTab === "approvals") return <Navigate to="/approvals" replace />;
 
   return (
     <div ref={pageRef} className="flex flex-col">
       <PageHeader
         title={tr("copy.documents_687c828")}
-        description={tr("copy.your_documents_prepared_drafts_and_approvals_rev_58fe3b4")}
+        description={tr("copy.your_documents_and_prepared_drafts_review_every__c16394c")}
         actions={
           noDocumentsYet ? undefined : (
             <>
@@ -170,9 +170,6 @@ export default function DocumentsPage() {
             <span className="hidden @lg/main:inline">{tr("copy.drafted_for_you_e0c432a")}</span>
             <Count value={draftCount} attention label={localize(tr("copy.v0_to_review_fcf61fe", { v0: draftCount ?? 0 }))} />
           </TabsTrigger>
-          <TabsTrigger value="approvals">
-            {tr("copy.approvals_deb9d03")}<Count value={approvalCount} attention label={localize(tr("copy.v0_waiting_9cf4230", { v0: approvalCount ?? 0 }))} />
-          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="documents">
@@ -180,9 +177,6 @@ export default function DocumentsPage() {
         </TabsContent>
         <TabsContent value="drafts">
           <DraftsTab selectedId={draftId} onSelect={selectDraft} wide={wide} />
-        </TabsContent>
-        <TabsContent value="approvals">
-          <ApprovalsTab />
         </TabsContent>
       </Tabs>
 

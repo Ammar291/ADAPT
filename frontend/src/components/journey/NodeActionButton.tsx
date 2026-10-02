@@ -52,7 +52,7 @@ export function NodeActionButton({
       onClick={() =>
         prepare.mutate(node.key, {
           onSuccess: () =>
-            toast({ title: tr("copy.prepared_for_your_review_3471d12"), description: tr("copy.check_what_will_be_shared_then_approve_it__27a5833"), action: { label: tr("copy.review_now_c594fad"), to: "/documents?tab=approvals" } }),
+            toast({ title: tr("copy.prepared_for_your_review_3471d12"), description: tr("copy.check_what_will_be_shared_then_approve_it__27a5833"), action: { label: tr("copy.review_now_c594fad"), to: "/approvals" } }),
           onError: (error) => toast({ title: describeError(error).title, description: describeError(error).detail, tone: "error" }),
         })
       }
@@ -80,7 +80,7 @@ export function NodeActionButton({
     case "appointment":
       if (action.approvalId) {
         return (
-          <Link to="/documents?tab=approvals" className={cls}>
+          <Link to="/approvals" className={cls}>
             <ShieldCheck className="size-4" aria-hidden />
             {tr("copy.review_the_booking_ec4ef08")}</Link>
         );
@@ -91,7 +91,7 @@ export function NodeActionButton({
     case "document_submission":
       if (action.approvalId && action.status === "awaiting_approval") {
         return (
-          <Link to="/documents?tab=approvals" className={cls}>
+          <Link to="/approvals" className={cls}>
             <ShieldCheck className="size-4" aria-hidden />
             {tr("copy.review_and_approve_365a840")}</Link>
         );

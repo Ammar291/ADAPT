@@ -119,7 +119,7 @@ export function ApprovalCard({ approval, compact = false, className }: { approva
       </div>
       {pending && (
         <div className="flex flex-wrap items-center gap-2 border-t border-line px-4 py-3">
-          {compact ? <Link to="/documents?tab=approvals" className="inline-flex min-h-11 items-center rounded-lg border border-line-strong px-4 text-sm font-medium hover:bg-sunken">{tr("copy.review_request_525f174")}</Link> : <Button size="sm" loading={decide.isPending && decide.variables?.decision === "approve"} disabled={decide.isPending} onClick={() => run("approve")}>
+          {compact ? <Link to="/approvals" className="inline-flex min-h-11 items-center rounded-lg border border-line-strong px-4 text-sm font-medium hover:bg-sunken">{tr("copy.review_request_525f174")}</Link> : <Button size="sm" loading={decide.isPending && decide.variables?.decision === "approve"} disabled={decide.isPending} onClick={() => run("approve")}>
             {approval.actionKind === "communication" ? tr("copy.approve_message_7f0e737") : tr("copy.approve_action_47d93f3")}
           </Button>}
           <Button size="sm" variant="ghost" disabled={decide.isPending} onClick={() => run("reject")} icon={<RotateCcw className="size-3.5" aria-hidden />}>

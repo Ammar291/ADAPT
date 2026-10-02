@@ -28,7 +28,7 @@ const LINK: Partial<Record<ActKey, { to: string; label: string }>> = {
   plan: { to: "/agents", label: tr("copy.agent_run_f5b3ee2", { lng: "en" }) },
   research: { to: "/discover", label: tr("copy.discover_4827ea2", { lng: "en" }) },
   what_if: { to: "/simulate", label: tr("copy.what_if_9b0576a", { lng: "en" }) },
-  actions: { to: "/documents?tab=approvals", label: tr("copy.approvals_deb9d03", { lng: "en" }) },
+  actions: { to: "/approvals", label: tr("copy.approvals_deb9d03", { lng: "en" }) },
 };
 
 function StatusMark({ status, number }: { status: ActStatus; number: number }) {

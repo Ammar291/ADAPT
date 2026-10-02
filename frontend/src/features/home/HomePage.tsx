@@ -198,7 +198,7 @@ function Upcoming({ journey }: { journey: Journey }) {
           <ApprovalCard key={approval.id} approval={approval} compact />
         ))}
         {pending.length > 2 && (
-          <Link to="/documents?tab=approvals" className="text-sm font-medium text-primary-strong hover:underline">
+          <Link to="/approvals" className="text-sm font-medium text-primary-strong hover:underline">
             {localize(pending.length - 2)} {tr("copy.more_waiting_for_you_cf0f46a")}</Link>
         )}
         {appointments.map((node) => (
@@ -412,7 +412,7 @@ export default function HomePage() {
         {[{ label: tr("copy.steps_complete_e8aa9b2"), value: `${formatNumber(completion(plan).done)} / ${formatNumber(completion(plan).total)}`, icon: CheckCheck }, { label: tr("copy.need_your_input_5e888ef"), value: plan.nodes.filter((n) => n.status === "waiting_for_me").length, icon: Hand }, { label: tr("copy.days_remaining_cf27604"), value: criticalPathDays(plan) || "—", icon: Clock3 }].map(({ label, value, icon: Icon }, i) => <div key={label} className={cn("min-w-0", i > 0 && "border-s border-line ps-3 sm:ps-6")}><dt className="flex items-center gap-1.5 text-2xs text-muted"><Icon className="hidden size-3.5 sm:block" aria-hidden />{localize(label)}</dt><dd dir="ltr" className="tabular mt-1 text-xl font-medium sm:text-2xl">{localize(value)}{Icon === Clock3 && <span className="ms-1 text-2xs font-normal text-subtle">{tr("copy.est_2f3035b")}</span>}</dd></div>)}
       </dl>
 
-      {(approvals.data?.length ?? 0) > 0 && <Link to="/documents?tab=approvals" className="flex min-h-14 items-center gap-3 rounded-xl border border-dune/30 bg-dune-tint px-4 py-3"><Hand className="size-4 shrink-0 text-dune" aria-hidden /><span className="min-w-0 flex-1 text-sm"><span className="font-medium">{localize(approvals.data!.length)} {tr("copy.requests_need_your_approval_2a179bd")}</span> {tr("copy.review_what_will_be_shared_330c11c")}</span><ArrowUpRight className="size-4 shrink-0 text-dune" aria-hidden /></Link>}
+      {(approvals.data?.length ?? 0) > 0 && <Link to="/approvals" className="flex min-h-14 items-center gap-3 rounded-xl border border-dune/30 bg-dune-tint px-4 py-3"><Hand className="size-4 shrink-0 text-dune" aria-hidden /><span className="min-w-0 flex-1 text-sm"><span className="font-medium">{localize(approvals.data!.length)} {tr("copy.requests_need_your_approval_2a179bd")}</span> {tr("copy.review_what_will_be_shared_330c11c")}</span><ArrowUpRight className="size-4 shrink-0 text-dune" aria-hidden /></Link>}
 
       <div className="grid gap-8 @4xl/main:grid-cols-[minmax(0,1fr)_340px]">
         <div className="flex min-w-0 flex-col gap-8">
