@@ -6,6 +6,7 @@
 #   bash infra/demo/local-demo.sh [LIVE_PUBLIC_URL] [SEEDED_PUBLIC_URL]
 #
 # Re-run with the tunnel URLs once they exist: the API must trust the browser's Origin.
+# Microsoft dev tunnels rewrite Origin to http://localhost:<port>, so that is trusted too.
 # The OpenAI key comes from the repo .env (gitignored). The regular dev stack is untouched.
 set -euo pipefail
 cd "$(dirname "${BASH_SOURCE[0]}")/../.."
@@ -31,7 +32,7 @@ BACKEND_HOST_PORT=$3
 POSTGRES_HOST_PORT=$4
 REDIS_HOST_PORT=$5
 PUBLIC_BASE_URL=$url
-CORS_ORIGINS=$url
+CORS_ORIGINS=$url,http://localhost:$2
 DEMO_MODE=false
 VITE_DATA_MODE=live
 VITE_SHOW_DEV_BADGE=false
