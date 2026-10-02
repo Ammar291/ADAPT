@@ -1,0 +1,24 @@
+# Hosted live demo: the full stack plus Caddy for automatic HTTPS (the microphone and
+# secure cookies need it). Used by infra/demo/setup-server.sh:
+#   docker compose -f docker-compose.yml -f docker-compose.demo.yml up -d --build
+# Postgres, Redis, backend and frontend stay bound to 127.0.0.1; only Caddy is public.
+services:
+  caddy:
+    image: caddy:2-alpine
+    environment:
+      ADAPT_DOMAIN: ${ADAPT_DOMAIN:?set ADAPT_DOMAIN in .env}
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./infra/demo/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - frontend
+    restart: unless-stopped
+
+volumes:
+  caddy_data:
+  caddy_config:

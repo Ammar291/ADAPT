@@ -1,0 +1,5 @@
+# Terminates TLS (Let's Encrypt, automatic) and hands everything to the frontend nginx,
+# which serves the PWA and proxies /api to the backend. No `encode`: it can buffer SSE.
+{$ADAPT_DOMAIN} {
+	reverse_proxy frontend:8080
+}
