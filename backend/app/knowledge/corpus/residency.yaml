@@ -1,0 +1,504 @@
+# Residency & identity cluster: founder (company owner / partner) moving to Abu Dhabi.
+# Entry permit, residence permit, Emirates ID + biometrics, company establishment card.
+# All pages below were read on 2026-09-29. No fees, processing times or penalty amounts recorded.
+#
+# Note on ICP service cards: every icp.gov.ae services-details page shows
+# "Last updated on: December 11, 2024" although their content contains later rules; treat
+# those last_updated values as the page's own label, not as a reliable content date.
+#
+# Not duplicated here (the loader rejects duplicate keys/URLs): family.yaml already owns
+# icp.issuance_of_a_visa, icp.issuing_residency_permit and
+# uae.general_provisions_residence_visa. Investor-specific passages for those pages are
+# proposed for merge into family.yaml in the residency research report.
+
+sources:
+  # ---------------------------------------------------------------------------
+  - key: icp.new_identity_card_issuance
+    title: "New Identity Card Issuance"
+    url: https://icp.gov.ae/en/services-details/?serviceid=64afe3c1035448005bd52e5a
+    authority: authority.icp
+    source_type: service_page
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: null
+    last_updated: 2024-12-11
+    topics: [emirates_id, residency, uae_pass]
+    verification: fetched
+    passages:
+      - key: about
+        section: "About this service"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          This service enables the customer to obtain a new Identity Card for the first time
+      - key: resident_unified_application
+        section: "Terms and Conditions (category: Resident)"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          Completion of the service procedures through the unified application for the Emirates
+          ID and residence permit.
+      - key: resident_medical_fit
+        section: "Terms and Conditions (category: Resident)"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          Completing the service requires obtaining the necessary approvals and passing the
+          medical examination with a 'Fit' result
+      - key: resident_appointment
+        section: "Terms and Conditions (category: Resident)"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          The customer must attend the Authority’s service center on the date and time they have
+          specified in the booked appointment, in order to ensure service is provided as quickly
+          as possible.
+      - key: biometrics_step
+        section: "Service Steps"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          Individuals who have completed 15 years of age are required to complete the fingerprint
+          and signature procedures through the Authority’s service centers.
+      - key: dependency
+        section: "Dependency on Other Service"
+        excerpt: paraphrase
+        states_requirement: true
+        text: >-
+          The service card lists "Issuing Residency Permit" and "Renewal of residency permits" as
+          the services this new Identity Card service depends on.
+      - key: resident_documents_channels
+        section: "List of Required Documents for Service / Service Channels / Access Control"
+        excerpt: paraphrase
+        states_requirement: true
+        text: >-
+          For the Resident category the required documents are a passport and a personal photo,
+          and the photo must comply with ICAO standards. Channels listed are the ICP Smart
+          Services Website, the ICP Smart App and ICP customer happiness centres (including
+          centres named Khalifa, Al Jazira, Al Ain and the Residency and Foreigners Affairs
+          Department – Al Dhafra). The service requires login using UAE Pass.
+      - key: card_delivery
+        section: "Service Steps"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          The new Identity Card is delivered through the authorized courier for the standard
+          service, and collected from the Authority’s centers for the urgent service.
+
+  # ---------------------------------------------------------------------------
+  - key: icp.issuing_establishment_card
+    title: "Issuing an Establishment Card"
+    url: https://icp.gov.ae/en/services-details/?serviceid=64afe3c1035448005bd52e6d
+    authority: authority.icp
+    source_type: service_page
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: null
+    last_updated: 2024-12-11
+    topics: [company_formation, residency, uae_pass]
+    verification: fetched
+    passages:
+      - key: about
+        section: "About this service"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          This service allows the issuance of the electronic establishment card, which includes
+          the registered establishment data such as trade name, license number, partners, and
+          type of activity.
+      - key: trade_licence
+        section: "Terms and Conditions (category: Private sector and Free zone companies)"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          A valid commercial license is required to obtain the service.
+      - key: signatory_eid_or_unified_number
+        section: "Terms and Conditions (category: Private sector and Free zone companies)"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          A valid Emirates ID card or a Unified Number (for visitors who have not yet been issued
+          an Emirates ID) must be provided for one of the authorized signatories, as the
+          establishment card issuance process cannot begin without it.
+      - key: authorized_service_providers
+        section: "Terms and Conditions (category: Private sector and Free zone companies)"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          It is required that the application for the initial approval and the establishment card
+          issuance be submitted exclusively through the authorized service providers.
+      - key: free_zone_companies
+        section: "Terms and Conditions (category: Private sector and Free zone companies)"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          For companies operating under a Free Zone Authority, the service request must be
+          submitted through the respective Free Zone Authority to which the establishment belongs.
+      - key: documents
+        section: "List of Required Documents for Service (category: Private sector and Free zone companies)"
+        excerpt: paraphrase
+        states_requirement: true
+        text: >-
+          Documents listed for private sector and free zone companies: the trade licence (for a
+          Limited Liability Company, a copy of the licence indicating the relevant stakeholders),
+          a signature authorization letter, the Memorandum of Association in case of partnership,
+          and any requirements issued by the local government authorities depending on the
+          emirate in which the establishment is registered.
+      - key: channels_uae_pass_result
+        section: "Service Steps / Service Channels / Access Control"
+        excerpt: paraphrase
+        states_requirement: true
+        text: >-
+          The responsible entity is the Federal Authority for Identity, Citizenship, Customs and
+          Port Security. Channels listed are the ICP Smart Services Website and the ICP Smart App,
+          and the service requires login using UAE Pass. The final step is approval of the
+          application and issuance of the electronic establishment card in the system.
+
+  # ---------------------------------------------------------------------------
+  - key: icp.faq
+    title: "FAQ"
+    url: https://icp.gov.ae/en/faq/
+    authority: authority.icp
+    source_type: faq
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: null
+    last_updated: 2025-05-30
+    topics: [residency, emirates_id, uae_pass]
+    verification: fetched
+    passages:
+      - key: appointment_biometrics
+        section: "Is an appointment required to visit the center?"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          Yes, an appointment is required in advance for certain cases in which the customer needs
+          to visit the centre (biometric/fingerprint procedures). However, simple inquiries and
+          basic follow-ups do not require a prior appointment.
+      - key: service_channels
+        section: "How can I apply for the Authority’s services?"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          Customers can apply for the Authority’s services through smart channels such as the
+          website and the smart application UAEICP, as well as through Customer Happiness Centres
+          and accredited typing offices. Excluded from this are the General Directorates of
+          Identity and Foreigners Affairs, as their role is limited to providing inquiry services
+          only.
+      - key: visa_purposes
+        section: "What is the visa issuance service ?"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          It is a service that allows the issuance of a visa permit to enter the country for
+          various purposes such as tourism, visiting a relative, business assignment, study,
+          medical treatment, exploring job opportunities, establishing a business, and more
+      - key: visa_channels
+        section: "What are the available channels for applying for the service?"
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          In the visa-issuance FAQ group, the channels for applying are the smart application, the
+          Authority's official website, and authorized typing and tourism offices.
+      - key: visa_general_documents
+        section: "What are the general required documents?"
+        excerpt: paraphrase
+        states_requirement: true
+        text: >-
+          General documents for a visa: a coloured personal photo with a white background, a copy
+          of the passport valid for more than 6 months, a return flight ticket in some cases,
+          valid health insurance, and additional documents depending on the type of visa.
+      - key: residence_permit_duration
+        section: "What is the available duration for the residence permit?"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          Residence permits are granted for different periods depending on the type of residence,
+          namely: one year, two years, three years, and may extend to five years or more for some
+          categories (such as investors or residence holders).
+      - key: digital_id
+        section: "How can I obtain a copy of the electronic ID?"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          After the ID card is issued, the customer can view the electronic version in the “ICP
+          UAE” application. The digital ID can also be used through the “UAE Pass” application
+          issued by the Telecommunications and Digital Government Regulatory Authority.
+
+  # ---------------------------------------------------------------------------
+  - key: icp.chc_khalifa_city
+    title: "Customer Happiness Center – Khalifa"
+    url: https://icp.gov.ae/en/ica_chc/khalifa-city-happiness-center/
+    authority: authority.icp
+    source_type: guidance_page
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: null
+    last_updated: 2026-06-02
+    topics: [emirates_id]
+    verification: fetched
+    passages:
+      - key: about
+        section: "About the center"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          Khalifa Customer Happiness Center is one of the main centers affiliated with the Federal
+          Authority for Identity, Citizenship, Customs, and Port Security. It specializes in
+          providing all services related to the UAE ID card.
+      - key: services_offered
+        section: "Services offered at the center"
+        excerpt: paraphrase
+        states_requirement: true
+        text: >-
+          Services listed at the centre: issuance and renewal of the ID card (each marked as
+          available exclusively to UAE citizens and GCC citizens), replacement of the ID card
+          (available to all categories), collection of printed ID cards (urgent service),
+          fingerprint capture, and customer service.
+      - key: location
+        section: "Address"
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          The centre is located in Abu Dhabi, Khalifa City A, next to Al Forsan Sports Building,
+          and has separate male and female service departments.
+
+  # ---------------------------------------------------------------------------
+  - key: uae.emirates_id
+    title: "Emirates ID"
+    url: https://u.ae/en/information-and-services/visa-and-emirates-id/emirates-id
+    authority: authority.uae_government
+    source_type: guidance_page
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: null
+    last_updated: 2026-02-17
+    topics: [emirates_id]
+    verification: fetched
+    passages:
+      - key: what_is
+        section: "What is Emirates ID?"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          Emirates ID is an identity card issued by Federal Authority for Identity, Citizenship,
+          Customs and Ports Security (ICP). It is a legal requirement for all UAE citizens and
+          residents to apply for one and carry it with them at all times.
+      - key: uses
+        section: "What is Emirates ID?"
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          The Emirates ID is used to get government services, to vote in Federal National Council
+          elections, as a travel document for UAE citizens within the GCC, and as a document to
+          pass through immigration gates at the UAE's airports.
+      - key: getting_emirates_id
+        section: "Getting Emirates ID"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          You can apply for a new Emirates ID card through the website of ICP or through an
+          accredited typing centre. You might need to visit one of ICP's service centres to
+          provide your biometric details.
+      - key: urgent_service_eligibility
+        section: "Emirates ID within 24 hours"
+        excerpt: paraphrase
+        states_requirement: true
+        text: >-
+          ICP's urgent 24-hour Emirates ID service is for UAE nationals and GCC nationals residing
+          in the UAE. Expatriate residents other than GCC nationals are entitled to the urgent
+          service only when replacing their identity card; the service is obtained by visiting an
+          ICP customer happiness centre.
+      - key: cancellation_linked_to_residence
+        section: "Cancelling Emirates ID"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          Cancellation of the Emirates ID is linked to the cancellation of the residence visa. When
+          a residence visa is cancelled, the Emirates ID is cancelled automatically as part of the
+          process.
+
+  # ---------------------------------------------------------------------------
+  - key: uae.recruiting_on_the_mainland
+    title: "Recruiting on the mainland"
+    url: https://u.ae/en/information-and-services/business/Doing-business/doing-business-on-the-mainland/recruiting-on-the-mainland-
+    authority: authority.uae_government
+    source_type: guidance_page
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: null
+    last_updated: 2026-09-28
+    topics: [company_formation, residency, emirates_id, medical_fitness]
+    verification: fetched
+    passages:
+      - key: licence_then_company_file
+        section: "Key provisions for recruiting foreign employees"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          After establishing a business and obtaining the required business licence, whether
+          commercial, industrial, or professional, the employer must register their workforce
+          under the company’s file so employees can legally work and reside in the UAE in
+          accordance with labour laws and the regulations of the General Directorate of Residency
+          and Foreigners Affairs (GDRFA).
+      - key: mohre_establishment_card
+        section: "Steps for recruiting an employee (Stage 1)"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          First, the employer must apply to MoHRE to officially register the establishment by
+          opening a file and obtaining an establishment card and number linked to the business
+          licence, enabling the company to operate and recruit employees.
+      - key: immigration_establishment_card
+        section: "Steps for recruiting an employee (Stage 2)"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          After receiving the ministry’s initial approval, the employer must also apply to open a
+          company file with the General Directorate of Residency and Foreigners Affairs (GDRFA).
+          Once approved and the establishment card is issued, the company will have an official
+          file with the Directorate, allowing it to apply for and obtain work entry permits for new
+          employees, which are also valid for two months.
+      - key: after_entry_steps
+        section: "Steps for recruiting an employee (Stage 2)"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          During the two-month period, the employer must instruct the employee to complete the
+          medical fitness test and apply for an Emirates ID through the Federal Authority for
+          Identity, Citizenship, Customs and Port Security, as well as obtain the labour card from
+          the Ministry of Human Resources and Emiratisation.
+      - key: work_bundle
+        section: "The Work Bundle platform"
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          Employers can complete recruitment through the unified "Work Bundle" platform, one
+          integrated application covering issuing and renewing work permits, residency procedures,
+          Emirates ID issuance, medical fitness examinations and employment contract procedures.
+
+  # ---------------------------------------------------------------------------
+  - key: adro.types_of_visas
+    title: "Visas"
+    url: https://adro.gov.ae/Visas/Types-of-Visas
+    authority: authority.adro
+    source_type: guidance_page
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: null
+    last_updated: null
+    topics: [residency, medical_fitness, emirates_id]
+    verification: fetched
+    passages:
+      - key: entry_permit_60_days
+        section: "Entry Permit"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          Most entry permits are valid for two months (60 days) but the duration depends on its
+          type. For example, entry permits for transit allow you to stay in the country for only
+          four days, while entry permits for employment allow you to stay in the country for 60
+          days during which you must obtain a Residence Visa or apply for an extension.
+      - key: residence_visa_issued_inside
+        section: "Residence Visa"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          A Residence Visa is issued to people who are already in the country after entering the
+          UAE on an entry or Tourist Visa. It allows you to live and work in Abu Dhabi legally and
+          can last up to three years depending on the sponsor.
+      - key: residence_visa_types
+        section: "Residence Visa"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          Long term residence visas are available for five or 10 years subject to certain
+          conditions. There are several types of residence visas, which includes: business,
+          golden, property owner, retirement, remote work and student residence visas.
+      - key: residence_visa_requirements
+        section: "Requirements for a Residence Visa"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          In order to obtain a Residence Visa, you must be at least 18 years old, have a sponsor
+          and undergo a medical test to prove that you are medically fit. The UAE takes pride in
+          maintaining a safe society, so aspiring residents must also pass a security check.
+          Finally, to complete the journey towards becoming a resident of Abu Dhabi, you must
+          apply for an Emirates ID card issued by the Federal Authority for Identity and
+          Citizenship.
+
+  # ---------------------------------------------------------------------------
+  - key: icp.green_residence_guide
+    title: "Green Residence Guide"
+    url: https://icp.gov.ae/en/services/uae-green-residency/
+    authority: authority.icp
+    source_type: guidance_page
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: null
+    last_updated: 2026-09-12
+    topics: [residency]
+    verification: fetched
+    passages:
+      - key: what_is
+        section: "What is Green Residence?"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          Green Residence is one of the UAE’s long-term residence categories. It is granted for a
+          period of five years, with the option of renewal, and enables holders to live and work
+          in the UAE without the need for a sponsor.
+      - key: key_benefits
+        section: "Key Benefits"
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          Listed benefits: a renewable five-year residence; no sponsor required within the UAE;
+          the ability to sponsor family members, including the spouse and children, in accordance
+          with the approved requirements; and specified grace periods on expiry of the residence.
+      - key: investors_business_partners
+        section: "Target Categories — Investors and Business Partners"
+        excerpt: paraphrase
+        states_requirement: true
+        text: >-
+          Key requirements for the Investors and Business Partners category: provide proof of
+          investment or contribution to a business venture within the UAE, and obtain the
+          necessary licences and approvals from the relevant authorities.
+
+  # ---------------------------------------------------------------------------
+  - key: uae.where_to_apply_for_entry_permits
+    title: "Check where to apply for a visa"
+    url: https://u.ae/en/information-and-services/visa-and-emirates-id/Apply-and-track-visa/where-to-apply-for-entry-permits-or-visas
+    authority: authority.uae_government
+    source_type: guidance_page
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: null
+    last_updated: 2026-07-16
+    topics: [residency]
+    verification: fetched
+    passages:
+      - key: channels_summary
+        section: "Channels to apply for a visa"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          You can apply for entry permits through the websites of ICP and GDRFA, through the apps:
+          ICP App and Dubai Now, and typing centres.
+      - key: online_channels
+        section: "Online channels"
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          Online channels for entry permits are the ICP eChannels portal (linked to
+          smartservices.icp.gov.ae), the UAEICP app on Google Play and the App Store, and the
+          website of GDRFA – Dubai.
+      - key: typing_centres
+        section: "Services centres"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          Offline visa application can be done through typing centres registered by ICP or typing
+          centres of GDRFA, where visa application is typed and processed through the GDRFA of the
+          respective emirate. Upon approval, the sponsor will receive a message about the approval
+          and the original entry permit.

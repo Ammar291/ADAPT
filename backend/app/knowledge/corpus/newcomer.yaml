@@ -1,0 +1,593 @@
+# Newcomer cluster: UAE PASS / service authentication, the TAMM platform, the Abu Dhabi
+# Residents Office (ADRO) and cultural guidance for newcomers.
+# Every URL below was loaded on retrieved_at; `quote` passages are verbatim (whitespace
+# normalised), `paraphrase` passages stay within what the page says. No fees, fines,
+# processing times or penalty amounts are recorded.
+
+sources:
+  # --- UAE PASS -------------------------------------------------------------------
+  - key: uae.uae_pass_app
+    title: "The UAE Pass"
+    url: https://u.ae/en/about-the-uae/digital-uae/digital-transformation/platforms-and-apps/the-uae-pass-app
+    authority: authority.uae_government
+    source_type: guidance_page
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: null
+    last_updated: 2024-12-30
+    topics: [uae_pass, newcomer]
+    verification: fetched
+    passages:
+      - key: what_is_uae_pass
+        section: "What is UAE Pass?"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          The UAE Pass app is the first national digital identity solution that enables you to
+          identify yourself to service providers in all emirates through a smartphone-based
+          authentication. You can also sign documents digitally with a high level of security.
+      - key: single_digital_identity
+        section: "What is UAE Pass?"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          By downloading the app and creating an account on UAE Pass, you will have a single
+          digital identity across both, government and private sector entities.
+      - key: operators
+        section: "What is UAE Pass?"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          Launched at Gitex Exhibition 2018, the app is a collaboration between Digital Dubai,
+          Telecommunications and Digital Government Regulatory Authority (TDRA) and Department of
+          Government Enablement
+      - key: facial_id_registration
+        section: "Features of the UAE Pass app"
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          The UAE Pass app registers users with biometric face recognition (facial ID), so a
+          verified account can be created without visiting government service centres for
+          verification. Before facial ID, registrants had to visit government service centres to
+          complete verification.
+      - key: digital_signature
+        section: "Features of the UAE Pass app"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          The UAE Pass has a feature to sign documents digitally. You can either upload and then
+          sign a document on the app or on the UAE Pass website, or sign a virtual document to
+          complete an official transaction. And, if someone shares a signed document with you, you
+          can instantly verify it on the app or even on the UAE Pass website.
+      - key: digital_vault
+        section: "Features of the UAE Pass app"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          You can request for a digital version of your official documents and use them securely,
+          to get services from service providers when needed. The digital vault is powered by
+          blockchain technology, providing you with optimal traceability and security.
+      - key: single_login_and_profile
+        section: "Features of the UAE Pass app"
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          UAE Pass also lets users sign in to services through a single mobile-based login, update
+          their profile information and update their address records.
+      - key: private_sector_use
+        section: "Integration with the private sector"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          The UAE Pass app is required not only to access government services, but also to access
+          services provided by the semi-government and private sectors. The app is used by the
+          banking, money exchange and telecommunication services.
+
+  - key: tdra.uae_pass
+    title: "DGOV - UAE PASS"
+    url: https://dgov.tdra.gov.ae/services/uae-pass
+    authority: authority.tdra
+    source_type: service_page
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: null
+    last_updated: null
+    topics: [uae_pass, emirates_id, newcomer]
+    verification: fetched
+    passages:
+      - key: overview
+        section: "Secure National Digital Identity"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          UAE Pass enables immediate and secure login for citizens, residents and visitors in the
+          UAE, allowing access to over 15000 services from government, semi-government, and private
+          sector entities through a single account.
+      - key: eligibility_citizens_residents
+        section: "Register and Verify"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          For UAE citizens and residents, you must have a valid Emirates ID and an active UAE
+          mobile number.
+      - key: how_to_register
+        section: "Register and Verify"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          Register using your Emirates ID number, verify your identity using facial recognition and
+          set a security pin. Or you can visit the nearest UAE Pass kiosk with your Emirates ID.
+      - key: visitors_without_emirates_id
+        section: "Don't have an Emirates ID?"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          Visitors can use the app by authenticating their information through other official
+          identity documents, including passports, or if you are a Gulf Cooperation Council (GCC)
+          citizen or resident, National ID can be used to create an account.
+      - key: verify_account
+        section: "Frequently Asked Questions"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          Download the UAE Pass application and register for an account. Verify your account (only
+          for Emirates ID card holders) using face verification on the mobile app or visit the
+          nearest UAE Pass kiosk with your Emirates ID.
+      - key: upgrade_basic_account
+        section: "Frequently Asked Questions"
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          A basic UAE Pass account can be verified through the app's face verification feature, by
+          visiting the nearest UAE Pass point in person (the page's wording is "visit the nearest
+          UAE Pass"), or by upgrading with an existing verified SmartPass or DubaiID account.
+      - key: apply_on_provider_channel
+        section: "Frequently Asked Questions"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          You cannot apply for services from the UAE Pass mobile application; instead, you must
+          visit the service provider's website, app portal or application and log in using UAE Pass
+          to access their services.
+      - key: sign_document_steps
+        section: "How to use UAE Pass"
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          Once you have downloaded UAE Pass and created an account, you can sign government
+          documents digitally: open the app, tap 'Sign Document', upload the document, sign it with
+          your phone's touchscreen and download the signed document as a PDF. The same account also
+          lets you sign in to government websites and services through a single digital identity.
+
+  # --- TAMM -----------------------------------------------------------------------
+  - key: uae.abu_dhabi_digital
+    title: "Abu Dhabi Digital"
+    url: https://u.ae/en/about-the-uae/digital-uae/digital-cities/smart-abu-dhabi
+    authority: authority.uae_government
+    source_type: guidance_page
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: null
+    last_updated: 2026-08-24
+    topics: [uae_pass, newcomer]
+    verification: fetched
+    passages:
+      - key: tamm_one_stop_shop
+        section: "TAMM-Abu Dhabi Government Services"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          TAMM is a one stop shop portal from the Abu Dhabi Government. The portal offers all Abu
+          Dhabi Government services and information which is aimed to serve the UAE’s citizens,
+          residents, visitors and investors by providing them quick access to information without
+          the need to visit government entities or their websites.
+      - key: tamm_journeys
+        section: "TAMM-Abu Dhabi Government Services"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          In addition, TAMM adopts a vision which shifts the service delivery model towards a
+          journey-focused approach that understands the needs of the customers and provides them
+          with personalised solutions and journeys. These journeys are designed to help people find
+          houses, buy and drive cars, start a business, find and get healthcare and other services.
+      - key: tamm_channels
+        section: "TAMM-Abu Dhabi Government Services"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          You can access services through the TAMM website or through the TAMM application
+          available on iTunes and Google Play. You can also visit TAMM centres and branches
+          throughout the emirate of Abu Dhabi.
+      - key: my_locker_uae_pass
+        section: "My Locker"
+        excerpt: paraphrase
+        states_requirement: true
+        text: >-
+          'My Locker' is a TAMM digital tool where government service applicants store key personal
+          information and official documents digitally, update their information, manage service
+          subscriptions, request and view updates on their documents and pay instantly through TAMM.
+          Users sign in with UAE Pass to access 'My Locker'.
+      - key: abu_dhabi_pay
+        section: "Abu Dhabi Pay"
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          Abu Dhabi Pay is a digital payment platform within the Abu Dhabi government services
+          ecosystem, intended to provide a secure, standardised way to pay online for all Abu Dhabi
+          government services through a unified channel.
+
+  - key: tamm.login
+    title: "TAMM - Login Page"
+    url: https://www.tamm.abudhabi/en/login
+    authority: authority.abu_dhabi_government
+    source_type: portal_page
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: null
+    last_updated: null
+    topics: [uae_pass]
+    verification: search_snippet
+    passages:
+      - key: uae_pass_sign_in
+        section: null
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          TAMM's login page offers signing in or signing up with UAE PASS and links to information
+          about UAE PASS, which it describes as a single trusted digital identity solution for
+          service providers in the UAE.
+
+  # --- Abu Dhabi Residents Office -------------------------------------------------
+  - key: adro.about
+    title: "About the Abu Dhabi Residents Office"
+    url: https://adro.gov.ae/About-Abu-Dhabi-Residents-Office
+    authority: authority.adro
+    source_type: guidance_page
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: null
+    last_updated: null
+    topics: [newcomer]
+    verification: fetched
+    passages:
+      - key: mandate
+        section: "Helping you to call Abu Dhabi home"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          The Abu Dhabi Residents Office is a division of the Abu Dhabi Department of Economic
+          Development (ADDED), established to support the Emirate's thriving international
+          community. The office is dedicated to helping new residents settle into Abu Dhabi and
+          supporting the integration and harmonisation of the international community with the
+          local culture and society.
+      - key: services
+        section: "Helping you to call Abu Dhabi home"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          This promise drives the office’s mandate to provide smart services for visa applications
+          and enquiries, guides for residents, as well as active research and engagement programmes
+          that promote life in the Emirate.
+      - key: advocacy
+        section: "Helping you to call Abu Dhabi home"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          The office also advocates for international residents and actively contribute to shaping
+          policies that improve the quality of life for everyone in Abu Dhabi, now and in the
+          future.
+      - key: golden_visa_faq
+        section: "Frequently Asked Questions"
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          The ADRO website points residents with questions about the Golden Visa to its FAQ.
+
+  - key: adro.settling_into_abu_dhabi
+    title: "Settling into Abu Dhabi"
+    url: https://www.adro.gov.ae/Move-to-abudhabi/Settling-into-AD
+    authority: authority.adro
+    source_type: guidance_page
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: null
+    last_updated: null
+    topics: [newcomer, housing, tenancy, health_insurance, residency]
+    verification: fetched
+    passages:
+      - key: health_insurance_required
+        section: "Health Insurance"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          As you are moving to Abu Dhabi, you must have health insurance because it is now a
+          requirement for all residents. This means that if you don't have an insurance plan in
+          place, you won't be able to obtain a resident visa. It is the responsibility of employers
+          and sponsors to provide health insurance for their employees and, typically, their
+          families.
+      - key: lease_documents
+        section: "Essential Utility Services"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          A valid residency visa, a copy of your passport, and an Emirates ID are required to sign
+          a lease. Landlords in Abu Dhabi are required to enter lease agreements into the Tawtheeq
+          system.
+      - key: utilities_after_tawtheeq
+        section: "Essential Utility Services"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          Abu Dhabi Distribution Company (ADDC) is in charge of delivering public utility services
+          in Abu Dhabi and its surrounding territories. Therefore, you must create an account with
+          the proper service provider in order to set up water and electricity services in your
+          home. After entering their rental agreement into the Tawtheeq system, tenants can access
+          services.
+      - key: residence_visa_overview
+        section: "Visa Requirements"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          People who have already arrived in the UAE on an entry or tourist visa are given a
+          residence visa. Depending on the sponsor, it may be valid for one to three years and
+          entitles you to live and work in Abu Dhabi. Subject to certain requirements, long-term
+          resident permits are available for up to ten years.
+      - key: telecom_providers
+        section: "Telecommunications"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          There are currently two internet providers in Abu Dhabi; Etisalat and du.
+
+  # --- Cultural guidance ----------------------------------------------------------
+  - key: uae.ramadan
+    title: "Ramadan"
+    url: https://u.ae/en/information-and-services/public-holidays-and-religious-affairs/ramadan
+    authority: authority.uae_government
+    source_type: guidance_page
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: null
+    last_updated: 2026-09-28
+    topics: [culture, newcomer]
+    verification: fetched
+    passages:
+      - key: what_is_ramadan
+        section: "What is Ramadan?"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          Ramadan is the month of piety, charity and blessings. During Ramadan, capable Muslims are
+          required to abstain from eating and drinking from dawn to dusk. Such fasting is one of
+          the five pillars of Islam.
+      - key: moon_sighting
+        section: "What is Ramadan?"
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          Ramadan begins at the first sighting of the new crescent moon and lasts 29 or 30 days, so
+          it arrives about 11 days earlier each Gregorian year. The UAE follows the official
+          announcement of the moon-sighting committee under the UAE Council for Fatwa.
+      - key: greeting
+        section: "What is Ramadan?"
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          During Ramadan people greet each other by saying 'Ramadan Kareem' or 'Ramadan Mubarak',
+          meaning 'Blessed Ramadan'.
+      - key: non_muslims_not_required_to_fast
+        section: "Changes during Ramadan"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          Non-Muslims are not required to fast during Ramadan. However, they can enjoy the unique
+          spiritual and social atmosphere that fills the country during this month, as cities
+          become especially lively after sunset.
+      - key: dining_for_non_muslims
+        section: "Changes during Ramadan"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          Non-Muslims can find dining options in shopping malls, where restaurants and food courts
+          provide designated areas away from those who are fasting. Some restaurants may adjust
+          their hours or close during the day, but they open fully at Iftar.
+      - key: attractions_open
+        section: "Changes during Ramadan"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          Amusement parks, restaurants, cultural and tourist sites remain open throughout the day,
+          allowing visitors and residents to enjoy their usual activities.
+      - key: reduced_working_hours
+        section: "Changes during Ramadan"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          According to UAE labor law, working hours are reduced by two hours per day. This decision
+          applies to Muslim and non-Muslim employees, without deducting regular wages.
+
+  - key: uae.public_holidays
+    title: "Public holidays"
+    url: https://u.ae/en/information-and-services/public-holidays-and-religious-affairs/public-holidays
+    authority: authority.uae_government
+    source_type: guidance_page
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: null
+    last_updated: 2026-07-02
+    topics: [culture, newcomer]
+    verification: fetched
+    passages:
+      - key: applies_to_both_sectors
+        section: "List of holidays"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          Following is the list of public holidays applicable to both, public and private sectors.
+      - key: holiday_list
+        section: "List of holidays"
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          The listed UAE public holidays are: Gregorian New Year (1 January); Eid Al Fitr (1 to 3
+          Shawwal); Arafah Day (9 Thu Al Hijjah); Eid Al Adha (10 to 12 Thu Al Hijjah); Hijri New
+          Year (1 Muharram); Prophet Mohammed's birthday (12 Rabi' Awwal); and National Day (2 and
+          3 December).
+      - key: islamic_holidays_moon_sighting
+        section: "List of holidays"
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          Islamic holidays are determined according to moon sighting. If Ramadan lasts 30 days,
+          day 30 is treated as an official holiday for Eid Al Fitr.
+      - key: no_transfer_rule
+        section: "List of holidays"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          Note: According to Article 3 of Cabinet Resolution No. 27 of 2024 Concerning the Public
+          Holidays in the State, the Public Holiday cannot be transferred to another day in the
+          event it coincides with another public holiday or falls on the weekend.
+      - key: national_day
+        section: "Spirit of the Union"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          The UAE’s National Day falls on 2 December and marks its formal nationalisation and the
+          start of the federal unification of the emirates in 1971.
+
+  - key: uae.working_hours_public_sector
+    title: "Working hours in the public sector"
+    url: https://u.ae/en/information-and-services/jobs/Sector-of-employment/working-in-uae-government-sector/working-hours-in-the-public-sector
+    authority: authority.uae_government
+    source_type: guidance_page
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: 2022-01-01
+    last_updated: 2026-08-12
+    topics: [culture, newcomer]
+    verification: fetched
+    passages:
+      - key: federal_work_week
+        section: "In federal government entities"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          The UAE federal government has adopted a four and a half-day working week. Hence,
+          employees work eight hours, from 7.30 am to 3.30 pm from Monday to Thursday, and from
+          7.30 am to 12.00 pm on Fridays.
+      - key: federal_weekend
+        section: "In federal government entities"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          Saturdays and Sundays are the official weekends for the federal government sector.
+      - key: effective_date
+        section: "In federal government entities"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          Note: The above work week system was announced in December 2021 and became effective from
+          1 January 2022.
+      - key: abu_dhabi_local_government
+        section: "In local government entities"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          Abu Dhabi, Dubai, Ajman, Umm Al Quwain, Ras Al Khaimah and Fujairah Governments have
+          adopted a similar work week system.
+
+  - key: uae.uae_heritage
+    title: "The UAE's Heritage"
+    url: https://u.ae/en/about-the-uae/culture/arab-and-islamic-heritage
+    authority: authority.uae_government
+    source_type: guidance_page
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: null
+    last_updated: 2024-12-30
+    topics: [culture, newcomer]
+    verification: fetched
+    passages:
+      - key: heritage_features
+        section: "Features"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          Some of the distinct features of the UAE's heritage are hospitality, tolerance, family
+          cohesion and solidarity among members of the society along with honour and pride
+          associated with being part of this heritage.
+      - key: mosques_open_to_non_muslims
+        section: "Constructing and maintaining mosques"
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          Sheikh Zayed Grand Mosque in Abu Dhabi, together with Al Bidya Mosque in Fujairah and
+          Jumeirah Mosque in Dubai, is open for visits by non-Muslims.
+      - key: mosque_dress_code
+        section: "Tips for non-Muslims to enter a mosque"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          A non-Muslim wishing to enter the mosque must dress conservatively. His/her clothes should
+          fully cover the shoulders, arms and knees. In addition, women would need to cover their
+          heads.
+      - key: al_ain_unesco
+        section: "Validation of the UAE's heritage"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          The city of Al Ain in the emirate of Abu Dhabi is a UNESCO World Heritage site.
+
+  - key: ad_police.tourist_guide_brochure
+    title: "Abu Dhabi Police Publishes a Guiding Brochure for Tourists"
+    url: https://www.adpolice.gov.ae/en/Media-Center/News/2021/06/30/Abu-Dhabi-Police-Publishes-a-Guiding-Brochure-for-Tourists
+    authority: authority.ad_police
+    source_type: news
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: null
+    last_updated: null
+    topics: [culture, newcomer]
+    verification: fetched
+    passages:
+      - key: brochure_purpose
+        section: null
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          Abu Dhabi Police published a Tourism Guide for tourists. The publication is an awareness
+          Brochure, in 12 different languages, explaining the guidelines of tourism ethics and
+          morals in the Emirate of Abu Dhabi.
+      - key: public_decency_and_dress
+        section: null
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          the brochure includes 14 guidelines for tourists, such as avoiding possession or use of
+          illegal drugs or psychotropic substances, avoiding indecent behavior, contrary to public
+          taste in public places (kissing, cross-dressing, etc..) as well as the need to wear
+          decent clothing.
+      - key: alcohol_and_id
+        section: null
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          The rules also include prohibiting alcohol consumption outside licensed places, driving
+          under the influence of alcohol. They also stress the need to carry proof of identity at
+          all times, and show it to security officers upon request, to provide security for
+          tourists
+      - key: restricted_areas_photography
+        section: null
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          it is strictly prohibited to enter or photograph restricted areas; prostitution, begging
+          and vagrancy are punishable by law, and are contrary to the local values and traditions.
+      - key: tourism_police_contact
+        section: null
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          Tourists needing help can call the Operations Room on 999 or contact the Abu Dhabi Police
+          Tourism Police Department toll free via the AMAN service on 8002626.

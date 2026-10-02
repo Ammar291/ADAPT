@@ -1,0 +1,129 @@
+# ADAPT — full stack. `docker compose up --build` starts everything:
+#   postgres (pgvector) -> migrate (alembic + governance seed) -> backend + worker -> frontend
+# Configuration comes from `.env` (copy `.env.example`). Everything has a working default,
+# and without OPENAI_API_KEY every AI capability runs on deterministic demo adapters.
+name: adapt
+
+x-backend-environment: &backend-environment
+  ADAPT_ENV: ${ADAPT_ENV:-development}
+  DATABASE_URL: postgresql+psycopg://${APP_DB_USER:-adapt_app}:${APP_DB_PASSWORD:-adapt_app}@postgres:5432/${POSTGRES_DB:-adapt}
+  MIGRATION_DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-adapt}:${POSTGRES_PASSWORD:-adapt}@postgres:5432/${POSTGRES_DB:-adapt}
+  APP_DB_USER: ${APP_DB_USER:-adapt_app}
+  REDIS_URL: redis://redis:6379/0
+  DOCUMENT_STORAGE_DIR: /data/documents
+  PUBLIC_BASE_URL: ${PUBLIC_BASE_URL:-http://localhost:8080}
+
+x-backend-service: &backend-service
+  build:
+    context: ./backend
+  image: adapt-backend:local
+  env_file:
+    - path: .env
+      required: false
+  environment: *backend-environment
+  volumes:
+    - documents:/data/documents
+  restart: unless-stopped
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg17
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-adapt}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-adapt}
+      POSTGRES_DB: ${POSTGRES_DB:-adapt}
+      APP_DB_USER: ${APP_DB_USER:-adapt_app}
+      APP_DB_PASSWORD: ${APP_DB_PASSWORD:-adapt_app}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./infra/postgres/init:/docker-entrypoint-initdb.d:ro
+    ports:
+      - "127.0.0.1:${POSTGRES_HOST_PORT:-55432}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+    restart: unless-stopped
+
+  redis:
+    image: redis:7.4-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redisdata:/data
+    ports:
+      - "127.0.0.1:${REDIS_HOST_PORT:-56379}:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+    restart: unless-stopped
+
+  migrate:
+    <<: *backend-service
+    command: ["sh", "-c", "alembic upgrade head && python -m app.seed"]
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: "no"
+
+  backend:
+    <<: *backend-service
+    command:
+      - uvicorn
+      - app.main:app
+      - --host=0.0.0.0
+      - --port=8000
+      - --proxy-headers
+      - --forwarded-allow-ips=*
+    ports:
+      - "127.0.0.1:${BACKEND_HOST_PORT:-8100}:8000"
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/health', timeout=2)",
+        ]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+
+  worker:
+    <<: *backend-service
+    command: ["arq", "app.workers.settings.WorkerSettings"]
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      redis:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+      args:
+        DEMO_MODE: ${DEMO_MODE:-false}
+        # Developer-only demo-adapter badge. Set to false for any end-user deployment.
+        VITE_SHOW_DEV_BADGE: ${VITE_SHOW_DEV_BADGE:-true}
+        # auto: API where shipped, typed mocks elsewhere. Use `live` for any real deployment.
+        VITE_DATA_MODE: ${VITE_DATA_MODE:-auto}
+    image: adapt-frontend:local
+    ports:
+      - "127.0.0.1:${FRONTEND_HOST_PORT:-8080}:8080"
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  pgdata:
+  redisdata:
+  documents:

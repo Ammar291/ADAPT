@@ -1,0 +1,249 @@
+/*
+ * Voice surface. The orb borrows from water rings on the Gulf: a solid teal
+ * disc whose rings answer live audio (--in: the person's microphone, --out: ADAPT's voice,
+ * both 0–1, written every animation frame). A single orbiting point means ADAPT is working.
+ * Dune stays out of the orb: across ADAPT it marks information from the web.
+ */
+
+/* --- orb ---------------------------------------------------------------------------- */
+
+.voice-orb {
+  --in: 0;
+  --out: 0;
+  --level: var(--in);
+  --size: clamp(6rem, min(34vw, 18vh), 9.5rem);
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: calc(var(--size) * 1.55);
+  height: calc(var(--size) * 1.55);
+  -webkit-tap-highlight-color: transparent;
+}
+.voice-orb[data-phase="speaking"] {
+  --level: var(--out);
+}
+
+.voice-orb-ring {
+  position: absolute;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 9999px;
+  border: 1.5px solid var(--teal);
+  opacity: 0;
+  transform: scale(1);
+  transition:
+    opacity 240ms var(--ease-standard),
+    border-color 240ms var(--ease-standard);
+  pointer-events: none;
+}
+.voice-orb-ring[data-ring="1"] {
+  background: var(--teal-tint);
+  border-color: transparent;
+  transform: scale(calc(1.05 + var(--level) * 0.12));
+}
+.voice-orb-ring[data-ring="2"] {
+  transform: scale(calc(1.14 + var(--level) * 0.22));
+}
+.voice-orb-ring[data-ring="3"] {
+  transform: scale(calc(1.27 + var(--level) * 0.27));
+}
+
+.voice-orb-core {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 9999px;
+  background: var(--teal);
+  color: var(--on-teal);
+  box-shadow: var(--elev-raised);
+  transform: scale(1);
+  transition:
+    background-color 240ms var(--ease-standard),
+    color 240ms var(--ease-standard),
+    transform 200ms var(--ease-standard);
+}
+.voice-orb-core svg {
+  width: 34%;
+  height: 34%;
+}
+
+.voice-orb-orbit {
+  position: absolute;
+  width: calc(var(--size) * 1.24);
+  height: calc(var(--size) * 1.24);
+  border-radius: 9999px;
+  box-shadow: inset 0 0 0 1px var(--line);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 240ms var(--ease-standard);
+}
+.voice-orb-orbit::after {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: calc(50% - 5px);
+  width: 10px;
+  height: 10px;
+  border-radius: 9999px;
+  background: var(--ink);
+}
+
+/* Listening: rings breathe gently at rest and open up with the person's voice. */
+.voice-orb[data-phase="listening"] .voice-orb-ring,
+.voice-orb[data-phase="user_speaking"] .voice-orb-ring {
+  opacity: calc(0.25 + var(--level) * 0.75);
+}
+.voice-orb[data-phase="listening"] .voice-orb-ring[data-ring="1"] {
+  opacity: 1;
+  animation: voice-breathe 3.2s var(--ease-standard) infinite;
+}
+.voice-orb[data-phase="user_speaking"] .voice-orb-ring[data-ring="1"] {
+  opacity: 1;
+}
+
+/* Speaking: ADAPT's voice swells the disc and ripples outwards. */
+.voice-orb[data-phase="speaking"] .voice-orb-core {
+  background: var(--teal-strong);
+  transform: scale(calc(1 + var(--out) * 0.1));
+}
+.voice-orb[data-phase="speaking"] .voice-orb-ring {
+  opacity: calc(0.2 + var(--out) * 0.8);
+}
+.voice-orb[data-phase="speaking"] .voice-orb-ring[data-ring="1"] {
+  opacity: 1;
+}
+
+/* Thinking and running tools: the disc settles, one point orbits. */
+.voice-orb[data-phase="thinking"] .voice-orb-core,
+.voice-orb[data-phase="tool"] .voice-orb-core {
+  transform: scale(0.92);
+}
+.voice-orb[data-phase="thinking"] .voice-orb-orbit,
+.voice-orb[data-phase="tool"] .voice-orb-orbit,
+.voice-orb[data-phase="connecting"] .voice-orb-orbit,
+.voice-orb[data-phase="reconnecting"] .voice-orb-orbit,
+.voice-orb[data-phase="requesting_mic"] .voice-orb-orbit {
+  opacity: 1;
+  animation: voice-orbit 1.6s linear infinite;
+}
+.voice-orb[data-phase="tool"] .voice-orb-orbit {
+  animation-duration: 1.1s;
+}
+
+/* Getting connected: a hollow disc; the orbit is slower. */
+.voice-orb[data-phase="connecting"] .voice-orb-core,
+.voice-orb[data-phase="reconnecting"] .voice-orb-core,
+.voice-orb[data-phase="requesting_mic"] .voice-orb-core {
+  background: var(--surface);
+  color: var(--teal);
+  box-shadow: inset 0 0 0 2px var(--teal);
+}
+.voice-orb[data-phase="connecting"] .voice-orb-orbit,
+.voice-orb[data-phase="reconnecting"] .voice-orb-orbit {
+  animation-duration: 2.4s;
+}
+
+/* Muted, offline, ended or failed: quiet and flat. */
+.voice-orb[data-phase="muted"] .voice-orb-core,
+.voice-orb[data-phase="offline"] .voice-orb-core,
+.voice-orb[data-phase="failed"] .voice-orb-core {
+  background: var(--surface-sunken);
+  color: var(--ink-muted);
+  box-shadow: inset 0 0 0 1.5px var(--line-strong);
+}
+.voice-orb[data-phase="muted"] .voice-orb-ring[data-ring="2"],
+.voice-orb[data-phase="idle"] .voice-orb-ring[data-ring="2"],
+.voice-orb[data-phase="ended"] .voice-orb-ring[data-ring="2"] {
+  opacity: 0.35;
+  border-color: var(--line-strong);
+}
+
+/* The orb is also the start button. */
+button.voice-orb {
+  cursor: pointer;
+  background: none;
+  border: 0;
+  padding: 0;
+}
+button.voice-orb:hover .voice-orb-core {
+  background: var(--teal-strong);
+  color: var(--on-teal);
+}
+button.voice-orb:active .voice-orb-core {
+  transform: scale(0.96);
+}
+button.voice-orb:focus-visible {
+  outline: none;
+}
+button.voice-orb:focus-visible .voice-orb-core {
+  outline: 3px solid var(--focus);
+  outline-offset: 4px;
+}
+
+@keyframes voice-breathe {
+  0%,
+  100% {
+    transform: scale(calc(1.05 + var(--level) * 0.12));
+  }
+  50% {
+    transform: scale(calc(1.11 + var(--level) * 0.12));
+  }
+}
+@keyframes voice-orbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* --- floating button while a conversation is live (optional for hosts) ------------------------------------ */
+
+.voice-fab-live::before {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 9999px;
+  border: 2px solid var(--teal);
+  animation: voice-fab-pulse 2s var(--ease-standard) infinite;
+}
+@keyframes voice-fab-pulse {
+  0% {
+    opacity: 0.8;
+    transform: scale(0.94);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.25);
+  }
+}
+
+/* A streaming turn ends in a soft caret. */
+.voice-caret::after {
+  content: "";
+  display: inline-block;
+  width: 0.45em;
+  height: 0.45em;
+  margin-inline-start: 0.3em;
+  border-radius: 9999px;
+  background: currentColor;
+  opacity: 0.45;
+  vertical-align: middle;
+  animation: voice-caret 1s ease-in-out infinite;
+}
+@keyframes voice-caret {
+  50% {
+    opacity: 0.1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .voice-orb-ring,
+  .voice-orb-core {
+    transform: none !important;
+  }
+  .voice-orb-orbit {
+    animation: none !important;
+  }
+}

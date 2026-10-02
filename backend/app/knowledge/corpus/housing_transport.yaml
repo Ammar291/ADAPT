@@ -1,0 +1,543 @@
+# Housing / tenancy and transport / driving in Abu Dhabi.
+# Curated official sources; see README.md in this directory for the format and rules.
+# Researched and read on 2026-09-29. No fees, processing times or penalty amounts recorded.
+
+sources:
+  # ---------------------------------------------------------------- housing / tenancy
+  - key: uae.leasing_a_property_in_the_uae
+    title: "Leasing a property in the UAE"
+    url: https://u.ae/en/information-and-services/moving-to-the-uae/leasing-a-property-in-the-uae
+    authority: authority.uae_government
+    source_type: guidance_page
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: null
+    last_updated: 2026-01-20
+    topics: [housing, tenancy, newcomer]
+    verification: fetched
+    passages:
+      - key: abu_dhabi_landlord_registers_tawtheeq
+        section: "Registering lease agreements"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          In Abu Dhabi, landlords have to register lease contract in the Tawtheeq system,
+          which is the city’s register for tenancy contracts.
+      - key: registration_needed_for_utilities
+        section: "Registering lease agreements"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          Lease agreements between landlords and tenants must be registered by the respective
+          authority in each emirate. Registration of lease contracts is compulsory to connect
+          the utility services. This includes water, electricity, gas and telecommunications
+          services.
+      - key: municipality_fee_on_utility_bill
+        section: "Registering lease agreements"
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          In Abu Dhabi, once the lease contract has been registered in Tawtheeq a municipality
+          fee is levied, and this amount is added to the tenant's monthly water and electricity
+          bill across 12 months.
+      - key: tenant_identification_documents
+        section: "Rent rates"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          To conclude a lease contract with the landlord and/or real estate agent, the tenant
+          must provide identification documents which include a copy of his passport, a valid
+          residence visa and Emirates ID, in addition to post-dated cheques covering payments
+          for the agreed lease period.
+      - key: abu_dhabi_rental_disputes
+        section: "Rental disputes"
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          For rental disputes between a landlord and a tenant in Abu Dhabi, the page directs
+          people to the Rent Dispute Settlement Committee in Abu Dhabi.
+
+  - key: adrec.home
+    title: "Home"
+    url: https://adrec.gov.ae/en
+    authority: authority.adrec
+    source_type: portal_page
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: null
+    last_updated: null
+    topics: [housing, tenancy]
+    verification: fetched
+    passages:
+      - key: adrec_mandate
+        section: null
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          The Abu Dhabi Real Estate Centre (ADREC) is mandated with strengthening Abu Dhabi's
+          reputation in the global real estate market.
+      - key: lease_services
+        section: "ADREC Services"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          Lease: Easily register, renew, modify, close, cancel, or terminate your tenancy and
+          PMA contracts.
+      - key: authorize_representative
+        section: "ADREC Services"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          Authorization: Authorize a trusted legal representative to perform transactions on
+          your behalf.
+      - key: branches_and_trustee_offices
+        section: "ADREC Experience"
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          ADREC lists service branches in Abu Dhabi (Al Danah), Al Ain (Al Jimi District) and
+          the Al Dhafra region (Madinat Zayed). It also has ADREC Trustee Offices spread across
+          Abu Dhabi that provide real estate services, where customers arrive at a scheduled
+          appointment.
+
+  - key: dmt.occupancy_certificate_grace_period
+    title: "Department of Municipalities and Transport Grants Grace Period to Comply with Occupancy Certificate Rules"
+    url: https://www.dmt.gov.ae/en/Media-Centre/News/DMT-Grants-Grace-Period-to-Comply-with-Occupancy-Certificate-Rules
+    authority: authority.dmt
+    source_type: news
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: 2026-08-05
+    last_updated: null
+    topics: [housing, tenancy]
+    verification: fetched
+    passages:
+      - key: tawtheeq_blocked_without_occupancy_certificate
+        section: null
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          The Abu Dhabi Real Estate Centre (ADREC) will support the programme's rollout by
+          cross-referencing municipal records and contacting the owners of non-compliant
+          properties. To uphold safety standards, ADREC will block the registration of new
+          lease contracts through Tawtheeq for any units without a valid occupancy certificate.
+      - key: occupancy_certificate_definition
+        section: null
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          An occupancy certificate is an official municipal document certifying that a building
+          is secure for use and complies with all applicable standards.
+      - key: owner_deadline
+        section: null
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          Under a new directive by the Department of Municipalities and Transport (DMT),
+          property owners and real estate operators in the emirate have until 16 September 2026
+          to apply for or renew their occupancy certificates through the Municipal e-Permitting
+          System.
+
+  - key: dmt.aam_tawtheeq
+    title: "Tawtheeq"
+    url: https://www.dmt.gov.ae/en/aam/About-Al-Ain-Municipality/Tawtheeq
+    authority: authority.dmt
+    source_type: guidance_page
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: null
+    last_updated: null
+    topics: [housing, tenancy]
+    verification: fetched
+    passages:
+      - key: rental_contract_registration_system
+        section: "Run Your Property from the Comfort of Your Home"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          Al Ain City Municipality allows you to register Leasable Real Estate Data easily and
+          quickly through the Rental Contract Registration System.
+      - key: lease_services_channels
+        section: "Run Your Property from the Comfort of Your Home"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          All services related to lease contracts such as registration, cancellation and
+          renewal of contracts and agreements are available through TAMM platform and the
+          smart platform, as well as in Customer Happiness Centers.
+      - key: representative_username
+        section: "Run Your Property from the Comfort of Your Home"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          Companies and individuals can also obtain their own username for real estate
+          management as a representative for providing services to all properties under their
+          management through the rental contract registration system.
+
+  - key: adrec.rules_tenancy
+    title: "Tenancy"
+    url: https://adrec.gov.ae/en/rules_and_regulations/tenancy
+    authority: authority.adrec
+    source_type: regulation
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: null
+    last_updated: null
+    topics: [tenancy, housing]
+    verification: fetched
+    passages:
+      - key: contracts_in_writing
+        section: "Law No. 20 of 2006 (Leasing of Spaces and Landlord-Tenant Relations) – Article (3)"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          As of the effective date of the provisions hereof, tenancy contracts shall be
+          concluded in writing.
+      - key: landlord_handover_condition
+        section: "Law No. 20 of 2006 – Article (5)"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          The Lessor shall hand over the leasehold and its additions in a suitable condition to
+          fulfill the utility for which it has been prepared as agreed or according to the
+          nature of the leasehold.
+      - key: landlord_necessary_repairs
+        section: "Law No. 20 of 2006 – Article (7)"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          The Lessor shall maintain the leasehold to keep it fit for utility and carry out all
+          necessary repairs excluding rental repairs during the rental period unless otherwise
+          agreed.
+      - key: tenant_pays_utilities
+        section: "Law No. 20 of 2006 – Article (15)"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          The tenant shall pay for the consumption of water, electricity, telephone of the
+          leasehold, any damages he may cause to the leasehold and any other fees he is legally
+          required to pay as of the date he takes over the leasehold till the date of surrender
+          to the Lessor unless otherwise agreed.
+      - key: no_subletting_without_permission
+        section: "Law No. 20 of 2006 – Article (17)"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          The tenant may not assign or subrent the leasehold in whole or in part without written
+          permission of the Lessor.
+      - key: renewal_notice_residential
+        section: "Law No. 20 of 2006 – Article (20)"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          In the event that either party does not wish to renew the lease, or wishes to amend
+          the conditions of the lease, that party shall notify the other party in writing two
+          months prior to the date of the lease's expiry in the case of residential properties
+      - key: registration_rules_by_executive_council
+        section: "Law No. 20 of 2006 – Article (20)"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          The rules and procedures relating to the registration of lease contracts of properties
+          in the Emirate shall be issued pursuant to a decision to be adopted by the Chairman of
+          the Executive Council.
+
+  # ---------------------------------------------------------------- driving
+  - key: uae.getting_a_driving_licence
+    title: "Getting a driving licence"
+    url: https://u.ae/en/information-and-services/transportation/Driving-and-licensing/get-a-driving-licence
+    authority: authority.uae_government
+    source_type: guidance_page
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: null
+    last_updated: 2026-08-19
+    topics: [driving, transport, newcomer]
+    verification: fetched
+    passages:
+      - key: exchange_home_country_licence
+        section: "Apply for a driving licence"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          Some expatriate residents can exchange their existing valid driving licence issued by
+          their home country. Note that in this case, the applicant must be at least 18 years
+          old.
+      - key: markhoos_visitors
+        section: "Apply for a driving licence"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          Some visitors to the UAE have the right to drive with their national driving licence
+          and exchange it for a UAE-issued licence if they are going to be residing here, under
+          the 'Markhoos' initiative.
+      - key: new_licence_via_classes_and_tests
+        section: "Apply for a driving licence"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          Citizens and expatriate residents can obtain a UAE driving licence after taking
+          classes from private institutes and passing the tests conducted by local transport
+          authorities.
+      - key: minimum_age
+        section: "Eligibility to drive"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          The minimum age requirement to obtain a driving licence is as follows: 17 years for
+          motorcycles and for vehicles for people with special needs; 18 years for cars and
+          light vehicles; 20 years for heavy vehicles and tractors; 21 years for buses.
+      - key: traffic_file_documents
+        section: "Documents and process to open a traffic file"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          Documents required to open a traffic file include: a copy of passport; a copy and the
+          Emirates ID card; 2 photographs; eye test report; a 'No objection' letter from the
+          sponsor (if required by the related traffic department).
+      - key: learning_to_drive_process
+        section: "Documents and process to open a traffic file"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          The process to learn driving includes: opening a traffic file in one of the
+          registered driving centres in the related emirate; conducting an eye test at any
+          centre approved by the traffic department; completing all required driving classes;
+          passing all tests set by the related traffic department; obtaining the driving licence
+          from the traffic authority.
+      - key: abu_dhabi_tamm_links
+        section: "Apply for a driving licence / Documents and process to open a traffic file"
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          For Abu Dhabi, the page's eServices links point to TAMM: the "Get a driving licence"
+          journey and the service "Request to open a driving licence file in Abu Dhabi".
+
+  - key: tamm.get_a_driving_licence_journey
+    title: "Explore all steps and services to get a driving licence in Abu Dhabi"
+    url: https://www.tamm.abudhabi/journeys/get-a-driving-licence/
+    authority: authority.abu_dhabi_government
+    source_type: portal_page
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: null
+    last_updated: null
+    topics: [driving, transport, newcomer]
+    verification: fetched
+    passages:
+      - key: journey_scope
+        section: null
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          Through this journey you may apply for a new driving licence, exchange your eligible
+          foreign licence, and renew, amend or add a new category to your existing licence.
+      - key: eligibility_eye_test_translation
+        section: "Eligibility stage"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          Through this journey stage, find out your eligibility for various driving licence
+          services by answering the questionnaire. Proceed to select the relevant tool to obtain
+          information on completing an eye test and translating the driving licence in Abu
+          Dhabi.
+      - key: supporting_tools
+        section: "Eligibility stage"
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          The journey lists supporting tools named "Conduct an Eye Exam", "Translate Foreign
+          Driving Licence" and "Driving Institute, Optician or Translation Centre Locator".
+      - key: replace_foreign_licence
+        section: "Services"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          Through this service, individuals can request for the replacement of driving licences
+          issued by specific foreign countries and gulf countries with driving licences issued
+          by UAE.
+      - key: open_file_for_training
+        section: "Services"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          Through this service, individuals can open a file at the Drivers Licensing Department
+          to attend theoretical and practical training courses in order to obtain a driving
+          licence.
+      - key: driving_test_appointment
+        section: "Services"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          Through this service, individuals can request an appointment to attend the driving
+          test.
+      - key: issue_licence_after_test
+        section: "Services"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          Through this service, individuals who have successfully passed the driving test can
+          request for the issuance of a driving licence.
+
+  - key: admobility.driver_licensing_services
+    title: "Driver and Vehicle Licensing Services"
+    url: https://admobility.gov.ae/en/driver-licensing-services
+    authority: authority.ad_mobility
+    source_type: guidance_page
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: null
+    last_updated: null
+    topics: [driving, transport, uae_pass]
+    verification: fetched
+    passages:
+      - key: itc_provides_licensing
+        section: "Driver and Vehicle Licensing Services"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          The Integrated Transport Centre (Abu Dhabi Mobility) provides a comprehensive range of
+          driver and vehicle licensing services. These encompass all services related to
+          learning to drive, issuing and renewing driving licences, registering and transferring
+          ownership of vehicles of all types, as well as a number of supporting services
+          designed to enhance the customer experience and improve the overall efficiency of the
+          mobility ecosystem within the Emirate of Abu Dhabi.
+      - key: tamm_uae_pass_traffic_file
+        section: "Driver and Vehicle Licensing Services"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          To ensure a seamless and swift experience, customers can conveniently access these
+          services digitally through the unified government platform "TAMM" (tamm.abudhabi).
+          The platform enables the completion of transactions securely and efficiently using the
+          UAE Pass and an active traffic file in the licensing system.
+      - key: foreign_licence_exchange_covered
+        section: "Driver Licensing Services – Overview"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          Driver licensing services include learning to drive various types of vehicles, issuing
+          and renewing driving licences, and modifying licence categories. They also cover the
+          exchange of foreign driving licences (GCC or from designated countries), along with
+          services related to learning to drive, such as rescheduling driving test appointments
+          and renewing learning permits.
+      - key: all_services_on_tamm
+        section: "Driver Licensing Services – Overview"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          All services are available through the "TAMM" portal in a secure and user-friendly
+          digital format, eliminating the need to visit service centres.
+
+  # ---------------------------------------------------------------- public transport / tolls
+  - key: admobility.hafilat_smart_cards
+    title: "Hafilat Smart Cards"
+    url: https://admobility.gov.ae/en/pb-bus-service/hafilat-cards
+    authority: authority.ad_mobility
+    source_type: guidance_page
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: null
+    last_updated: null
+    topics: [transport, newcomer]
+    verification: fetched
+    passages:
+      - key: what_hafilat_is
+        section: "Hafilat Smart Cards"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          Hafilat smart cards enable users to pay the fare of public transportation services in
+          Abu Dhabi Emirate by tapping it on the reader device upon boarding and alighting. The
+          card provides a range of services that caters to the needs of residents and visitors
+      - key: anonymous_card_no_prerequisites
+        section: "Hafilat Anonymous Card – Requirements"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          No prerequisites required; you can obtain the card directly from purchase locations.
+      - key: anonymous_card_balance_transfer
+        section: "Hafilat Anonymous Card"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          It is easy to obtain the card without prerequisites, given it is Anonymous it does not
+          offer the feature of balance transfer in case of damage or loss unless it is linked to
+          a UAE identity card.
+      - key: anonymous_card_purchase_locations
+        section: "Hafilat Anonymous Card – Purchase Locations"
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          The anonymous card can be bought from sales and recharge machines (TVMs), from
+          strategic partner offices (Abu Dhabi Cooperative Society (SPAR), Al Ain Cooperative
+          Society, and Lulu Hypermarket and Lulu Exchange branches in Abu Dhabi, Al Ain and Al
+          Dhafra), and from Customer Happiness Offices at bus stations and the airport.
+      - key: anonymous_card_features
+        section: "Hafilat Anonymous Card – Features"
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          Features of the anonymous card: balance can be added to it, and 30-day or 7-day public
+          transport passes can be added to it.
+
+  - key: admobility.darb
+    title: "Darb"
+    url: https://admobility.gov.ae/en/darb
+    authority: authority.ad_mobility
+    source_type: guidance_page
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: null
+    last_updated: null
+    topics: [transport, driving]
+    verification: fetched
+    passages:
+      - key: what_darb_is
+        section: "DARB – Abu Dhabi Tolling System"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          “Darb” toll gate system is one of several strategic projects that aims to reduce
+          traffic congestion in the Emirate of Abu Dhabi and promote the use of public
+          transport.
+      - key: legal_basis
+        section: "DARB – Abu Dhabi Tolling System"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          The toll gate system was introduced in the application of Law No. (17) of 2017 on Road
+          Tolls in the Emirate of Abu Dhabi, issued by the late Sheikh Khalifa bin Zayed Al
+          Nahyan.
+      - key: charging_periods
+        section: "Fees"
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          Vehicles are charged per crossing of a tolling gate during the morning (07:00–09:00)
+          and evening (15:00–19:00) periods, except on Sundays and official holidays. The page
+          also states that daily and monthly caps have been removed for peak-hour crossings.
+      - key: unregistered_vehicle_fine
+        section: "Fines – Unregistered vehicle"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          A fine will be issued for Unregistered vehicles after passing the tollgate when the
+          grace period ends (Ten working days) starting from the passing date
+      - key: exemptions
+        section: "Exemptions"
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          Some vehicles are exempt automatically without a request, for example public
+          transport buses, motorcycles, authorised Abu Dhabi taxis, and ambulance, armed forces
+          and civil defence vehicles. Vehicles of people of determination, families of limited
+          income, senior citizens and retired citizens are exempt only through an exemption
+          request (one vehicle for each category).
+      - key: registration_portal
+        section: null
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          For registration and account management, the page points to the Darb portal at
+          darb.itc.gov.ae (RucWeb login).

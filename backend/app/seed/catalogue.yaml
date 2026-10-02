@@ -1,0 +1,949 @@
+# ADAPT public catalogue: real Abu Dhabi organisations, places, events and guidance.
+#
+# Every row was verified on its `retrieved_at` date (2026-09-29, or 2026-10-01 for later
+# additions) by loading its page (a few pages that block automated
+# fetching were confirmed through search results instead). Summaries paraphrase only what
+# the page says. There are no phone numbers, emails, prices or specific dates: recurring
+# events carry a `timing_note` instead of invented dates.
+#
+# Shared by the catalogue seed (`python -m app.seed`: communities, events, cultural_guides)
+# and offline research (`app/research/snapshot.py`). Extra keys:
+#   binding: true   a binding legal rule stated on an official government page. The catalogue
+#                   stores it as official_guidance; research shows it as "Law" only when the
+#                   source is an official domain.
+#   timing_note     usual timing of a recurring event (events have no verified dates).
+# Tags drive personalisation: relocation:, profession:, interest:, background:, faith:.
+# background: and interest: tags are only ever matched with community-personalisation
+# consent; faith rows only with faith opt-in.
+
+reviewed_on: '2026-09-29'
+communities:
+- key: community.meetup_abu_dhabi
+  name: Meetup events in Abu Dhabi
+  category: social
+  description: Meetup's Abu Dhabi listing gathers upcoming community groups and events in the city, from
+    business networking and tech talks to sports such as volleyball and cycling, dance classes, language
+    exchanges and casual social meet-ups for residents and expats.
+  languages: []
+  area: null
+  website_url: https://www.meetup.com/find/ae--abu-dhabi/
+  source_url: https://www.meetup.com/find/ae--abu-dhabi/
+  source_title: Events in Abu Dhabi | Meetup
+  retrieved_at: '2026-09-29'
+  evidence_kind: community_web
+  is_sample: false
+  tags: []
+- key: community.india_social_and_cultural_centre
+  name: India Social and Cultural Centre (ISC) Abu Dhabi
+  category: cultural
+  description: A membership-based Indian social and cultural centre in Abu Dhabi with sections for entertainment,
+    sports and literary programmes, dining facilities and event venues for members.
+  languages: []
+  area: null
+  website_url: https://iscabudhabi.com/about
+  source_url: https://iscabudhabi.com/about
+  source_title: ISC - about | India Social and Cultural Center
+  retrieved_at: '2026-09-29'
+  evidence_kind: community_web
+  is_sample: false
+  tags:
+  - background:india
+- key: community.kerala_social_centre
+  name: Kerala Social Centre Abu Dhabi
+  category: cultural
+  description: A long-established social and cultural forum for expatriates from Kerala in Abu Dhabi,
+    registered with the UAE Ministry of Community Development, running arts, literature, cultural, welfare
+    and sports activities for members and their families.
+  languages: []
+  area: null
+  website_url: https://www.kscabudhabi.com/
+  source_url: https://www.kscabudhabi.com/
+  source_title: Kerala Social Centre Abu Dhabi
+  retrieved_at: '2026-09-29'
+  evidence_kind: community_web
+  is_sample: false
+  tags:
+  - background:india
+- key: community.embassy_of_india_abu_dhabi
+  name: Embassy of India, Abu Dhabi (consular services)
+  category: cultural
+  description: India's embassy in Abu Dhabi, offering consular services such as passports, visas and OCI,
+    document attestation, and registration of marriages and deaths, with community affairs pages on the
+    legal rights of Indian nationals in the UAE and the Indian community.
+  languages: []
+  area: null
+  website_url: https://www.indembassyuae.gov.in/
+  source_url: https://www.indembassyuae.gov.in/
+  source_title: Embassy of India, Abu Dhabi, UAE
+  retrieved_at: '2026-10-01'
+  evidence_kind: community_web
+  is_sample: false
+  tags:
+  - background:india
+- key: community.abu_dhabi_accueil
+  name: Abu Dhabi Accueil (French-speaking newcomers' association)
+  category: cultural
+  description: Listed by the French Embassy in the UAE, Abu Dhabi Accueil is an association that welcomes
+    newcomers, helps them settle in, and organises activities for the French-speaking community in Abu
+    Dhabi.
+  languages: []
+  area: null
+  website_url: https://ae.diplomatie.gouv.fr/fr/associations-francaises/abu-dhabi-accueil
+  source_url: https://ae.diplomatie.gouv.fr/fr/associations-francaises/abu-dhabi-accueil
+  source_title: Abu Dhabi Accueil | La France aux Émirats Arabes Unis
+  retrieved_at: '2026-09-29'
+  evidence_kind: community_web
+  is_sample: false
+  tags:
+  - background:france
+- key: community.american_womens_network_abu_dhabi
+  name: American Women's Network (AWN) Abu Dhabi
+  category: cultural
+  description: An informal community of international women living in Abu Dhabi, open to all nationalities,
+    offering coffee mornings, social events, sports and arts clubs, trips around the UAE and a speaker
+    series.
+  languages: []
+  area: null
+  website_url: https://www.awnabudhabi.com/
+  source_url: https://www.awnabudhabi.com/
+  source_title: Home | AWN Abu Dhabi, Connecting Cultures Through Friendship
+  retrieved_at: '2026-09-29'
+  evidence_kind: community_web
+  is_sample: false
+  tags: []
+- key: community.abu_dhabi_striders
+  name: Abu Dhabi Striders (running club)
+  category: sports
+  description: A running club based in Abu Dhabi focused on athletics and road running, open to runners
+    of all levels.
+  languages: []
+  area: null
+  website_url: https://www.hopasports.com/en/abudhabistriders
+  source_url: https://www.hopasports.com/en/abudhabistriders
+  source_title: Abu Dhabi Striders | Hopasports
+  retrieved_at: '2026-09-29'
+  evidence_kind: community_web
+  is_sample: false
+  tags:
+  - interest:running
+- key: community.triathlon_abu_dhabi
+  name: Triathlon Abu Dhabi community training groups
+  category: sports
+  description: A community hub for swim, bike and run enthusiasts across the emirate that lists free,
+    volunteer-led training groups, including community cycling rides and local running groups.
+  languages: []
+  area: null
+  website_url: https://www.triathlonabudhabi.ae/training-groups
+  source_url: https://www.triathlonabudhabi.ae/training-groups
+  source_title: Training Groups | Triathlon Abu Dhabi
+  retrieved_at: '2026-09-29'
+  evidence_kind: community_web
+  is_sample: false
+  tags:
+  - interest:running
+  - interest:cycling
+  - interest:swimming
+- key: community.volunteers_ae
+  name: Volunteers.ae (UAE national volunteering platform)
+  category: volunteering
+  description: A nationwide digital volunteering platform set up by Emirates Foundation with the Ministry
+    of Community Empowerment that matches volunteers with opportunities posted by organisations across
+    all seven emirates.
+  languages: []
+  area: null
+  website_url: https://www.volunteers.ae/en
+  source_url: https://www.volunteers.ae/en
+  source_title: Home - Volunteers.ae
+  retrieved_at: '2026-09-29'
+  evidence_kind: community_web
+  is_sample: false
+  tags:
+  - interest:volunteering
+- key: faith_and_worship.sheikh_zayed_grand_mosque
+  name: Sheikh Zayed Grand Mosque Centre
+  category: faith
+  description: Official site of the Sheikh Zayed Grand Mosque, one of the world's largest mosques and
+    a national cultural landmark, which offers prayer facilities, exhibitions and complimentary guided
+    cultural tours in several languages.
+  languages: []
+  area: null
+  website_url: https://szgmc.gov.ae/en/
+  source_url: https://szgmc.gov.ae/en/
+  source_title: Sheikh Zayed Grand Mosque Centre
+  retrieved_at: '2026-09-29'
+  evidence_kind: official_guidance
+  is_sample: false
+  tags:
+  - faith:muslim
+- key: faith_and_worship.szgmc_prayer_timings
+  name: Daily prayer times in Abu Dhabi (Sheikh Zayed Grand Mosque Centre)
+  category: faith
+  description: The Sheikh Zayed Grand Mosque Centre's daily prayer times for Abu Dhabi, covering Fajr,
+    sunrise, Dhuhr, Asr, Maghrib and Isha, with a link to the Emirati Hijri calendar. Worshippers can
+    enter the mosque directly without an entry ticket.
+  languages: []
+  area: null
+  website_url: https://szgmc.gov.ae/en/worshippers/prayer-timingss
+  source_url: https://szgmc.gov.ae/en/worshippers/prayer-timingss
+  source_title: Prayer Timings
+  retrieved_at: '2026-10-01'
+  evidence_kind: official_guidance
+  is_sample: false
+  tags:
+  - faith:muslim
+- key: faith_and_worship.awqaf
+  name: General Authority of Islamic Affairs, Endowments and Zakat (Awqaf)
+  category: faith
+  description: Official site of the UAE authority for Islamic affairs, endowments and zakat, covering
+    prayer times, mosques, Quranic centres, Hajj and Umrah, and zakat services such as paying and calculating
+    zakat.
+  languages: []
+  area: null
+  website_url: https://www.awqaf.gov.ae/?lang=en
+  source_url: https://www.awqaf.gov.ae/?lang=en
+  source_title: General Authority of Islamic Affairs, Endowments & Zakat
+  retrieved_at: '2026-10-01'
+  evidence_kind: official_guidance
+  is_sample: false
+  tags:
+  - faith:muslim
+- key: faith_and_worship.uae_religious_affairs_entities
+  name: Islamic affairs and religious authorities in the UAE
+  category: faith
+  description: The UAE Government portal explains that Islam is the official religion and other religions
+    are practised freely, and introduces the General Authority of Islamic Affairs & Endowments, which develops
+    mosques and Quranic centres and manages Hajj and Umrah, and Awqaf Abu Dhabi, which manages endowments.
+  languages: []
+  area: null
+  website_url: https://u.ae/en/information-and-services/public-holidays-and-religious-affairs/official-religion-and-religious-affairs-entities
+  source_url: https://u.ae/en/information-and-services/public-holidays-and-religious-affairs/official-religion-and-religious-affairs-entities
+  source_title: Official religion and religious affairs' entities | The Official Portal of the UAE Government
+  retrieved_at: '2026-10-01'
+  evidence_kind: official_guidance
+  is_sample: false
+  tags:
+  - faith:muslim
+- key: faith_and_worship.abrahamic_family_house
+  name: Abrahamic Family House
+  category: faith
+  description: An interfaith complex on Saadiyat Island bringing together three houses of worship, the
+    Eminence Ahmed El Tayeb Mosque, St. Francis Church and Moses Ben Maimon Synagogue, alongside a forum
+    for dialogue; it welcomes visitors with tours and programmes.
+  languages: []
+  area: null
+  website_url: https://www.abrahamicfamilyhouse.ae/
+  source_url: https://www.abrahamicfamilyhouse.ae/
+  source_title: Abrahamic Family House
+  retrieved_at: '2026-09-29'
+  evidence_kind: community_web
+  is_sample: false
+  tags:
+  - faith:multi
+- key: faith_and_worship.moses_ben_maimon_synagogue
+  name: Moses Ben Maimon Synagogue (Abrahamic Family House)
+  category: faith
+  description: The synagogue within the Abrahamic Family House, described as the first purpose-built synagogue
+    in the UAE, serving the Jewish community in Abu Dhabi and hosting educational programmes and activities.
+  languages: []
+  area: null
+  website_url: https://www.abrahamicfamilyhouse.ae/synagogue
+  source_url: https://www.abrahamicfamilyhouse.ae/synagogue
+  source_title: Moses Ben Maimon Synagogue
+  retrieved_at: '2026-09-29'
+  evidence_kind: community_web
+  is_sample: false
+  tags:
+  - faith:jewish
+- key: faith_and_worship.st_josephs_cathedral
+  name: St. Joseph's Cathedral Abu Dhabi (Catholic)
+  category: faith
+  description: Official website of St. Joseph's Cathedral, a Catholic cathedral parish in Abu Dhabi.
+  languages: []
+  area: null
+  website_url: https://stjosephsabudhabi.org/
+  source_url: https://stjosephsabudhabi.org/
+  source_title: St. Joseph's Cathedral Abu Dhabi - Abu Dhabi
+  retrieved_at: '2026-09-29'
+  evidence_kind: community_web
+  is_sample: false
+  tags:
+  - faith:christian
+- key: faith_and_worship.st_andrews_church
+  name: St Andrew's Church Abu Dhabi (Anglican)
+  category: faith
+  description: An Anglican church in the Al Mushrif area of Abu Dhabi offering Sunday worship with Holy
+    Communion, traditional hymns and contemporary music, plus children's and youth programmes during the
+    school year.
+  languages: []
+  area: null
+  website_url: https://standrewauh.org/
+  source_url: https://standrewauh.org/
+  source_title: St Andrew's Church - Home
+  retrieved_at: '2026-09-29'
+  evidence_kind: community_web
+  is_sample: false
+  tags:
+  - faith:christian
+- key: faith_and_worship.evangelical_community_church_abu_dhabi
+  name: Evangelical Community Church of Abu Dhabi
+  category: faith
+  description: An international evangelical church in Abu Dhabi holding weekly worship gatherings with
+    prayer, singing and Bible teaching, and offering classes in Christian doctrine and discipleship.
+  languages: []
+  area: null
+  website_url: https://www.eccad.org/
+  source_url: https://www.eccad.org/
+  source_title: Evangelical Community Church of Abu Dhabi > Home
+  retrieved_at: '2026-09-29'
+  evidence_kind: community_web
+  is_sample: false
+  tags:
+  - faith:christian
+- key: faith_and_worship.baps_hindu_mandir
+  name: BAPS Hindu Mandir Abu Dhabi
+  category: faith
+  description: A Hindu temple in Abu Dhabi run by BAPS that welcomes visitors for spiritual experiences
+    and daily aarti ceremonies; visits must be booked in advance and a valid government-issued ID is required.
+  languages: []
+  area: null
+  website_url: https://www.mandir.ae/
+  source_url: https://www.mandir.ae/
+  source_title: BAPS Hindu Mandir
+  retrieved_at: '2026-09-29'
+  evidence_kind: community_web
+  is_sample: false
+  tags:
+  - faith:hindu
+- key: professional_network.hub71
+  name: Hub71
+  category: professional
+  description: Abu Dhabi's global tech ecosystem, connecting startup founders with investors, corporate
+    partners and mentors, and supporting companies from early-stage ideas to scale-ups with access to
+    capital, commercial opportunities and subsidised resources.
+  languages: []
+  area: null
+  website_url: https://www.hub71.com/
+  source_url: https://www.hub71.com/
+  source_title: Hub71 | Abu Dhabi's Unique Global Tech Ecosystem
+  retrieved_at: '2026-09-29'
+  evidence_kind: community_web
+  is_sample: false
+  tags:
+  - relocation:business
+  - profession:founder
+  - profession:technology
+- key: professional_network.abu_dhabi_chamber
+  name: Abu Dhabi Chamber of Commerce and Industry
+  category: professional
+  description: The emirate's chamber of commerce, acting as a bridge between the business community and
+    policymakers and supporting companies of all sizes through market intelligence, policy advocacy, ecosystem
+    development and innovation initiatives.
+  languages: []
+  area: null
+  website_url: https://www.abudhabichamber.ae/en
+  source_url: https://www.abudhabichamber.ae/en
+  source_title: Abu Dhabi Chamber of Commerce and Industry
+  retrieved_at: '2026-09-29'
+  evidence_kind: community_web
+  is_sample: false
+  tags:
+  - relocation:business
+- key: professional_network.adgm
+  name: Abu Dhabi Global Market (ADGM)
+  category: professional
+  description: Abu Dhabi's international financial centre on Al Maryah and Al Reem islands, operating
+    an English common law framework and offering company registration, regulatory oversight, dispute resolution
+    and business services.
+  languages: []
+  area: null
+  website_url: https://www.adgm.com/
+  source_url: https://www.adgm.com/
+  source_title: Abu Dhabi's International Financial Centre | ADGM
+  retrieved_at: '2026-09-29'
+  evidence_kind: official_guidance
+  is_sample: false
+  tags:
+  - relocation:business
+  - profession:founder
+  - profession:technology
+  - profession:finance
+  - profession:legal
+- key: professional_network.abu_dhabi_investment_office
+  name: Abu Dhabi Investment Office (ADIO)
+  category: professional
+  description: The government entity that facilitates investment in Abu Dhabi, supporting businesses from
+    initial setup through expansion with coordinated access to government services, support programmes
+    and relationship management across priority sectors.
+  languages: []
+  area: null
+  website_url: https://www.investwithabudhabi.com/
+  source_url: https://www.investwithabudhabi.com/
+  source_title: Abu Dhabi Investment Office | Invest in Abu Dhabi
+  retrieved_at: '2026-09-29'
+  evidence_kind: community_web
+  is_sample: false
+  tags:
+  - relocation:business
+- key: professional_network.khalifa_fund
+  name: Khalifa Fund for Enterprise Development
+  category: professional
+  description: A not-for-profit economic development fund of the Government of Abu Dhabi supporting small
+    and medium enterprises, providing Emirati entrepreneurs with funding, capability development and programmes
+    to help their ventures grow.
+  languages: []
+  area: null
+  website_url: https://www.khalifafund.ae/
+  source_url: https://www.khalifafund.ae/
+  source_title: Business Funding in UAE | Enterprise and Startup Fund | Khalifa Fund
+  retrieved_at: '2026-09-29'
+  evidence_kind: community_web
+  is_sample: false
+  tags:
+  - relocation:business
+  - profession:founder
+  # Its programmes are for Emirati entrepreneurs (see the description).
+  - background:united arab emirates
+- key: professional_network.british_chamber_of_commerce_abu_dhabi
+  name: British Chamber of Commerce Abu Dhabi
+  category: professional
+  description: A not-for-profit membership organisation promoting bilateral trade between the UAE and
+    the UK, offering companies networking, market information, business connections and advocacy.
+  languages: []
+  area: null
+  website_url: https://www.bccad.ae/about-us
+  source_url: https://www.bccad.ae/about-us
+  source_title: About Us | British Chamber of Commerce Abu Dhabi
+  retrieved_at: '2026-09-29'
+  evidence_kind: community_web
+  is_sample: false
+  tags:
+  - relocation:business
+- key: professional_network.indian_business_professional_group
+  name: Indian Business & Professional Group (IBPG) Abu Dhabi
+  category: professional
+  description: A business group registered with the Abu Dhabi Chamber that promotes commerce and investment
+    between India and Abu Dhabi and helps Indian businesses and professionals establish and expand in
+    the UAE.
+  languages: []
+  area: null
+  website_url: https://ibpgauh.org/
+  source_url: https://ibpgauh.org/
+  source_title: Welcome - IBPG Abu Dhabi
+  retrieved_at: '2026-09-29'
+  evidence_kind: community_web
+  is_sample: false
+  tags:
+  - relocation:business
+  - relocation:work
+  - background:india
+- key: professional_network.international_business_women_group
+  name: International Business Women Group (IBWG) Abu Dhabi
+  category: professional
+  description: A networking group for professional women of all nationalities doing business in Abu Dhabi,
+    holding regular gatherings with speakers and networking opportunities.
+  languages: []
+  area: null
+  website_url: https://ibwgabudhabi.org/
+  source_url: https://ibwgabudhabi.org/
+  source_title: International Business Women Group
+  retrieved_at: '2026-09-29'
+  evidence_kind: community_web
+  is_sample: false
+  tags:
+  - relocation:work
+  - relocation:business
+events:
+- key: events.visit_abu_dhabi_events_calendar
+  title: Visit Abu Dhabi events calendar
+  description: The official destination site's events calendar, covering major sports, music, arts, culture
+    and family events across Abu Dhabi, with a top-events list and planning FAQs.
+  category: culture
+  starts_at: null
+  ends_at: null
+  venue: null
+  area: null
+  url: https://visitabudhabi.ae/en/events
+  source_url: https://visitabudhabi.ae/en/events
+  source_title: Abu Dhabi Events | Calendar | Experience Abu Dhabi
+  retrieved_at: '2026-09-29'
+  evidence_kind: community_web
+  is_sample: false
+  is_free: null
+  languages: []
+  tags: []
+  timing_note: The calendar is busiest from November to March (the cooler months); check the page for
+    current listings
+- key: events.abu_dhabi_grand_prix
+  title: Formula 1 Abu Dhabi Grand Prix
+  description: Yas Marina Circuit's page for the Formula 1 Etihad Airways Abu Dhabi Grand Prix, which
+    brings on-track racing together with citywide celebrations and entertainment.
+  category: sports
+  starts_at: null
+  ends_at: null
+  venue: null
+  area: null
+  url: https://www.yasmarinacircuit.com/en/formula1
+  source_url: https://www.yasmarinacircuit.com/en/formula1
+  source_title: F1® Etihad Airways Abu Dhabi Grand Prix | Yas Marina Circuit
+  retrieved_at: '2026-09-29'
+  evidence_kind: community_web
+  is_sample: false
+  is_free: null
+  languages: []
+  tags:
+  - interest:motorsport
+  timing_note: Held as the Formula 1 season finale; check the official page for this year's dates
+- key: events.frieze_abu_dhabi
+  title: Frieze Abu Dhabi (successor to the Abu Dhabi Art fair)
+  description: An international art fair presented by Frieze with the Department of Culture and Tourism
+    – Abu Dhabi in the Saadiyat Cultural District, continuing the Abu Dhabi Art fair and bringing together
+    galleries from around the world.
+  category: culture
+  starts_at: null
+  ends_at: null
+  venue: null
+  area: null
+  url: https://www.friezeabudhabi.com/
+  source_url: https://www.friezeabudhabi.com/
+  source_title: Frieze Abu Dhabi
+  retrieved_at: '2026-09-29'
+  evidence_kind: community_web
+  is_sample: false
+  is_free: null
+  languages: []
+  tags:
+  - interest:arts
+  timing_note: Usually held in November; check the official page for this year's dates
+- key: events.abu_dhabi_festival
+  title: Abu Dhabi Festival
+  description: A classical music and arts festival presented by the Abu Dhabi Music & Arts Foundation
+    (ADMAF), with programmes across the Abu Dhabi Stage, Global Stage, youth initiatives and visual arts.
+  category: culture
+  starts_at: null
+  ends_at: null
+  venue: null
+  area: null
+  url: https://abudhabifestival.ae/
+  source_url: https://abudhabifestival.ae/
+  source_title: Abu Dhabi Festival | Arts & Classical Music in Abu Dhabi
+  retrieved_at: '2026-09-29'
+  evidence_kind: community_web
+  is_sample: false
+  is_free: null
+  languages: []
+  tags:
+  - interest:music
+  - interest:arts
+- key: events.sheikh_zayed_festival
+  title: Sheikh Zayed Festival (Al Wathba)
+  description: A large cultural and entertainment festival in Al Wathba that combines Emirati heritage,
+    such as a traditional village and folklore performances, with international country pavilions, concerts,
+    drone and fireworks shows, and family rides.
+  category: culture
+  starts_at: null
+  ends_at: null
+  venue: null
+  area: null
+  url: https://zayedfestival.ae/
+  source_url: https://zayedfestival.ae/
+  source_title: Sheikh Zayed Festival
+  retrieved_at: '2026-09-29'
+  evidence_kind: community_web
+  is_sample: false
+  is_free: null
+  languages: []
+  tags:
+  - interest:heritage
+  - interest:family_activities
+- key: events.abu_dhabi_international_book_fair
+  title: Abu Dhabi International Book Fair
+  description: An annual book fair organised by the Abu Dhabi Arabic Language Centre (part of the Department
+    of Culture and Tourism – Abu Dhabi), with speakers, sessions, author interactions and a large catalogue
+    of books.
+  category: education
+  starts_at: null
+  ends_at: null
+  venue: null
+  area: null
+  url: https://adbookfair.com/en/adibf
+  source_url: https://adbookfair.com/en/adibf
+  source_title: Abu Dhabi International Book Fair
+  retrieved_at: '2026-09-29'
+  evidence_kind: community_web
+  is_sample: false
+  is_free: null
+  languages: []
+  tags:
+  - interest:books
+cultural_guides:
+- key: culture.emirati_social_life
+  title: Emirati social life and hospitality
+  topic: etiquette
+  section: culture
+  summary: The UAE Government portal describes the importance of social gatherings in Emirati life, from
+    the traditional majlis to regular family gatherings, the honour with which guests are treated, and
+    traditional greetings between Emirati men.
+  body_markdown: The UAE Government portal describes the importance of social gatherings in Emirati life,
+    from the traditional majlis to regular family gatherings, the honour with which guests are treated,
+    and traditional greetings between Emirati men.
+  language: en
+  source_url: https://u.ae/en/about-the-uae/culture/theaspectsofuaessociallife
+  source_title: Social life | The Official Portal of the UAE Government
+  retrieved_at: '2026-09-29'
+  evidence_kind: official_guidance
+  is_sample: false
+  authority: null
+  position: 0
+- key: culture.ramadan_in_the_uae
+  title: Ramadan in the UAE
+  topic: ramadan
+  section: culture
+  summary: Non-Muslims are not required to fast during Ramadan; malls offer dining areas set apart from
+    those who are fasting, and working hours are reduced by two hours a day for Muslim and non-Muslim
+    employees alike.
+  body_markdown: Non-Muslims are not required to fast during Ramadan; malls offer dining areas set apart
+    from those who are fasting, and working hours are reduced by two hours a day for Muslim and non-Muslim
+    employees alike.
+  language: en
+  source_url: https://u.ae/en/information-and-services/public-holidays-and-religious-affairs/ramadan
+  source_title: Ramadan | The Official Platform of the UAE Government
+  retrieved_at: '2026-09-29'
+  evidence_kind: official_guidance
+  is_sample: false
+  authority: null
+  position: 1
+- key: culture.visitor_etiquette_abu_dhabi
+  title: Local etiquette for visitors and residents
+  topic: etiquette
+  section: culture
+  summary: Visit Abu Dhabi advises being mindful of dress at religious sites, avoiding public displays
+    of affection, not drinking alcohol in public areas outside licensed venues, and not eating or drinking
+    in public during daylight hours in Ramadan.
+  body_markdown: Visit Abu Dhabi advises being mindful of dress at religious sites, avoiding public displays
+    of affection, not drinking alcohol in public areas outside licensed venues, and not eating or drinking
+    in public during daylight hours in Ramadan.
+  language: en
+  source_url: https://visitabudhabi.ae/en/plan-your-trip/article-hub/things-to-know-before-travelling-to-abudhabi
+  source_title: 9 Tips for Planning Your Abu Dhabi Trip | Experience Abu Dhabi
+  retrieved_at: '2026-09-29'
+  evidence_kind: community_web
+  is_sample: false
+  authority: null
+  position: 2
+- key: culture.mosque_manners
+  title: Dress code and manners at Sheikh Zayed Grand Mosque
+  topic: dress
+  section: culture
+  summary: Women are asked to wear loose, ankle-length clothing with sleeves to the wrist and to cover
+    their hair; men should avoid sleeveless, tight or transparent tops. Photography is allowed only at
+    designated stops, and food, smoking and intimate expressions are not permitted.
+  body_markdown: Women are asked to wear loose, ankle-length clothing with sleeves to the wrist and to
+    cover their hair; men should avoid sleeveless, tight or transparent tops. Photography is allowed only
+    at designated stops, and food, smoking and intimate expressions are not permitted.
+  language: en
+  source_url: https://szgmc.gov.ae/en/worshippers/en-w-mosque-manners
+  source_title: Mosque Manners
+  retrieved_at: '2026-09-29'
+  evidence_kind: official_guidance
+  is_sample: false
+  authority: null
+  position: 3
+- key: culture.qasr_al_hosn
+  title: Qasr Al Hosn
+  topic: heritage
+  section: culture
+  summary: Described as the oldest and most significant building in Abu Dhabi, the fort began as a watchtower
+    guarding the settlement, has served many governmental roles, and is now a museum telling the story
+    of Abu Dhabi's development, with year-round heritage programming.
+  body_markdown: Described as the oldest and most significant building in Abu Dhabi, the fort began as
+    a watchtower guarding the settlement, has served many governmental roles, and is now a museum telling
+    the story of Abu Dhabi's development, with year-round heritage programming.
+  language: en
+  source_url: https://qasralhosn.ae/en/qasralhosn
+  source_title: Historical landmarks in Abu Dhabi, UAE | Qasr Al Hosn
+  retrieved_at: '2026-09-29'
+  evidence_kind: community_web
+  is_sample: false
+  authority: null
+  position: 4
+- key: culture.louvre_abu_dhabi
+  title: Louvre Abu Dhabi
+  topic: arts
+  section: culture
+  summary: An art museum on Saadiyat Island designed by Jean Nouvel and created through an agreement between
+    the governments of Abu Dhabi and France, with a collection spanning human history that focuses on
+    connections between cultures.
+  body_markdown: An art museum on Saadiyat Island designed by Jean Nouvel and created through an agreement
+    between the governments of Abu Dhabi and France, with a collection spanning human history that focuses
+    on connections between cultures.
+  language: en
+  source_url: https://www.louvreabudhabi.ae/
+  source_title: Explore Louvre Abu Dhabi, an Art Museum in Abu Dhabi | Book Tickets
+  retrieved_at: '2026-09-29'
+  evidence_kind: community_web
+  is_sample: false
+  authority: null
+  position: 5
+- key: culture.cultural_foundation
+  title: Cultural Foundation Abu Dhabi
+  topic: arts
+  section: culture
+  summary: A home for Abu Dhabi's culture presenting contemporary, popular and home-grown performing arts
+    including music, dance and theatre, and housing the Abu Dhabi Children's Library.
+  body_markdown: A home for Abu Dhabi's culture presenting contemporary, popular and home-grown performing
+    arts including music, dance and theatre, and housing the Abu Dhabi Children's Library.
+  language: en
+  source_url: https://culturalfoundation.ae/en/
+  source_title: Cultural Foundation | Home of Abu Dhabi's Culture
+  retrieved_at: '2026-09-29'
+  evidence_kind: community_web
+  is_sample: false
+  authority: null
+  position: 6
+- key: lifestyle.working_week
+  title: The working week and weekend
+  topic: workplace
+  section: surprises
+  summary: The UAE federal government works a four-and-a-half-day week, Monday to Thursday plus a half
+    day on Friday, with Saturday and Sunday as the official weekend; the Abu Dhabi government has adopted
+    a similar system.
+  body_markdown: The UAE federal government works a four-and-a-half-day week, Monday to Thursday plus
+    a half day on Friday, with Saturday and Sunday as the official weekend; the Abu Dhabi government has
+    adopted a similar system.
+  language: en
+  source_url: https://u.ae/en/information-and-services/jobs/Sector-of-employment/working-in-uae-government-sector/working-hours-in-the-public-sector
+  source_title: Working hours in the public sector | The Official Portal of the UAE Government
+  retrieved_at: '2026-09-29'
+  evidence_kind: official_guidance
+  is_sample: false
+  authority: null
+  position: 0
+- key: lifestyle.midday_outdoor_work_break
+  title: Summer midday break for outdoor work
+  topic: workplace
+  section: surprises
+  summary: Work under direct sunlight and in open places is not allowed during peak midday hours in the
+    summer months under a Ministerial Resolution, with limited exemptions for technical or urgent tasks.
+  body_markdown: Work under direct sunlight and in open places is not allowed during peak midday hours
+    in the summer months under a Ministerial Resolution, with limited exemptions for technical or urgent
+    tasks.
+  language: en
+  source_url: https://u.ae/en/information-and-services/jobs/Workplace-regulations/health-and-safety-at-workplace
+  source_title: Health and safety at workplace | The Official Platform of the UAE Government
+  retrieved_at: '2026-09-29'
+  evidence_kind: official_guidance
+  is_sample: false
+  binding: true
+  authority: null
+  position: 1
+- key: lifestyle.ramadan_reduced_working_hours
+  title: Shorter working hours during Ramadan
+  topic: ramadan
+  section: surprises
+  summary: Private-sector working hours are set at 8 hours a day or 48 hours a week, and are reduced by
+    two hours every day during the holy month of Ramadan.
+  body_markdown: Private-sector working hours are set at 8 hours a day or 48 hours a week, and are reduced
+    by two hours every day during the holy month of Ramadan.
+  language: en
+  source_url: https://u.ae/en/information-and-services/jobs/Sector-of-employment/employment-in-the-private-sector/working-hours
+  source_title: Working hours and overtime | The Official Platform of the UAE Government
+  retrieved_at: '2026-09-29'
+  evidence_kind: official_guidance
+  is_sample: false
+  binding: true
+  authority: null
+  position: 2
+- key: lifestyle.dress_in_public_places
+  title: What to wear in public places
+  topic: dress
+  section: surprises
+  summary: Short or tight clothing may be worn but attracts attention; malls and resorts are more relaxed,
+    shoulders and legs should be covered in government offices, regular swimwear is fine on beaches, and
+    more conservative dress is recommended during Ramadan.
+  body_markdown: Short or tight clothing may be worn but attracts attention; malls and resorts are more
+    relaxed, shoulders and legs should be covered in government offices, regular swimwear is fine on beaches,
+    and more conservative dress is recommended during Ramadan.
+  language: en
+  source_url: https://visitabudhabi.ae/en/plan-your-trip/essential-info/climate-and-what-to-wear
+  source_title: Climate and What to Wear | Experience Abu Dhabi
+  retrieved_at: '2026-09-29'
+  evidence_kind: community_web
+  is_sample: false
+  authority: null
+  position: 3
+- key: lifestyle.photographing_people
+  title: Asking before photographing people
+  topic: etiquette
+  section: surprises
+  summary: Visit Abu Dhabi advises that it is polite to ask permission before photographing people, particularly
+    women, and that photographing government buildings, military installations, ports and airports is
+    prohibited.
+  body_markdown: Visit Abu Dhabi advises that it is polite to ask permission before photographing people,
+    particularly women, and that photographing government buildings, military installations, ports and
+    airports is prohibited.
+  language: en
+  source_url: https://visitabudhabi.ae/en/faqs
+  source_title: Abu Dhabi FAQs | Experience Abu Dhabi
+  retrieved_at: '2026-09-29'
+  evidence_kind: community_web
+  is_sample: false
+  authority: null
+  position: 4
+- key: lifestyle.summer_heat_safety
+  title: Staying safe in the summer heat
+  topic: climate
+  section: surprises
+  summary: The Abu Dhabi Public Health Centre's Safety in Heat programme raises awareness of the risks
+    of extreme summer temperatures, stressing adequate hydration, recognising the symptoms of heat-related
+    illness, and safe work practices in the heat.
+  body_markdown: The Abu Dhabi Public Health Centre's Safety in Heat programme raises awareness of the
+    risks of extreme summer temperatures, stressing adequate hydration, recognising the symptoms of heat-related
+    illness, and safe work practices in the heat.
+  language: en
+  source_url: https://www.adphc.gov.ae/en/Public-Health-Programs/Injury-Prevention/Safety-in-Heat
+  source_title: Safety in Heat
+  retrieved_at: '2026-09-29'
+  evidence_kind: official_guidance
+  is_sample: false
+  authority: null
+  position: 5
+- key: starter_kit.tamm
+  title: TAMM (Abu Dhabi government services)
+  topic: government_services
+  section: starter_kit
+  summary: The Abu Dhabi Government's single point of access to government services, available online
+    and through a mobile app, where users can also contact the government and submit complaints and feedback.
+  body_markdown: The Abu Dhabi Government's single point of access to government services, available online
+    and through a mobile app, where users can also contact the government and submit complaints and feedback.
+  language: en
+  source_url: https://www.tamm.abudhabi/
+  source_title: TAMM - Abu Dhabi Government Services
+  retrieved_at: '2026-09-29'
+  evidence_kind: official_guidance
+  is_sample: false
+  authority: null
+  position: 0
+- key: starter_kit.icp_emirates_id
+  title: Emirates ID and residency (ICP)
+  topic: government_services
+  section: starter_kit
+  summary: The Federal Authority for Identity, Citizenship, Customs & Port Security handles Emirates ID
+    issuance and renewal, residency permits, visas and passport services.
+  body_markdown: The Federal Authority for Identity, Citizenship, Customs & Port Security handles Emirates
+    ID issuance and renewal, residency permits, visas and passport services.
+  language: en
+  source_url: https://icp.gov.ae/en/
+  source_title: UAE ICP | Federal Authority for Identity, Citizenship, Customs & Port Security
+  retrieved_at: '2026-09-29'
+  evidence_kind: official_guidance
+  is_sample: false
+  authority: null
+  position: 1
+- key: starter_kit.health_insurance_abu_dhabi
+  title: Health insurance in Abu Dhabi
+  topic: health
+  section: starter_kit
+  summary: In the emirate of Abu Dhabi, employers and sponsors are responsible for providing health insurance
+    for their employees and their families (a spouse and up to three children under 18).
+  body_markdown: In the emirate of Abu Dhabi, employers and sponsors are responsible for providing health
+    insurance for their employees and their families (a spouse and up to three children under 18).
+  language: en
+  source_url: https://u.ae/en/information-and-services/health-and-fitness/Healthcare-access-and-insurance/getting-a-health-insurance
+  source_title: Getting a health insurance | The Official Portal of the UAE Government
+  retrieved_at: '2026-09-29'
+  evidence_kind: official_guidance
+  is_sample: false
+  binding: true
+  authority: null
+  position: 2
+- key: starter_kit.public_transport_hafilat
+  title: Public buses and Hafilat cards (Abu Dhabi Mobility)
+  topic: transport
+  section: starter_kit
+  summary: Abu Dhabi Mobility (the Integrated Transport Centre) runs public transport services across
+    Abu Dhabi, Al Ain and Al Dhafra; the page links to information on Hafilat smart cards and public bus
+    fares.
+  body_markdown: Abu Dhabi Mobility (the Integrated Transport Centre) runs public transport services across
+    Abu Dhabi, Al Ain and Al Dhafra; the page links to information on Hafilat smart cards and public bus
+    fares.
+  language: en
+  source_url: https://admobility.gov.ae/en/pb-bus-service
+  source_title: Public Transport Services
+  retrieved_at: '2026-09-29'
+  evidence_kind: official_guidance
+  is_sample: false
+  authority: null
+  position: 4
+- key: starter_kit.darb_road_tolls
+  title: Darb road tolls
+  topic: transport
+  section: starter_kit
+  summary: Darb is Abu Dhabi's road tolling system, charging vehicles that pass through toll gates during
+    designated peak hours; it was established under an Abu Dhabi law to ease congestion and encourage
+    public transport use.
+  body_markdown: Darb is Abu Dhabi's road tolling system, charging vehicles that pass through toll gates
+    during designated peak hours; it was established under an Abu Dhabi law to ease congestion and encourage
+    public transport use.
+  language: en
+  source_url: https://admobility.gov.ae/en/darb-fees
+  source_title: DARB – Abu Dhabi Tolling System
+  retrieved_at: '2026-09-29'
+  evidence_kind: official_guidance
+  is_sample: false
+  binding: true
+  authority: null
+  position: 7
+- key: starter_kit.abu_dhabi_police
+  title: Abu Dhabi Police
+  topic: safety
+  section: starter_kit
+  summary: The Abu Dhabi Police site lists emergency contacts and offers e-services such as traffic fine
+    payment, driving licences and vehicle registration, plus the Aman service for reporting community
+    safety concerns.
+  body_markdown: The Abu Dhabi Police site lists emergency contacts and offers e-services such as traffic
+    fine payment, driving licences and vehicle registration, plus the Aman service for reporting community
+    safety concerns.
+  language: en
+  source_url: https://www.adpolice.gov.ae/en
+  source_title: Welcome to Abu Dhabi Police GHQ Website
+  retrieved_at: '2026-09-29'
+  evidence_kind: official_guidance
+  is_sample: false
+  authority: null
+  position: 6
+- key: starter_kit.utilities_taqa_distribution
+  title: Electricity and water (TAQA Distribution)
+  topic: utilities
+  section: starter_kit
+  summary: Electricity and water distribution in the emirate of Abu Dhabi is handled by TAQA Distribution,
+    formed from the merger of ADDC and AADC; residents apply for service and can pay bills online, by
+    app, at kiosks or at service centres.
+  body_markdown: Electricity and water distribution in the emirate of Abu Dhabi is handled by TAQA Distribution,
+    formed from the merger of ADDC and AADC; residents apply for service and can pay bills online, by
+    app, at kiosks or at service centres.
+  language: en
+  source_url: https://u.ae/en/information-and-services/housing/public-utilities
+  source_title: Public utilities | The Official Portal of the UAE Government
+  retrieved_at: '2026-09-29'
+  evidence_kind: official_guidance
+  is_sample: false
+  authority: null
+  position: 3
+- key: starter_kit.handling_emergencies
+  title: Handling emergencies in the UAE
+  topic: safety
+  section: starter_kit
+  summary: The UAE Government portal explains which authorities to contact for crimes, medical emergencies,
+    natural disasters and workplace accidents, and describes the National Early Warning System that sends
+    text alerts about dangerous weather.
+  body_markdown: The UAE Government portal explains which authorities to contact for crimes, medical emergencies,
+    natural disasters and workplace accidents, and describes the National Early Warning System that sends
+    text alerts about dangerous weather.
+  language: en
+  source_url: https://u.ae/en/information-and-services/justice-safety-and-the-law/Safety/handling-emergencies
+  source_title: Handling emergencies | The Official Portal of the UAE Government
+  retrieved_at: '2026-09-29'
+  evidence_kind: official_guidance
+  is_sample: false
+  authority: null
+  position: 5

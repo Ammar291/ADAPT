@@ -1,0 +1,658 @@
+# Business cluster: company formation on the Abu Dhabi mainland (ADDED / u.ae), incorporation
+# in ADGM (Registration Authority), ADGM employee work permits / visa prerequisites, UAE
+# corporate tax registration (FTA / EmaraTax), and the ADRO Golden Visa route for entrepreneurs.
+# Every URL below was loaded on retrieved_at (or, for `search_snippet` records, appeared verbatim
+# in search results because adgm.com HTML pages sit behind a Cloudflare challenge). `quote`
+# passages are verbatim (whitespace normalised); `paraphrase` passages stay within what the page
+# says. No fees, fines, processing times, penalty amounts or capital/revenue amounts are recorded.
+# TAMM service pages (tamm.abudhabi) render as empty JavaScript shells and could not be read.
+
+sources:
+  # --- Abu Dhabi mainland: ADDED -------------------------------------------------------
+  - key: added.establish_your_business
+    title: "Establishing your business"
+    url: https://www.added.gov.ae/en/set-up/establish-your-business
+    authority: authority.added
+    source_type: guidance_page
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: null
+    last_updated: 2026-09-24
+    topics: [company_formation]
+    verification: fetched
+    notes: >-
+      The identical stamp "Page was last updated on: 24 Sep 2026 11:56:33 AM" also appears on
+      other ADDED pages, so it may be a site-wide publish time rather than a page-specific edit.
+    passages:
+      - key: business_activity
+        section: "Business activity"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          Determining the nature of your business activity is the first step to getting your
+          business legally recognised under one of the six types of licences available:
+          industrial, commercial, professional, tourism, agricultural or occupational.
+      - key: trade_name
+        section: "Trade name"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          Remember to choose a unique name that resonates with your business and register it
+          with ADDED.
+      - key: initial_approval
+        section: "Initial approval"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          Simultaneously, you must apply for an initial approval from ADDED which will help you
+          proceed further and launch your business faster
+      - key: contractual_agreements
+        section: "Contractual agreements"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          Depending on your legal form and ownership criteria, you may need to draft a
+          Memorandum of Association (MOA) or a Local Service Agent Agreement (LSA).
+      - key: business_location
+        section: "Business location"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          Next, you must find a suitable business location and obtain a tenancy contract. Learn
+          more about Office Space and Renting.
+      - key: additional_approvals
+        section: "Additional Approvals"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          Depending on your activity and location, you may need additional approvals from other
+          entities, such as the Abu Dhabi Municipality, the Department of Health, the Abu Dhabi
+          Tourism Authority, etc.
+      - key: business_licence
+        section: "Business licence"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          Submitted all the required documents and paid the fees? Congratulations, you’re ready
+          to obtain your final business licence!
+      - key: online_via_tamm
+        section: "Office space and rental"
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          ADDED says that, as an alternative to the step-by-step process, investors can use its
+          platforms such as TAMM to start a business online and get the licence. Its office-space
+          guidance lists finding premises, verifying that the location and premises comply with
+          business requirements in the Emirate of Abu Dhabi, and obtaining a rental agreement or
+          tenancy contract (which validates the right to operate on the premises); a business that
+          does not need physical premises can get a licence to operate online through TAMM.
+
+  - key: added.licensing_requirements
+    title: "Licensing Requirements"
+    url: https://www.added.gov.ae/en/set-up/establish-your-business/licensing-requirements
+    authority: authority.added
+    source_type: guidance_page
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: null
+    last_updated: 2026-09-24
+    topics: [company_formation]
+    verification: fetched
+    notes: >-
+      Same site-wide-looking "last updated" stamp as added.establish_your_business.
+    passages:
+      - key: apply_via_tamm
+        section: "Licensing Requirements"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          ADDED streamlines the processing of licenses and permits required to engage in
+          commercial activities. You can choose from and apply for the licenses you need through
+          our eServices on TAMM.
+      - key: primary_services
+        section: "Primary and secondary licensing services"
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          ADDED lists its primary licensing services as reserving a trade name, issuing an
+          economic licence, renewing an economic licence, cancelling an economic licence, amending
+          an economic licence and mortgaging an economic licence.
+      - key: standard_licence
+        section: "Types of Economic Licences"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          This is a standard economic licence that permits practicing a business in the Emirate
+          of Abu Dhabi. This licence accommodates all legal forms of business and adheres to
+          traditional procedures of establishing a business.
+      - key: freelancer_licence
+        section: "Types of Economic Licences"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          This licence is available for investors (citizens and foreigners) to practice economic
+          activities in specific fields, remotely without the need for physical office premises.
+      - key: virtual_licence
+        section: "Types of Economic Licences"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          This is an economic licence for individuals residing outside the country who wish to
+          start a business in Abu Dhabi.
+      - key: dual_licence
+        section: "Types of Economic Licences"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          This licence allows establishments registered in the free zones of Abu Dhabi to carry
+          out their activities and manage their business outside the free zones area.
+      - key: abu_dhabi_trader_licence
+        section: "Types of Economic Licences"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          This licence is issued electronically for specific commercial activities to UAE
+          citizens and residents.
+
+  # --- Mainland: UAE Government portal ---------------------------------------------------
+  - key: uae.steps_to_start_a_business_on_the_mainland
+    title: "Steps to start a business on the mainland"
+    url: https://u.ae/en/information-and-services/business/Doing-business/doing-business-on-the-mainland/steps-to-start-a-business-on-the-mainland
+    authority: authority.uae_government
+    source_type: guidance_page
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: null
+    last_updated: 2026-07-16
+    topics: [company_formation]
+    verification: fetched
+    notes: >-
+      Federal, emirate-generic page. Its licence document list includes a Dubai-specific item
+      (lease attested by RERA) and its local-service-agent note may be out of date relative to
+      u.ae's own full-foreign-ownership page (uae.full_foreign_ownership_of_commercial_companies).
+    passages:
+      - key: standard_process_steps
+        section: "Starting a business through the standard process"
+        excerpt: paraphrase
+        states_requirement: true
+        text: >-
+          Starting a business on the mainland the conventional way involves identifying a
+          business activity, selecting an appropriate legal form, applying for a trade licence,
+          registering the trade name, applying for an initial approval, drafting a Memorandum of
+          Association and local service agent agreement, selecting a location to conduct
+          business, getting additional government approvals, and submitting documents and paying
+          fees.
+      - key: trade_name_registration
+        section: "Registering the trade name"
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          An investor applies for the trade name through the economic department of each
+          emirate, via its website or mobile application. The local department of economic
+          development registers the trade name, while the Ministry of Economy and Tourism
+          registers the trademark. Trade name certificates are renewable.
+      - key: trade_name_rules
+        section: "Registering the trade name"
+        excerpt: paraphrase
+        states_requirement: true
+        text: >-
+          The trade name must be followed by the legal-form acronym (such as LLC, EST, PJSC,
+          PrJSC); must not violate public morals or public order; must be compatible with the
+          type of activity and the legal status of the business; must not contain names of any
+          religion or governing authority, nor names or logos of external bodies; and must not
+          have been previously registered.
+      - key: initial_approval_meaning
+        section: "Getting the initial approval"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          An initial approval means that the UAE Government has no objection for the business
+          to be established in the country. It also allows the investor to proceed with the next
+          steps in setting up a business. It does not, however, grant the authority to run or
+          practice the business activity.
+      - key: initial_approval_prerequisites
+        section: "Getting the initial approval"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          Foreign investors must obtain the approval of the General Directorate of Residency and
+          Foreigners’ Affairs before getting the initial approval. Some activities require
+          additional approvals from government entities related to that particular business
+          before applying for the initial approval.
+      - key: moa_lsa
+        section: "Signing the MOA and LSA"
+        excerpt: paraphrase
+        states_requirement: true
+        text: >-
+          Depending on the legal form, a completed and signed Memorandum of Association (required
+          for limited partnerships, LLCs, PJSCs and PrJSCs) or a local service agent agreement is
+          required; MoAs are prepared and attested by UAE-based law firms, courts and notary
+          public. The page also states that businesses owned completely by non-GCC residents
+          require a local service agent from the UAE under an attested agreement.
+      - key: business_location
+        section: "Selecting a business location"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          All businesses in the UAE must have a physical address to operate. The business
+          premises and location must comply with the requirements defined by the respective
+          emirate’s Department of Economic Development, as well as the land planning regulations
+          of the local municipalities. Office and warehouse rental agreement must be provided.
+      - key: licence_documents
+        section: "Collecting the business licence"
+        excerpt: paraphrase
+        states_requirement: true
+        text: >-
+          After completing the earlier steps, the investor collects the business licence from the
+          economic department's service centres or websites. Documents listed for all legal forms
+          are the initial approval receipt and previously submitted documents, the lease contract
+          (the page cites RERA attestation in Dubai), a duly attested Memorandum of Association,
+          approvals from other government entities as required, and a duly attested service agent
+          contract for civil establishments and companies 100 per cent owned by non-GCC nationals.
+
+  - key: uae.full_foreign_ownership_of_commercial_companies
+    title: "Full foreign ownership of commercial companies"
+    url: https://u.ae/en/information-and-services/business/Doing-business/doing-business-on-the-mainland/full-foreign-ownership-of-commercial-companies
+    authority: authority.uae_government
+    source_type: guidance_page
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: null
+    last_updated: 2026-04-06
+    topics: [company_formation]
+    verification: fetched
+    passages:
+      - key: full_ownership
+        section: "Full foreign ownership of commercial companies"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          The UAE Government amended the Commercial Companies Law, granting foreign investors full
+          ownership of specific businesses. This means that foreign investors’ share will not be
+          limited to 49 per cent as before; instead, it can be as much as 100 per cent.
+      - key: decree_law
+        section: "Federal law on commercial companies"
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          Federal Decree-Law No. 26 of 2020, in effect from early 2021, permitted 100 per cent
+          foreign ownership of mainland companies and removed the requirement for 51 per cent
+          Emirati ownership or a local agent for most business activities, while strategic sectors
+          still require approvals; the changes were later consolidated by Federal Decree-Law No. 32
+          of 2021 on Commercial Companies. It also removed the obligation for branches of foreign
+          companies to appoint a UAE national service agent.
+      - key: restricted_activities
+        section: "Restricted activities"
+        excerpt: paraphrase
+        states_requirement: true
+        text: >-
+          The Cabinet determines activities of strategic impact and may set licensing requirements
+          for them, including restrictions on foreign ownership. Activities listed as not allowed
+          to be fully foreign-owned include security, defence and military activities;
+          telecommunications; banks, exchange, financing, insurance and note or coin production;
+          commercial agencies; Hajj and Umrah organising; Holy Quran recitation institutes; and
+          fish, natural pearl and marine animal catching.
+
+  # --- ADGM -----------------------------------------------------------------------------
+  - key: adgm.registration_authority
+    title: "Registration Authority (RA) | ADGM"
+    url: https://www.adgm.com/registration-authority
+    authority: authority.adgm
+    source_type: guidance_page
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: null
+    last_updated: null
+    topics: [adgm, company_formation]
+    verification: search_snippet
+    notes: >-
+      adgm.com returns a Cloudflare challenge (HTTP 403) to curl and WebFetch; this record rests
+      on a search-result snippet for an exact-phrase query. Review on the live page.
+    passages:
+      - key: ra_role
+        section: null
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          The ADGM Registration Authority is responsible for the registration, incorporation and
+          licensing of legal entities in ADGM, and supports them with government-related services.
+
+  - key: adgm.online_registry_solution
+    title: "The ADGM Online Registry Solution"
+    url: https://www.adgm.com/operating-in-adgm/e-services/online-registry-solution
+    authority: authority.adgm
+    source_type: portal_page
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: null
+    last_updated: null
+    topics: [adgm, company_formation]
+    verification: search_snippet
+    notes: >-
+      Page blocked by a Cloudflare challenge; passages paraphrase search-result snippets. The
+      portal's current web address is not confirmed (the 2020 incorporation guide names
+      www.registration.adgm.com; search results also show newreg.adgm.com).
+    passages:
+      - key: register_online
+        section: null
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          The Online Registry Solution is ADGM's digital platform that lets applicants register
+          and maintain their company through online services without needing to visit the ADGM
+          offices.
+      - key: registry_functions
+        section: null
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          The Online Registry Solution is used to register and incorporate entities and to search
+          for entities and their details; other registration services, such as charges and the
+          recognition of auditors, are also fulfilled digitally through it.
+
+  - key: adgm.non_financial_incorporation_guide
+    title: "Non-Financial Incorporation Guide"
+    url: https://assets.adgm.com/download/assets/Application+Guide-Non-Financial-Incorporation.pdf/b6d2d2c65aff11ef9f105a09db51114c
+    authority: authority.adgm
+    source_type: guidance_page
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: null
+    last_updated: null
+    topics: [adgm, company_formation]
+    verification: fetched
+    notes: >-
+      PDF published by ADGM; the document itself carries no date, but its PDF metadata shows it
+      was created in May 2020, so screen names and the portal address may be out of date.
+    passages:
+      - key: scope
+        section: "Introduction"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          You can use this guide if you are registering a new company and your activity is
+          non-financial.
+      - key: documents_to_prepare
+        section: "Let's Get Started!"
+        excerpt: paraphrase
+        states_requirement: true
+        text: >-
+          Documents to have ready: information about the business; a resolution (template
+          available); Articles of Association (model articles available); a signed lease
+          agreement; passport copies of directors, authorised signatories and individual
+          shareholders; a copy of the valid UAE residence visa of authorised signatories;
+          certified true copies of the certificate of registration or incorporation of any body
+          corporate directors or shareholders; data processor details (if appointed); and, if the
+          entity is subject to anti-money-laundering regulations, the MLRO's CV and an AML manual.
+          The Registrar can request further documentation at any time.
+      - key: signatory_residency
+        section: "Let's Get Started!"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          At least one signatory must be GCC national or hold a valid UAE residence visa.
+      - key: digital_application
+        section: "Where to access the application form"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          Applications are only accepted digitally and can be accessed at
+          www.registration.adgm.com and you have to complete the following forms: a) Business
+          Application and b) Application to Incorporate a Company Limited by Shares
+      - key: application_sequence
+        section: "Application to Incorporate a Private Company Limited by Shares"
+        excerpt: paraphrase
+        states_requirement: true
+        text: >-
+          The applicant first creates a user and submits a Business Application (Online Services,
+          Companies, Pre-Registration). The Application to Incorporate a Private Company Limited by
+          Shares can be completed once the Business Application has been approved.
+      - key: form_sections
+        section: "Application form sections"
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          The incorporation application has ten sections: General Details, Addresses, Authorised
+          Signatories, Director, Secretary, Shares and Shareholders, Anti-Money Laundering, Data
+          Protection, Beneficial Owners, and Review. Company names can be reserved in advance and
+          selected in the form.
+      - key: physical_address
+        section: "Section 2: Addresses"
+        excerpt: paraphrase
+        states_requirement: true
+        text: >-
+          Having a physical address in ADGM is described as a core principle to being granted a
+          commercial licence. Applicants enter the registered office address on Al Maryah Island
+          and upload a signed office lease agreement.
+
+  - key: adgm.tech_startup_licence_faq
+    title: "Frequently Asked Questions (FAQs) | ADGM"
+    url: https://adgm.com/faqs/adgm-tech-start-up-commercial-licence
+    authority: authority.adgm
+    source_type: faq
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: null
+    last_updated: null
+    topics: [adgm, company_formation]
+    verification: search_snippet
+    notes: >-
+      Tech Start-up Commercial Licence FAQ. Page blocked by a Cloudflare challenge; passages
+      paraphrase search-result snippets returned alongside this URL. Review on the live page.
+    passages:
+      - key: hub71_approval_letter
+        section: null
+        excerpt: paraphrase
+        states_requirement: true
+        text: >-
+          Applications for the ADGM tech start-up licence must be accompanied by a Hub71 approval
+          (eligibility) letter. Applicants must first apply to Hub71 for this letter; applications
+          without it are not accepted (as of July 2024).
+      - key: office_space
+        section: null
+        excerpt: paraphrase
+        states_requirement: true
+        text: >-
+          Tech start-ups must maintain an ADGM office address: physical office space on Al Maryah
+          Island with at least one dedicated desk or office (hot-desks are not accepted), evidenced
+          by an executed lease agreement or membership agreement.
+
+  - key: adgm.ra_work_permit_guide
+    title: "Work Permit Guide – Registration Authority (August 2025)"
+    url: https://assets.adgm.com/download/assets/ADGM+RA+Work+Permit+Guide.pdf/3b295b4487ce11ef8ad1064e6f3513dc
+    authority: authority.adgm
+    source_type: guidance_page
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: null
+    last_updated: null
+    topics: [adgm, residency]
+    verification: fetched
+    notes: >-
+      Cover dated "August 2025" (month only). The guide describes itself as non-binding and
+      cites the ADGM Employment Regulations 2019.
+    passages:
+      - key: work_permit_definition
+        section: "Part1: Work Permits"
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          An ADGM work permit grants an employee of an ADGM Licensed Person permission to work in
+          or from the geographical jurisdiction of ADGM. The ADGM Registration Authority is the
+          sole issuing authority for work permits.
+      - key: employer_responsibility
+        section: "Part1: Work Permits"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          As per the Regulations, the ADGM Licensed Person shall be responsible for obtaining,
+          maintaining and paying the cost of an employee's work permit and, as applicable, the
+          UAE residency visa and UAE identity card.
+      - key: establishment_card_prerequisite
+        section: "Part1: Work Permits"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          In order for an ADGM Licensed Person to obtain an employment visa/Work Permit for its
+          employees, the entity must hold a valid establishment card and an E-Channels account
+          with ADGM.
+      - key: accessadgm_channel
+        section: "Part1: Work Permits"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          The Corporate Relations division of the ADGM Registration Authority processes
+          applications for Work Permits for employees of ADGM Licensed Persons through the
+          ACCESSADGM portal.
+      - key: sponsored_employees
+        section: "1) Employees sponsored by ADGM Licensed Persons"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          This category covers employees who are not UAE/GCC nationals and are sponsored by an
+          ADGM Licensed Person. Employment visas for these employees shall be facilitated by the
+          ADGM Registration Authority. The Work Permit will be issued upon the issuance of the
+          employment visa.
+      - key: uae_gcc_nationals
+        section: "b) UAE & GCC Nationals"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          UAE and GCC nationals are not required to obtain an employment visa; however, the ADGM
+          Licensed Person must obtain a Work Permit for those employees that enables them to work
+          in the geographical jurisdiction of ADGM.
+      - key: temporary_work_permits
+        section: "Part 2: Temporary Work Permits"
+        excerpt: paraphrase
+        states_requirement: true
+        text: >-
+          An ADGM Licensed Person must apply for a temporary work permit for any non-employee
+          engaged to perform work or provide services in ADGM. Recipients must hold a valid UAE
+          residence visa (valid for longer than the permit period) or be UAE/GCC nationals.
+
+  # --- Corporate tax: FTA ---------------------------------------------------------------
+  - key: fta.corporate_tax_registration
+    title: "Corporate Tax Registration"
+    url: https://tax.gov.ae/en/services/corporate.tax.registration.aspx
+    authority: authority.fta
+    source_type: service_page
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: null
+    last_updated: 2026-08-19
+    topics: [corporate_tax]
+    verification: fetched
+    passages:
+      - key: service_description
+        section: "Service Description"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          This service enables all persons subject to Corporate Tax to submit a registration
+          application to the Federal Tax Authority, in order to obtain a Corporate Tax
+          Registration Number and comply with the applicable tax obligations.
+      - key: juridical_persons_must_register
+        section: "FAQs"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          All juridical persons subject to Corporate Tax are required to register with the
+          Federal Tax Authority and obtain a Corporate Tax Registration Number in accordance with
+          the provisions of the Federal Tax Authority Decision No. (3) of 2024 regarding the
+          specified timeline for the registration of persons subject to Corporate Tax and
+          Business Tax.
+      - key: natural_persons_must_register
+        section: "FAQs"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          Natural persons are required to register for Corporate Tax if they conduct a business
+          or business activity in the United Arab Emirates and their annual revenues exceed the
+          registration threshold specified under the Corporate Tax Law.
+      - key: channel_emaratax
+        section: "Channels and working hours"
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          The service is delivered through the EmaraTax platform, available 24 hours a day, 7 days
+          a week. A banner on the FTA site states that FTA services are only available through
+          UAE PASS.
+      - key: required_documents
+        section: "Required Documents and Forms"
+        excerpt: paraphrase
+        states_requirement: true
+        text: >-
+          Required documents: the Certificate of Incorporation, Memorandum of Association or
+          Partnership Agreement (if available); the Commercial Registration Certificate or any
+          official document issued by the licensing authority; a valid trade licence, including
+          branch licences if applicable; the Emirates ID and passport of any owner holding more
+          than 25 per cent and of authorised signatories; and proof of authorisation for the
+          signatory. Files are uploaded as PDF.
+      - key: procedure_steps
+        section: "Procedures and Steps"
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          Register and activate an EmaraTax account, open the account dashboard, create a new
+          Taxable Person profile, open the Taxable Person account, choose Register from the
+          Corporate Tax action menu, then complete the application and submit it for review.
+
+  # --- ADRO: Golden Visa for entrepreneurs -------------------------------------------------
+  - key: adro.golden_visa_entrepreneurs
+    title: "Abu Dhabi Golden Visa for Entrepreneurs"
+    url: https://www.adro.gov.ae/en/Visas/Types-of-Visas/Abu-Dhabi-Golden-Visa/Entrepreneurs
+    authority: authority.adro
+    source_type: guidance_page
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: null
+    last_updated: null
+    topics: [residency, company_formation, newcomer]
+    verification: fetched
+    notes: >-
+      Revenue and sale-value thresholds stated on the page are deliberately not recorded.
+    passages:
+      - key: overview
+        section: "Abu Dhabi Golden Visa for Entrepreneurs"
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          The Abu Dhabi Golden Visa for Entrepreneurs has a duration of 10 years. The page says
+          business owners relocating to Abu Dhabi can sponsor themselves, their family and
+          employees with a long-term visa.
+      - key: eligibility
+        section: "Criteria"
+        excerpt: paraphrase
+        states_requirement: true
+        text: >-
+          Eligible applicants are (a) an owner or partner whose pioneering business project
+          concept has been approved by an approved business incubator, the Ministry of Economy,
+          ICP or a competent local authority; or (b) an owner or partner in a pioneering project
+          in an approved sector, classified as an SME and meeting the minimum annual revenue
+          stated on the page; or (c) a founder of previous pioneering project(s) sold for at least
+          the total value stated on the page, subject to approval.
+      - key: incubator_nomination
+        section: "Requirements"
+        excerpt: paraphrase
+        states_requirement: true
+        text: >-
+          All three entrepreneur routes require a nomination issued by a business incubator in the
+          UAE. Applications made through the Abu Dhabi Residents Office web app are sent
+          automatically to the relevant business incubator for nomination.
+      - key: owner_partner_documents
+        section: "Requirements"
+        excerpt: paraphrase
+        states_requirement: true
+        text: >-
+          An owner or partner in a pioneering project provides a trade licence, financial or
+          social certificates (required by Hub71 and Ma'an respectively), audited financial
+          statements for the past two years, a company profile or deck, a LinkedIn profile, and
+          the business incubator nomination.
+      - key: how_to_apply
+        section: "How to Apply"
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          UAE residents apply for Golden Visa nomination through the Abu Dhabi Residents Office
+          (the page's apply link points to a TAMM Golden Visa nomination service); non-UAE
+          residents are asked to contact e.management@adio.gov.ae to apply for nomination.

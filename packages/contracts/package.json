@@ -1,0 +1,18 @@
+{
+  "name": "@adapt/contracts",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Typed API contracts generated from the ADAPT backend (Pydantic -> OpenAPI -> TypeScript)",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "generate": "openapi-typescript openapi.json --output src/generated/openapi.ts --root-types --root-types-no-schema-prefix --enum-values",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "openapi-typescript": "^7.13.0",
+    "typescript": "^5.9.3"
+  }
+}

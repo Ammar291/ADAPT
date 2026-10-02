@@ -1,0 +1,263 @@
+/*
+ * Knowledge graph explorer.
+ *   --kz        current zoom, kept in sync by the explorer (never re-renders nodes)
+ *   data-lod    far | compact | overview | detail: how much text a node shows at this zoom
+ * Node text is counter-scaled so it never renders below ~10.5px on screen, and strokes keep a
+ * constant on-screen width. Highlighting works by dimming everything under [data-focus] and
+ * lifting one neighbourhood with a generated rule (see emphasisCss).
+ */
+.kg-canvas,
+.kg-legend {
+  --kz: 1;
+  --kg-edge-rest: 0.5;
+}
+.kg-canvas[data-tone="twin"] {
+  --kg-edge-rest: 0.9;
+}
+
+/* --- nodes ------------------------------------------------------------------------------- */
+
+.kg-canvas .react-flow__node {
+  transition: opacity 160ms ease;
+}
+.kg-canvas .react-flow__node.kg-static {
+  pointer-events: none;
+}
+.kg-handle.react-flow__handle {
+  opacity: 0;
+  pointer-events: none;
+  width: 1px;
+  height: 1px;
+  min-width: 0;
+  min-height: 0;
+  border: 0;
+}
+
+.kg-box {
+  transition: box-shadow 160ms ease, border-color 160ms ease;
+}
+.kg-canvas .kg-box {
+  cursor: pointer;
+}
+.kg-canvas .react-flow__node:hover .kg-box {
+  box-shadow: var(--elev-raised);
+}
+/* Keyboard focus stays visible at any zoom. */
+.kg-canvas .react-flow__node:focus-visible > * {
+  outline-width: max(2px, calc(2px / var(--kz)));
+  outline-offset: max(2px, calc(3px / var(--kz)));
+}
+.kg-box.kg-selected {
+  box-shadow: 0 0 0 calc(3px / var(--kz)) var(--kg-ring, var(--civic)), var(--elev-raised);
+}
+
+.kg-label {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--kg-lines, 2);
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  line-height: 1.16;
+  font-size: max(var(--kg-size, 13px), calc(10.5px / var(--kz)));
+}
+.kg-caption {
+  font-size: max(11px, calc(9.5px / var(--kz)));
+  line-height: 1.25;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.kg-acronym {
+  font-size: max(15px, calc(12.5px / var(--kz)));
+  line-height: 1.1;
+  letter-spacing: 0.01em;
+}
+.kg-icon {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+}
+
+/*
+ * Level of detail. detail: caption, icon and the full label; overview: a shorter label on two
+ * lines; compact: one line; far: shapes only (authorities keep their acronym).
+ */
+.kg-canvas:not([data-lod="detail"]) :is(.kg-caption, .kg-icon, .kg-full, .kg-sub):not(.kg-keep) {
+  display: none;
+}
+.kg-canvas[data-lod="detail"] .kg-pill .kg-label {
+  --kg-lines: 1;
+}
+.kg-canvas[data-lod="detail"] .kg-short {
+  display: none;
+}
+.kg-canvas[data-lod="compact"] .kg-label {
+  --kg-lines: 1;
+}
+.kg-canvas[data-lod="far"] .kg-text {
+  visibility: hidden;
+}
+.kg-canvas[data-lod="far"] .kg-authority .kg-text:has(.kg-acronym) {
+  visibility: visible;
+}
+
+/* Column headings stay readable at any zoom. */
+.kg-header-title {
+  font-size: max(15px, calc(12.5px / var(--kz)));
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.kg-header-count {
+  font-size: max(12px, calc(11px / var(--kz)));
+}
+.kg-header-rule {
+  height: max(1px, calc(1px / var(--kz)));
+}
+
+/* --- edges ------------------------------------------------------------------------------- */
+
+.kg-canvas .react-flow__edge {
+  opacity: var(--kg-edge-rest);
+  transition: opacity 160ms ease;
+}
+/* Edges aren't selectable, but hovering one still names its relation. */
+.kg-canvas .react-flow__edge.inactive {
+  pointer-events: visibleStroke;
+}
+.kg-edge {
+  fill: none;
+  stroke: var(--kg-stroke, var(--line-strong));
+  stroke-width: calc(var(--kg-w, 1.2px) * var(--kg-boost, 1) / var(--kz));
+  stroke-linecap: round;
+  transition: stroke-width 160ms ease;
+}
+.kg-edge-hit {
+  fill: none;
+  stroke: transparent;
+  stroke-width: calc(14px / var(--kz));
+}
+.kg-e-depends {
+  --kg-stroke: var(--ink);
+  --kg-w: 1.5px;
+}
+.kg-e-requires {
+  --kg-stroke: var(--ink-muted);
+  --kg-w: 1.3px;
+  stroke-dasharray: calc(6px / var(--kz)) calc(4px / var(--kz));
+}
+.kg-e-may {
+  --kg-stroke: var(--ink-subtle);
+  --kg-w: 1.1px;
+  stroke-dasharray: calc(3px / var(--kz)) calc(5px / var(--kz));
+}
+.kg-e-produces {
+  --kg-stroke: color-mix(in oklab, var(--teal) 72%, var(--line-strong));
+  --kg-w: 1.5px;
+}
+.kg-e-applies {
+  --kg-stroke: var(--civic);
+  --kg-w: 1.6px;
+  stroke-dasharray: 0 calc(4px / var(--kz));
+}
+.kg-e-quiet {
+  --kg-stroke: var(--line-strong);
+  --kg-w: 1.1px;
+}
+.kg-e-private {
+  --kg-stroke: color-mix(in oklab, var(--teal) 55%, var(--line-strong));
+  --kg-w: 1.6px;
+}
+.kg-e-cross {
+  --kg-stroke: var(--civic);
+  --kg-w: 1.4px;
+  stroke-dasharray: calc(6px / var(--kz)) calc(5px / var(--kz));
+}
+.kg-e-blocked {
+  --kg-stroke: var(--danger);
+  --kg-w: 1.7px;
+  stroke-dasharray: calc(6px / var(--kz)) calc(4px / var(--kz));
+}
+.kg-marker-ink {
+  fill: var(--ink);
+}
+.kg-marker-danger {
+  fill: var(--danger);
+}
+
+.kg-pin {
+  position: absolute;
+  pointer-events: none;
+  white-space: nowrap;
+  border-radius: 999px;
+  font-size: max(11px, calc(11px / var(--kz)));
+  line-height: 1.4;
+  padding: 0 0.55em;
+}
+.kg-pin {
+  background: var(--surface);
+  border: max(1px, calc(1px / var(--kz))) solid var(--line-strong);
+  color: var(--ink-muted);
+}
+.kg-pin[data-variant="blocked"] {
+  border-color: color-mix(in oklab, var(--danger) 45%, transparent);
+  color: var(--danger);
+  background: var(--danger-tint);
+}
+.kg-hover-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  pointer-events: none;
+  white-space: nowrap;
+  border-radius: 999px;
+  padding: 2px 10px;
+  font-size: 12px;
+  line-height: 1.4;
+  background: var(--ink);
+  color: var(--canvas);
+  box-shadow: var(--elev-raised);
+}
+.kg-hover-label[hidden] {
+  display: none;
+}
+
+/* --- highlighting -------------------------------------------------------------------------- */
+
+.kg-canvas .react-flow__node.kg-out {
+  opacity: 0.2;
+}
+.kg-canvas .react-flow__edge.kg-out {
+  opacity: 0.05;
+}
+.kg-canvas[data-focus] .react-flow__node:not(.kg-static) {
+  opacity: 0.22;
+}
+.kg-canvas[data-focus] .react-flow__edge {
+  opacity: 0.05;
+}
+
+/* --- legend swatches ------------------------------------------------------------------------ */
+
+.kg-legend .kg-swatch {
+  width: 22px;
+  height: 14px;
+  flex-shrink: 0;
+}
+.kg-legend .kg-line {
+  width: 30px;
+  height: 10px;
+  flex-shrink: 0;
+  overflow: visible;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kg-canvas .react-flow__node,
+  .kg-canvas .react-flow__edge,
+  .kg-box,
+  .kg-edge {
+    transition: none;
+  }
+}

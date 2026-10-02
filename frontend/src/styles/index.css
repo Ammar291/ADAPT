@@ -1,0 +1,437 @@
+@import "tailwindcss";
+@import "@xyflow/react/dist/base.css";
+@import "@fontsource-variable/alexandria";
+@import "@fontsource/ibm-plex-sans-arabic/400.css";
+@import "@fontsource/ibm-plex-sans-arabic/500.css";
+@import "@fontsource/ibm-plex-sans-arabic/600.css";
+
+/*
+ * ADAPT design tokens.
+ *   limestone — app canvas: warm, neutral stone (not cream)
+ *   navy      — text and dark surfaces
+ *   gulf teal — the single action colour
+ *   civic     — slate blue reserved for the public governance graph and official sources
+ *   dune      — amber reserved for community / web-sourced information (never actions)
+ * Journey lines (life areas) have their own muted hues, always paired with a text label.
+ * Trust tiers are encoded by fill and line style as well as colour.
+ */
+:root {
+  --canvas: #f5f5f1;
+  --surface: #ffffff;
+  --surface-sunken: #eeece6;
+  --surface-muted: #f9f8f5;
+  --ink: #0f1c2e;
+  --ink-muted: #4e5a6a;
+  --ink-subtle: #646e7b;
+  --line: #e2e7e3;
+  --line-strong: #cfccc3;
+  --teal: #146c65;
+  --teal-strong: #0e514c;
+  --teal-tint: #e7f1ed;
+  --on-teal: #ffffff;
+  --civic: #34507a;
+  --civic-tint: #e8edf5;
+  --dune: #8f5a0f;
+  --dune-tint: #f7eddb;
+  --danger: #b42331;
+  --danger-tint: #faeaeb;
+  --focus: #0b6e75;
+  --brand-outline: transparent;
+
+  --lane-business: #3e5c99;
+  --lane-residency: #0b6e75;
+  --lane-family: #9b4d7a;
+  --lane-housing: #9a6428;
+  --lane-health: #3e8468;
+  --lane-finance: #5f55a0;
+  --lane-daily_life: #6f6a60;
+  --lane-community: #2f7fa0;
+
+  --elev-card: 0 1px 2px rgb(15 28 46 / 0.04), 0 2px 8px -4px rgb(15 28 46 / 0.08);
+  --elev-raised: 0 1px 2px rgb(15 28 46 / 0.05), 0 8px 24px -12px rgb(15 28 46 / 0.18);
+  --elev-overlay: 0 24px 64px -16px rgb(15 28 46 / 0.32);
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --canvas: #0b1320;
+    --surface: #111b2a;
+    --surface-sunken: #0a111c;
+    --surface-muted: #0e1725;
+    --ink: #e7ecf3;
+    --ink-muted: #a1acbb;
+    --ink-subtle: #8591a1;
+    --line: #1f2b3c;
+    --line-strong: #2e3b4e;
+    --teal: #4db6bc;
+    --teal-strong: #7acdd1;
+    --teal-tint: #0f2c33;
+    --on-teal: #06131b;
+    --civic: #93add9;
+    --civic-tint: #17233a;
+    --dune: #e3a94f;
+    --dune-tint: #2a2112;
+    --danger: #f07b7f;
+    --danger-tint: #35191d;
+    --focus: #7acdd1;
+    --brand-outline: #2e3b4e;
+    --lane-business: #8aa4dc;
+    --lane-residency: #4db6bc;
+    --lane-family: #d38fb6;
+    --lane-housing: #d9a15f;
+    --lane-health: #74c09f;
+    --lane-finance: #a79de0;
+    --lane-daily_life: #b3ad9f;
+    --lane-community: #6fbbdc;
+    --elev-card: 0 1px 2px rgb(0 0 0 / 0.3);
+    --elev-raised: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px -12px rgb(0 0 0 / 0.6);
+    --elev-overlay: 0 24px 64px -16px rgb(0 0 0 / 0.7);
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --canvas: #0b1320;
+  --surface: #111b2a;
+  --surface-sunken: #0a111c;
+  --surface-muted: #0e1725;
+  --ink: #e7ecf3;
+  --ink-muted: #a1acbb;
+  --ink-subtle: #8591a1;
+  --line: #1f2b3c;
+  --line-strong: #2e3b4e;
+  --teal: #4db6bc;
+  --teal-strong: #7acdd1;
+  --teal-tint: #0f2c33;
+  --on-teal: #06131b;
+  --civic: #93add9;
+  --civic-tint: #17233a;
+  --dune: #e3a94f;
+  --dune-tint: #2a2112;
+  --danger: #f07b7f;
+  --danger-tint: #35191d;
+  --focus: #7acdd1;
+  --brand-outline: #2e3b4e;
+  --lane-business: #8aa4dc;
+  --lane-residency: #4db6bc;
+  --lane-family: #d38fb6;
+  --lane-housing: #d9a15f;
+  --lane-health: #74c09f;
+  --lane-finance: #a79de0;
+  --lane-daily_life: #b3ad9f;
+  --lane-community: #6fbbdc;
+  --elev-card: 0 1px 2px rgb(0 0 0 / 0.3);
+  --elev-raised: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px -12px rgb(0 0 0 / 0.6);
+  --elev-overlay: 0 24px 64px -16px rgb(0 0 0 / 0.7);
+  color-scheme: dark;
+}
+
+/* Earlier token names, kept as aliases for code written against the first design system. */
+:root {
+  --salt: var(--canvas);
+  --mangrove: var(--teal);
+  --mangrove-strong: var(--teal-strong);
+  --mangrove-tint: var(--teal-tint);
+  --on-mangrove: var(--on-teal);
+}
+
+@theme inline {
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-sunken: var(--surface-sunken);
+  --color-muted-surface: var(--surface-muted);
+  --color-ink: var(--ink);
+  --color-muted: var(--ink-muted);
+  --color-subtle: var(--ink-subtle);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-primary: var(--teal);
+  --color-primary-strong: var(--teal-strong);
+  --color-primary-tint: var(--teal-tint);
+  --color-on-primary: var(--on-teal);
+  --color-civic: var(--civic);
+  --color-civic-tint: var(--civic-tint);
+  --color-dune: var(--dune);
+  --color-dune-tint: var(--dune-tint);
+  --color-danger: var(--danger);
+  --color-danger-tint: var(--danger-tint);
+  --color-focus: var(--focus);
+  --color-lane-business: var(--lane-business);
+  --color-lane-residency: var(--lane-residency);
+  --color-lane-family: var(--lane-family);
+  --color-lane-housing: var(--lane-housing);
+  --color-lane-health: var(--lane-health);
+  --color-lane-finance: var(--lane-finance);
+  --color-lane-daily_life: var(--lane-daily_life);
+  --color-lane-community: var(--lane-community);
+
+  --font-display: "Alexandria Variable", "IBM Plex Sans Arabic", "Nirmala UI", "Noto Sans Devanagari", "Noto Sans Malayalam", "Noto Sans Tamil", "Noto Sans Telugu", "Noto Sans Kannada", "Microsoft YaHei", "Yu Gothic", system-ui, sans-serif;
+  --font-sans: "IBM Plex Sans Arabic", "Nirmala UI", "Noto Sans Devanagari", "Noto Sans Malayalam", "Noto Sans Tamil", "Noto Sans Telugu", "Noto Sans Kannada", "Microsoft YaHei", "Yu Gothic", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* Type scale (≈1.2 ratio). Body is 15px: dense enough for planning, calm enough to read. */
+  --text-2xs: 0.75rem;
+  --text-2xs--line-height: 1rem;
+  --text-xs: 0.8125rem;
+  --text-xs--line-height: 1.125rem;
+  --text-sm: 0.875rem;
+  --text-sm--line-height: 1.3125rem;
+  --text-base: 0.9375rem;
+  --text-base--line-height: 1.5rem;
+  --text-lg: 1.0625rem;
+  --text-lg--line-height: 1.625rem;
+  --text-xl: 1.25rem;
+  --text-xl--line-height: 1.75rem;
+  --text-2xl: 1.5rem;
+  --text-2xl--line-height: 2rem;
+  --text-3xl: 1.875rem;
+  --text-3xl--line-height: 2.375rem;
+  --text-4xl: 2.375rem;
+  --text-4xl--line-height: 2.875rem;
+  --text-5xl: 3rem;
+  --text-5xl--line-height: 3.375rem;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+
+  --shadow-card: var(--elev-card);
+  --shadow-raised: var(--elev-raised);
+  --shadow-overlay: var(--elev-overlay);
+
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    @apply bg-canvas text-ink font-sans text-base;
+    min-height: 100dvh;
+    font-feature-settings: "kern", "liga";
+  }
+
+  #root { min-height: 100dvh; }
+  button, a, input, textarea, select { touch-action: manipulation; }
+  button:not(:disabled), [role="button"]:not([aria-disabled="true"]) { cursor: pointer; }
+  img, video { max-width: 100%; }
+  input, textarea, select { min-width: 0; }
+  main, dialog { overflow-wrap: anywhere; }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-display text-ink;
+    font-weight: 560;
+    letter-spacing: -0.012em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background: var(--teal-tint);
+  }
+
+  [dir="rtl"] .flip-rtl {
+    transform: scaleX(-1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer utilities {
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .pt-safe {
+    padding-top: env(safe-area-inset-top);
+  }
+  .scrollbar-none {
+    scrollbar-width: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+  /* Faint dot grid for graph canvases. */
+  .canvas-dots {
+    background-image: radial-gradient(var(--line) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+}
+
+@layer components {
+  .workspace-sidebar { background: #142c32; color: #e9f0f2; }
+  .workspace-sidebar .sidebar-link { color: #afc0c7; }
+  .workspace-sidebar .sidebar-link:hover { color: #fff; background: rgb(255 255 255 / 0.06); }
+  .workspace-sidebar .sidebar-link-active { color: #fff; background: #2c494c; box-shadow: inset 3px 0 0 #97cec2; }
+  .workspace-sidebar .sidebar-link-active svg { color: #a5dbcf; }
+  :root[dir="rtl"] .workspace-sidebar .sidebar-link-active { box-shadow: inset -3px 0 0 #97cec2; }
+  .workspace-sidebar a:focus-visible, .workspace-sidebar button:focus-visible { outline-color: #a5dbcf; }
+  .workspace-sidebar > div:first-child .text-ink { color: #e9f0f2; }
+  .adapt-button { line-height: 1.35; padding-block: 0.5rem; }
+  .adapt-button:active:not(:disabled) { transform: translateY(1px); }
+  .adapt-switch::before { content: ""; position: absolute; inset: -10px -4px; }
+  .command-dialog { position: fixed; inset: 12vh 0 auto; margin-inline: auto; padding: 0; border: 0; width: min(600px, calc(100vw - 32px)); max-width: 100vw; background: transparent; color: var(--ink); }
+  .command-dialog::backdrop { background: rgb(8 24 28 / 0.5); backdrop-filter: blur(4px); }
+  .private-banner { background: linear-gradient(100deg, var(--teal-tint), var(--surface)); border: 1px solid var(--line); }
+  .dashboard-summary { background: linear-gradient(120deg, var(--teal-tint), var(--surface) 85%); }
+  @media (max-width: 767px) {
+    .command-dialog { inset: auto 0 0; width: 100%; margin: 0; }
+    .command-dialog > div { border-bottom-left-radius: 0; border-bottom-right-radius: 0; padding-bottom: env(safe-area-inset-bottom); }
+  }
+  /* Native <dialog> sheet: bottom sheet on phones, end-side drawer on larger screens. */
+  .adapt-sheet {
+    position: fixed;
+    inset: auto 0 0 0;
+    width: 100%;
+    max-width: 100vw;
+    max-height: 100dvh;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+  }
+  .adapt-sheet::backdrop {
+    background: rgb(8 14 24 / 0.45);
+  }
+  .adapt-sheet-panel {
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    transition: transform 260ms var(--ease-standard);
+    overflow: hidden;
+  }
+  @starting-style {
+    .adapt-sheet[open] .adapt-sheet-panel {
+      transform: translateY(100%);
+    }
+  }
+  @media (min-width: 768px) {
+    .adapt-sheet:not([data-mobile-only]) {
+      inset-block: 0;
+      inset-inline: auto 0;
+      width: 460px;
+      height: 100dvh;
+    }
+    .adapt-sheet:not([data-mobile-only]) .adapt-sheet-panel {
+      height: 100dvh;
+      border-radius: 0;
+      border-inline-start: 1px solid var(--line);
+    }
+    @starting-style {
+      .adapt-sheet[open]:not([data-mobile-only]) .adapt-sheet-panel {
+        transform: translateX(100%);
+      }
+      [dir="rtl"] .adapt-sheet[open]:not([data-mobile-only]) .adapt-sheet-panel {
+        transform: translateX(-100%);
+      }
+    }
+  }
+
+  /* React Flow, themed with ADAPT tokens. */
+  .adapt-flow {
+    --xy-background-color: transparent;
+    --xy-edge-stroke: var(--line-strong);
+    --xy-edge-stroke-selected: var(--ink);
+    --xy-connectionline-stroke: var(--line-strong);
+    --xy-attribution-background-color: transparent;
+    --xy-controls-button-background-color: var(--surface);
+    --xy-controls-button-background-color-hover: var(--surface-sunken);
+    --xy-controls-button-color: var(--ink);
+    --xy-controls-button-border-color: var(--line);
+    --xy-minimap-background-color: var(--surface);
+    --xy-minimap-mask-background-color: rgb(15 28 46 / 0.06);
+    --xy-minimap-node-background-color: var(--line-strong);
+    --xy-selection-background-color: rgb(11 110 117 / 0.08);
+    --xy-selection-border: 1px dashed var(--teal);
+  }
+  .adapt-flow .react-flow__attribution {
+    font-size: 10px;
+    color: var(--ink-subtle);
+  }
+  .adapt-flow .react-flow__attribution a {
+    color: inherit;
+  }
+  .adapt-flow .react-flow__node:focus-visible {
+    outline: none;
+  }
+  .adapt-flow .react-flow__node:focus-visible > * {
+    outline: 2px solid var(--focus);
+    outline-offset: 3px;
+  }
+  .adapt-flow .react-flow__controls {
+    box-shadow: var(--elev-card);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--line);
+  }
+  .adapt-flow .react-flow__controls-button {
+    width: 40px;
+    height: 40px;
+  }
+  @media (pointer: coarse) {
+    .adapt-flow .react-flow__controls-button { width: 44px; height: 44px; }
+  }
+  .adapt-flow .react-flow__minimap {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+  .adapt-flow .react-flow__edge-path {
+    transition: stroke 160ms ease, stroke-width 160ms ease, opacity 160ms ease;
+  }
+}
+
+/* These interaction minimums override per-component utility sizes on phones. */
+@media (max-width: 767px) {
+  .adapt-button, .adapt-icon-button, .adapt-segment { min-height: 44px; }
+  .adapt-icon-button { min-width: 44px; }
+  input:not([type="radio"]):not([type="checkbox"]), textarea, select { font-size: max(1rem, 1em); }
+}
+
+/* Graph geometry is always LTR. Localize node text and controls without reflecting coordinates. */
+:root[dir="rtl"] .adapt-flow .react-flow__node { direction: rtl; text-align: start; }
+:root[dir="rtl"] .adapt-flow .react-flow__panel { direction: rtl; }
+:root[dir="rtl"] .adapt-flow .react-flow__panel.left { left: auto; right: 0; }
+:root[dir="rtl"] .adapt-flow .react-flow__panel.right { right: auto; left: 0; }
+:root[dir="rtl"] .adapt-flow .react-flow__minimap { margin-left: 0 !important; margin-right: 60px; }
+:root[dir="rtl"] .adapt-flow .react-flow__edge-label { direction: rtl; }
+:root[dir="rtl"] .adapt-switch [data-state="unchecked"] { transform: translateX(-2px); }
+:root[dir="rtl"] .workspace-bar .lucide-chevron-right,
+:root[dir="rtl"] .lucide-chevron-right:not(.flip-rtl),
+:root[dir="rtl"] .lucide-arrow-left:not(.flip-rtl),
+:root[dir="rtl"] .lucide-arrow-right:not(.flip-rtl),
+:root[dir="rtl"] .lucide-chevron-left:not(.flip-rtl),
+:root[dir="rtl"] .lucide-arrow-up-right:not(.flip-rtl) { transform: scaleX(-1); }
+:root[lang="ar"] body, :root[lang="ur"] body { line-height: 1.65; }
+:root[dir="rtl"] .uppercase { letter-spacing: normal; }
+:root[dir="rtl"] :is(p, h1, h2, h3, blockquote, dd) { unicode-bidi: plaintext; }
+.tabular { unicode-bidi: isolate; }
+:root:is([lang="hi"], [lang="mr"], [lang="ml"], [lang="ta"], [lang="te"], [lang="kn"]) body { line-height: 1.7; }

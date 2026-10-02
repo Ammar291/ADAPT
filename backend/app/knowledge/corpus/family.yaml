@@ -1,0 +1,661 @@
+# Family residency & document attestation cluster.
+# Researched 2026-09-29. Only official pages; see README.md for format rules.
+# Notes:
+#  - ICP service pages are tabbed by customer category. Passages from
+#    icp.issuing_residency_permit are taken from the "Resident – Family members of a
+#    foreign resident" category (identified by the category class in the page markup).
+#  - TAMM pages are JavaScript apps that return an empty shell; TAMM sources below are
+#    search_snippet only.
+
+sources:
+  # ---------------------------------------------------------------------------
+  - key: uae.residence_visa_for_family_members
+    title: "Residence visa for families of employees"
+    url: https://u.ae/en/information-and-services/visa-and-emirates-id/Types-of-visas/Residence-visa/residence-visa-for-family-members
+    authority: authority.uae_government
+    source_type: guidance_page
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: null
+    last_updated: 2026-09-28
+    topics: [family_residency, residency, medical_fitness]
+    verification: fetched
+    passages:
+      - key: who_can_sponsor
+        section: "Residence visa for families of employees"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          Both, employers and employees with valid UAE residence visas can sponsor residence
+          visas for their families. Unlike before, employees can sponsor their families
+          regardless of their job titles if they earn a minimum salary of AED 4,000 or
+          AED 3,000 plus accommodation.
+      - key: eligible_family_members
+        section: "Sponsorship requirements"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          Expatriate residents may bring in his/her spouse, unmarried daughters, sons under
+          25 years old, and children with special needs. Holders of the Green visa are also
+          entitled to sponsor first-degree relatives.
+      - key: sponsor_income
+        section: "Sponsorship requirements"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          The sponsor must have a minimum salary of AED 4,000 or AED 3,000 plus accommodation.
+      - key: medical_fitness_18_plus
+        section: "Sponsorship requirements"
+        excerpt: paraphrase
+        states_requirement: true
+        text: >-
+          Sponsored family members, male and female, who have completed the age of 18 must
+          undergo and pass medical fitness tests at approved health centres in the UAE. The
+          page lists the Disease Prevention and Screening Center (Abu Dhabi) among the
+          government medical fitness centres.
+      - key: conditions_change
+        section: "Sponsorship requirements"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          The conditions are subject to change from time to time. Kindly check with Federal
+          Authority for Identity, Citizenship, Customs and Port Security (ICP) or GDRFA.
+      - key: linked_to_sponsor_permit
+        section: "Cancellation"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          The family's residence permits are linked to the residence permit of the sponsoring
+          family member. If the sponsoring family member's visa is cancelled, it requires
+          cancellation of the visas of the dependents.
+
+  # ---------------------------------------------------------------------------
+  - key: uae.general_provisions_residence_visa
+    title: "General provisions for the residence visa"
+    url: https://u.ae/en/information-and-services/visa-and-emirates-id/Visa-information/general-provisions-for-the-residence-visa
+    authority: authority.uae_government
+    source_type: guidance_page
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: null
+    last_updated: 2026-09-28
+    topics: [residency, family_residency, medical_fitness, emirates_id, health_insurance]
+    verification: fetched
+    passages:
+      - key: dependent_validity
+        section: "Validity of a residence visa"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          The expiry date of the dependent’s residence visa will not exceed that of the sponsor.
+      - key: medical_test_security_eid
+        section: "Medical test"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          A residence visa requires applicants who are 18 and above to undergo a medical test
+          to prove that they are medically fit. They must also pass a security check and apply
+          for an Emirates ID card from Federal Authority for Identity and Citizenship.
+      - key: documents_dependent
+        section: "Required documents"
+        excerpt: paraphrase
+        states_requirement: true
+        text: >-
+          The page's general "Required documents" list for a residence visa (which mixes items
+          for several cases) includes, for a dependent: a recent coloured personal photo with a
+          white background, a copy of the dependent's passport, the Emirates ID application
+          receipt, the entry permit, medical insurance or a health card, a medical fitness
+          certificate for dependents above 18 years, and an attested birth certificate for
+          dependent children.
+      - key: documents_sponsor_and_housing
+        section: "Required documents"
+        excerpt: paraphrase
+        states_requirement: true
+        text: >-
+          The same list includes a housing lease contract (certified) or proof of owning a
+          residence, a copy of the sponsor's passport with a valid residence permit, and the
+          job contract of the sponsor.
+
+  # ---------------------------------------------------------------------------
+      - key: validity
+        section: Validity of a residence visa
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          The validity of a residence visa varies according to its type and the sponsor. It can be
+          for 1, 2 or 3 years on a sponsored visa, or up to 5 or 10 years on an unsponsored visa.
+      - key: outside_uae_180_days
+        section: Expiry of residence visa on staying out of the UAE
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          The general rule is that if an expatriate resident lives outside the UAE for more than
+          180 days continuously, his/her residence visa will be nullified automatically. If this
+          happens, they will have to apply for a new entry permit to enter the UAE again.
+      - key: investor_exception_180_days
+        section: Expiry of residence visa on staying out of the UAE
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          The list of residents to whom the 180-day rule does not apply includes "investors holding
+          valid residence visas in the UAE".
+      - key: renewal_and_eid_expiry
+        section: Renewing your residence visa
+        excerpt: paraphrase
+        states_requirement: true
+        text: >-
+          The sponsor must renew the residence visa before it expires. When the residence visa
+          expires, the Emirates ID card issued by ICP also expires.
+
+  - key: icp.issuing_residency_permit
+    title: "Issuing Residency Permit"
+    url: https://icp.gov.ae/en/services-details/?serviceid=64afe3c1035448005bd52e64
+    authority: authority.icp
+    source_type: service_page
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: null
+    last_updated: 2024-12-11
+    topics: [family_residency, residency, emirates_id, health_insurance]
+    verification: fetched
+    passages:
+      - key: about_and_steps
+        section: "About this service"
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          ICP's service issues a new residence permit linked to an Emirates ID card
+          application. Digital steps: submit the application through the selected channel,
+          review the form, attach required documents if data retrieval through integration
+          fails, pay the fees, follow up on the request; the applicant is notified of the
+          residence issuance, then the Emirates ID card is delivered by authorised courier
+          companies.
+      - key: family_eligible_members
+        section: "Terms and Conditions (Resident – Family members of a foreign resident)"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          The foreign sponsor (resident in the UAE) may bring in his/her spouse, unmarried
+          daughters, sons under 25 years old, and children with special needs. Holders of the
+          Green Residence are also entitled to sponsor first-degree relatives.
+      - key: sponsor_valid_residence
+        section: "Terms and Conditions (Resident – Family members of a foreign resident)"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          The foreign national (sponsor/head of the family) must hold a valid residence permit
+          in the UAE.
+      - key: financial_solvency
+        section: "Terms and Conditions (Resident – Family members of a foreign resident)"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          Financial solvency must be demonstrated, with a minimum monthly income of AED 3,000
+          plus employer-provided housing, or AED 4,000 if housing is not provided.
+      - key: adequate_housing
+        section: "Terms and Conditions (Resident – Family members of a foreign resident)"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          Adequate housing must be secured for family members, in proportion to the property’s
+          capacity (owned or rented).
+      - key: validity_and_entry_window
+        section: "Terms and Conditions (Resident – Family members of a foreign resident)"
+        excerpt: paraphrase
+        states_requirement: true
+        text: >-
+          The family member's passport must be valid for no less than 6 months. The family
+          residence matches the sponsor's permit and cannot exceed it. The foreigner's stay in
+          the UAE must not exceed sixty (60) days from the date of entry to complete the
+          residence issuance procedures; otherwise overstay fines apply.
+      - key: family_required_documents
+        section: "List of Required Documents for Service (Resident – Family members of a foreign resident)"
+        excerpt: paraphrase
+        states_requirement: true
+        text: >-
+          Documents listed for family members of a foreign resident: passport; personal photo;
+          water/electricity bill; proof of kinship (attested marriage contract, children's
+          birth certificates); birth certificates to prove children's ages, or documents
+          proving special needs regardless of age; an employment certificate showing family
+          monthly income and housing provision; a copy of the personal identification card
+          (for Afghanistan / Iran / Iraq); and valid health insurance.
+      - key: channels
+        section: "Service Channels"
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          The service is offered through the ICP Smart Services website and the ICP Smart App,
+          and requires login with UAE Pass. The page also says customers may visit a service
+          centre in the UAE (Customer Happiness Centers operate during working hours; the smart
+          services are available 24/7).
+
+  # ---------------------------------------------------------------------------
+      - key: steps_eid_issuance
+        section: Service Steps
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          Notification of the residence issuance, followed by the issuance of the Emirates ID card,
+          which is delivered through authorized courier companies.
+      - key: green_investor_terms
+        section: 'Terms and Conditions (category: Green Residence Investor)'
+        excerpt: paraphrase
+        states_requirement: true
+        text: >-
+          For the Green Residence Investor category the terms include a passport valid for no less
+          than 6 months and approval from the competent authorities and authorization for the
+          applicant to conduct the activity. To maintain and renew the residency the investor must
+          continue to meet all the conditions and must notify the issuing authority if any of them
+          are no longer met.
+      - key: green_investor_contribution
+        section: 'Terms and Conditions (category: Green Residence Investor)'
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          The investor’s contribution to the company must not be less than AED 1,000,000 in cash or
+          its equivalent in foreign currencies, whether at the time of establishing the company or
+          when contributing to an existing company.
+      - key: green_investor_documents
+        section: 'List of Required Documents for Service (category: Green Residence Investor)'
+        excerpt: paraphrase
+        states_requirement: true
+        text: >-
+          Required documents for the Green Residence Investor category: passport, personal photo,
+          trade licence, and partnership or investment agreement.
+      - key: change_of_status_inside_uae
+        section: 'Terms and Conditions (category: Government, private, or free zone entities for issuing
+  residency for employment purposes)'
+        excerpt: paraphrase
+        states_requirement: true
+        text: >-
+          Under the category for government, private or free zone entities issuing residency for
+          employment purposes, a Change of Status request must be submitted within the country,
+          after the previous residence permit is cancelled and upon issuance of a new visa (or
+          where violations need to be settled), so that the residency procedures can be completed
+          without leaving the UAE.
+
+  - key: icp.issuance_of_a_visa
+    title: "Issuance of a Visa"
+    url: https://icp.gov.ae/en/services-details/?serviceid=64afe3c1035448005bd52e60
+    authority: authority.icp
+    source_type: service_page
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: null
+    last_updated: null
+    topics: [family_residency, residency, health_insurance]
+    verification: fetched
+    passages:
+      - key: about
+        section: "About this service"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          A service whereby an entry permit is issued for a specific period, either for
+          tourism, visit, or treatment, or to complete the procedures for issuing a work
+          residency or residence for family members.
+      - key: active_sponsor_file
+        section: "Terms and Conditions (Visitor – Issuance of residency visa without employment)"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          The host/head of family must have an active sponsor file that enables them to apply
+          for visa and residence services.
+      - key: insurance_and_passport
+        section: "Terms and Conditions (Visitor – Issuance of residency visa without employment)"
+        excerpt: paraphrase
+        states_requirement: true
+        text: >-
+          Conditions listed for this category include a valid health insurance policy within
+          the UAE and a passport valid for no less than 6 months.
+      - key: entry_and_residence_window
+        section: "Terms and Conditions (Visitor – Issuance of residency visa without employment)"
+        excerpt: paraphrase
+        states_requirement: true
+        text: >-
+          The holder must enter the UAE within the 60-day validity of the entry permit from its
+          date of issuance, and the foreigner's stay must not exceed sixty (60) days from the
+          date of entry to complete the residence issuance procedures.
+      - key: required_documents
+        section: "List of Required Documents for Service (Visitor – Issuance of residency visa without employment)"
+        excerpt: paraphrase
+        states_requirement: true
+        text: >-
+          Documents listed for this category include the passport, a personal photo, a lease
+          agreement and, for relatives, proof of kinship (plus a copy of the personal
+          identification document for Afghanistan / Iran / Iraq).
+      - key: channels
+        section: "Service Channels"
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          Available through the ICP Smart App and the ICP Smart Services website; the service
+          requires login using UAE Pass. The page also refers customers to ICP service centres
+          in the UAE.
+
+  # ---------------------------------------------------------------------------
+      - key: dependency_field
+        section: Dependency on Other Service
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          The service card's "Dependency on Other Service" field for Issuance of a Visa reads
+          "There is no", i.e. ICP lists no prerequisite service on this page.
+      - key: entity_category_conditions
+        section: 'Terms and Conditions (category: Government, private, or free zone entities for entry
+  visa issuance for a work mission Or Residency)'
+        excerpt: paraphrase
+        states_requirement: true
+        text: >-
+          For the category "Government, private, or free zone entities for entry visa issuance for
+          a work mission Or Residency", the listed terms are a valid health insurance policy within
+          the UAE, a passport valid for no less than 6 months and a return travel ticket. Approval
+          from the Ministry of Human Resources and Emiratisation (MOHRE) is required if the
+          employer is subject to the Labour Relations Regulation Law or the applicant is a domestic
+          worker.
+      - key: entity_category_documents
+        section: 'List of Required Documents for Service (category: Government, private, or free zone
+  entities for entry visa issuance for a work mission Or Residency)'
+        excerpt: paraphrase
+        states_requirement: true
+        text: >-
+          For that category the documents listed are: passport, personal photo, medical report,
+          employment contract (if the applicant is bound by an employment agreement), employer
+          certificate in the UAE, temporary job contract or letter stating the purpose of entry,
+          medical fitness certificate for work, travel ticket, a certificate of good conduct
+          attested as required according to the announced categories, and a copy of the personal
+          identification document for nationals of Afghanistan, Iran or Iraq.
+
+  - key: tamm.family_residency_visa_private
+    title: "Family Residency Visa/Private"
+    url: https://www.tamm.abudhabi/en/life-events/individual/Identity-Citizenship-Human-Resources/Residency-Entry-Permit/RequesttoIssueaFamilyVisaaResidentSponsorWorkinginthePrivateSector
+    authority: authority.abu_dhabi_government
+    source_type: service_page
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: null
+    last_updated: null
+    topics: [family_residency, residency]
+    verification: search_snippet
+    passages:
+      - key: scope
+        section: null
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          Through this TAMM service, a resident sponsor working in the private sector or a free
+          zone can request to issue a residency visa for a family member.
+      - key: provider
+        section: null
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          The service is provided by the Federal Authority for Identity, Citizenship, Customs
+          & Port Security (ICP) and accessed through the TAMM platform.
+
+  # ---------------------------------------------------------------------------
+  - key: tamm.open_sponsorship_file
+    title: "Open a Sponsorship File"
+    url: https://www.tamm.abudhabi/en/life-events/individual/Identity-Citizenship-Human-Resources/Identity-Citizenship/RequesttoOpenaSponsorshipFile
+    authority: authority.abu_dhabi_government
+    source_type: service_page
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: null
+    last_updated: null
+    topics: [family_residency, residency]
+    verification: search_snippet
+    passages:
+      - key: first_step
+        section: null
+        excerpt: paraphrase
+        states_requirement: true
+        text: >-
+          Opening a sponsor file is described as the first and essential step that allows a
+          sponsor to issue visas and submit residency permit applications for family members
+          or domestic workers.
+      - key: opened_once
+        section: null
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          The sponsor file only needs to be opened once; it is then used to access and
+          complete these visa and residency services. The service is provided by ICP through
+          TAMM.
+
+  # ---------------------------------------------------------------------------
+  - key: mofa.documents_attestation
+    title: "Attestation of Official Documents and Certificates"
+    url: https://www.mofa.gov.ae/en/services/attestation
+    authority: authority.mofa
+    source_type: service_page
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: null
+    last_updated: null
+    topics: [attestation]
+    verification: fetched
+    passages:
+      - key: about
+        section: "About this service"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          This service enables customers to obtain the attestation of the Ministry of Foreign
+          Affairs and the UAE Mission in the destination country. Attestation certifies the
+          authenticity of the signatures and seals on documents issued within or outside the
+          United Arab Emirates.
+      - key: issued_outside_uae_steps
+        section: "Service process — Second: Documents Issued Outside the United Arab Emirates"
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          For documents issued outside the UAE: sign in to apply for the service, select
+          "Attestation through UAE Missions Abroad" and complete the required information, pay
+          the applicable fees, and receive a confirmation message with the application
+          reference number.
+      - key: missions_availability
+        section: "Service process — Second: Documents Issued Outside the United Arab Emirates"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          This service is available through selected UAE Missions abroad. Please visit the
+          website of the UAE Mission in your country of residence to confirm whether the
+          service is available electronically and submit your application. If the service is
+          not available online, please visit the UAE Mission in person.
+      - key: no_uae_mission
+        section: "Conditions of Use"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          If there is no UAE Mission in the country where you are located, please contact the
+          Ministry through the Contact Center or the Contact Us page.
+      - key: courier_route_document_rules
+        section: "Required Documents — Attestation Through an Approved Courier Service Provider"
+        excerpt: paraphrase
+        states_requirement: true
+        text: >-
+          For the courier-based route, the original document must be in Arabic or English, or
+          accompanied by a legally certified translation; it must be certified or attested by
+          the relevant competent authorities where applicable; and it must not be laminated.
+      - key: service_centre
+        section: "Other useful information"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          You may also visit a service centre in the United Arab Emirates to obtain the service
+      - key: uae_pass_and_channels
+        section: "FAQs — Before you begin your application"
+        excerpt: paraphrase
+        states_requirement: true
+        text: >-
+          The page's Digital Attestation FAQ says applications are submitted through the
+          Ministry of Foreign Affairs website or the UAE MOFA smart app, and that UAE PASS is
+          required to sign in and access the service.
+
+  # ---------------------------------------------------------------------------
+  - key: mofa.faqs
+    title: "FAQ"
+    url: https://www.mofa.gov.ae/en/faqs
+    authority: authority.mofa
+    source_type: faq
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: null
+    last_updated: null
+    topics: [attestation]
+    verification: fetched
+    passages:
+      - key: channels
+        section: "What are the channels for providing Official Documents, Certificates and Commercial Invoices attestation service?"
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          Attestation channels listed: the MoFA website (www.mofa.gov.ae), the UAE MOFA smart
+          mobile app, and UAE embassies and consulates abroad.
+      - key: attestation_requirements
+        section: "What are the requirements for attestation?"
+        excerpt: paraphrase
+        states_requirement: true
+        text: >-
+          Requirements for attestation: the original document in English or Arabic (or an
+          official translation of it); the document must be attested by the appropriate
+          governing bodies prior to submission; and the document must not be laminated.
+      - key: issued_outside_uae_chain
+        section: "What are the prerequisites of attesting documents?"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          For documents issued outside the UAE: Original documents must be attested by the
+          Ministry of Foreign Affairs of the issuing country. Documents can then be attested by
+          the UAE Embassy or Consulate in the issuing country by applying through MoFA online
+          channels. Original documents must be attested in the UAE through the Ministry’s
+          official website www.mofa.gov.ae or the UAE MOFA smart application.
+      - key: personal_documents_in_scope
+        section: "What are the types of documents that can be attested through MoFA’s e-channels?"
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          Individual affairs documents that can be attested through MoFA's e-channels include,
+          among others, birth certificates and marriage certificates.
+      - key: centres_closed
+        section: "Where are Customer Happiness Centres (Attestation Centres) located within the UAE?"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          The Ministry of Foreign Affairs provides all its services electronically through its
+          website and smartphone application only. All customers can now submit all
+          transactions related to MoFA’s attestation service through the Ministry’s official
+          website www.mofa.gov.ae and the UAE MOFA smart application, upon fulfilling all terms
+          and conditions. MoFA Customer Happiness Centres are closed,
+          in line with the directives of the UAE visionary leadership towards improving
+          government services and customer experience.
+      - key: courier_collection_in_uae
+        section: "How can I send my documents to MoFA after successful payment of attestation fees inside the UAE?"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          If you selected UAE as a location for attestation, you will be asked to select the
+          type of courier service desired for the service. Once you have successfully paid for
+          the transaction, a courier service representative will contact you to collect your
+          documents.
+      - key: on_behalf
+        section: "Can someone attest my documents on my behalf?"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          Anyone can attest documents on your behalf.
+
+  # ---------------------------------------------------------------------------
+  - key: uae.preparing_to_work
+    title: "Preparing to work"
+    url: https://u.ae/en/information-and-services/jobs/Sector-of-employment/employment-in-the-private-sector/preparing-to-work
+    authority: authority.uae_government
+    source_type: guidance_page
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: null
+    last_updated: 2026-09-24
+    topics: [attestation, newcomer]
+    verification: fetched
+    passages:
+      - key: where_mofa_attests
+        section: "Attestation of academic certifications"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          The UAE's Ministry of Foreign Affairs provides certificate attestation services both
+          inside the UAE (via digital channels) and abroad (through UAE embassies and
+          consulates).
+      - key: document_types
+        section: "Attestation of academic certifications"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          MoFA attests various individual affairs’ documents including birth, death and
+          marriage certificates; as well as, commercial documents such as contracts and
+          agreements, minutes of meeting, trademark registrations and company closure
+          documents.
+      - key: issued_outside_uae
+        section: "Attestation of academic certifications"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          For documents issued outside the UAE, the original document should be attested by
+          Ministry of Foreign Affairs in the issuing country. Afterwards, the document can be
+          attested by a UAE Embassy or Consulate in that country by applying through digital
+          channels.
+      - key: no_mission
+        section: "Attestation of academic certifications"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          If there is no UAE mission present in that country, applicants may contact MoFA for
+          assistance via its call centre or approved channels.
+      - key: mofa_channels
+        section: "Attestation of academic certifications"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          MoFA attestation services are available via the official website and its app
+          UAEMOFA available on Android and iOS.
+
+  # ---------------------------------------------------------------------------
+  - key: uae.getting_a_health_insurance
+    title: "Getting a health insurance"
+    url: https://u.ae/en/information-and-services/health-and-fitness/Healthcare-access-and-insurance/getting-a-health-insurance
+    authority: authority.uae_government
+    source_type: guidance_page
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: null
+    last_updated: 2026-09-08
+    topics: [health_insurance, family_residency]
+    verification: fetched
+    passages:
+      - key: abu_dhabi_sponsor_family_cover
+        section: "Health insurance for resident expatriates"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          In the emirate of Abu Dhabi, employers and sponsors are responsible for the
+          providing health insurance coverage for their employees and their families
+          (1 spouse and 3 children under 18 years).
+      - key: coverage_extent
+        section: "Health insurance for resident expatriates"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          The extent of coverage for employers and their dependents is determined by the
+          employee's salary, designation etc. The extent of coverage and type of policy/scheme
+          would determine the cost of your medical services.
+      - key: private_sector_prerequisite
+        section: "Health insurance for private sector employees and domestic workers"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          From 1 January 2025, employers are required to purchase health insurance policy as a
+          prerequisite for applying for the issuance or renewal of residency permits of private
+          sector employees and domestic workers. The system is implemented on a mandatory basis
+          in Abu Dhabi and Dubai, and will extend to private sector workers in Sharjah, Ajman,
+          Umm Al Quwain, Ras Al Khaimah, and Fujairah.

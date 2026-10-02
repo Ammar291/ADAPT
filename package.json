@@ -1,0 +1,28 @@
+{
+  "name": "adapt",
+  "private": true,
+  "description": "ADAPT — Abu Dhabi Digital Arrival & Planning Twin",
+  "workspaces": [
+    "packages/*",
+    "frontend"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w @adapt/frontend",
+    "demo": "node frontend/scripts/demo.mjs",
+    "demo:dev": "node frontend/scripts/demo.mjs dev",
+    "demo:build": "npm run typecheck && node frontend/scripts/demo.mjs build",
+    "audit:demo": "node frontend/scripts/demo-audit.mjs",
+    "build": "npm run build -w @adapt/frontend",
+    "test": "npm run test -w @adapt/frontend",
+    "lint": "npm run lint -w @adapt/frontend",
+    "audit:ui": "node frontend/scripts/product-audit.mjs",
+    "audit:pwa": "node frontend/scripts/pwa-audit.mjs",
+    "audit:interpreter": "node frontend/scripts/interpreter-audit.mjs",
+    "audit:states": "node frontend/scripts/state-audit.mjs",
+    "typecheck": "npm run typecheck -w @adapt/contracts && npm run typecheck -w @adapt/frontend",
+    "contracts:generate": "cd backend && uv run python scripts/export_openapi.py && cd .. && npm run generate -w @adapt/contracts"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

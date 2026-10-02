@@ -1,0 +1,28 @@
+# dependencies & builds
+node_modules/
+dist/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.audit-pytest-*/
+*.tsbuildinfo
+frontend/qa-artifacts/
+
+# local configuration & data (never commit secrets or user documents)
+.env
+.env.*
+!.env.example
+.adapt-session-secret
+backend/var/
+var/
+*.log
+
+# editors / OS
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json

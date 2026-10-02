@@ -1,0 +1,66 @@
+[project]
+name = "adapt-backend"
+version = "0.1.0"
+description = "ADAPT — Abu Dhabi Digital Arrival & Planning Twin: API, agents and workers"
+requires-python = ">=3.13"
+dependencies = [
+    "alembic>=1.20.0",
+    "arq>=0.28.0",
+    "cryptography>=45.0.0",
+    "fastapi>=0.141.1",
+    "httpx>=0.28.1",
+    "langgraph>=1.2.12",
+    "langgraph-checkpoint-postgres>=3.1.2",
+    "openai>=3.20.0",
+    "pgvector>=0.5.0",
+    "psycopg[binary,pool]>=3.3.6",
+    "pydantic>=2.13.5",
+    "pydantic-settings>=2.15.0",
+    "pyjwt>=2.15.1",
+    "pypdf>=6.0",
+    "python-multipart>=0.0.32",
+    "pyyaml>=6.0.3",
+    "redis>=5.3.1",
+    "sqlalchemy[asyncio]>=2.1.1",
+    "uvicorn[standard]>=0.54.0",
+]
+
+[dependency-groups]
+dev = [
+    "mypy>=2.3.1",
+    "pytest>=9.1.1",
+    "pytest-asyncio>=1.4.0",
+    "ruff>=0.16.9",
+    "types-pyyaml>=6.0.12.20260906",
+]
+
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "session"
+asyncio_default_test_loop_scope = "session"
+testpaths = ["tests"]
+markers = [
+    "integration: requires PostgreSQL (set ADAPT_TEST_DATABASE_URL) and optionally Redis",
+]
+filterwarnings = ["ignore::DeprecationWarning:arq.*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+extend-exclude = ["migrations/versions"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "ASYNC", "SIM", "RUF"]
+ignore = ["B008", "RUF012", "ASYNC109"]
+
+[tool.ruff.lint.per-file-ignores]
+"app/db/rls.py" = ["E501"]  # embedded SQL
+
+[tool.mypy]
+python_version = "3.13"
+plugins = ["pydantic.mypy"]
+ignore_missing_imports = true
+check_untyped_defs = true

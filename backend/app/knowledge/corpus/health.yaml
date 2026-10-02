@@ -1,0 +1,628 @@
+# Health: residency medical fitness screening, mandatory health insurance and healthcare
+# access in Abu Dhabi.
+# Curated official sources; see README.md in this directory for the format and rules.
+# Every URL below was loaded on retrieved_at (PDFs were downloaded and text-extracted);
+# `quote` passages are verbatim apart from whitespace / list-numbering normalisation.
+# No fees, processing times or penalty amounts are recorded.
+#
+# Related passages already in other files (not duplicated here because a URL may appear once):
+#   family.yaml   uae.getting_a_health_insurance#abu_dhabi_sponsor_family_cover
+#   family.yaml   uae.general_provisions_residence_visa#medical_test_security_eid
+#   family.yaml   uae.residence_visa_for_family_members#medical_fitness_18_plus
+#   newcomer.yaml adro.settling_into_abu_dhabi#health_insurance_required
+
+sources:
+  # ------------------------------------------------------------ medical fitness screening
+  - key: uae.health_conditions_residence_visa
+    title: "Health conditions for UAE residence visa"
+    url: https://u.ae/en/information-and-services/health-and-fitness/Health-and-travel/health-conditions-for-uae-residence-visa
+    authority: authority.uae_government
+    source_type: guidance_page
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: null
+    last_updated: 2026-09-08
+    topics: [medical_fitness, residency]
+    verification: fetched
+    passages:
+      - key: free_of_communicable_diseases
+        section: "Provisions regarding health conditions"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          In order to be able to obtain a work/residence permit, foreign nationals need to be
+          free of all forms of communicable diseases such as HIV and TB.
+      - key: occupational_additional_tests
+        section: "Provisions regarding health conditions"
+        excerpt: paraphrase
+        states_requirement: true
+        text: >-
+          Workers in nurseries, domestic workers (including housemaids, nannies and drivers),
+          food handlers and workers in restaurants and cafes, workers in salons and beauty
+          centres, and workers in health clubs should also test negative for syphilis and
+          hepatitis B. Female domestic workers must test negative for pregnancy.
+      - key: abu_dhabi_chest_xray
+        section: "Provisions regarding health conditions"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          The emirate of Abu Dhabi screen foreign nationals to detect pulmonary tuberculosis by
+          a chest x-ray; however, the emirate of Dubai does not.
+      - key: tb_on_renewal_conditional_certificate
+        section: "Provisions regarding health conditions"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          A new Cabinet Resolution was passed in 2016. As per this resolution, all resident
+          expatriates while renewing their residence visas have to undergo TB screening. Those
+          found with scars or active TB or found having drug-resistant TB will be issued a
+          conditional fitness certificate and be issued residence visa for one year. They will
+          then have to undergo treatment in the UAE.
+      - key: abu_dhabi_screening_eservice
+        section: "Related eServices"
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          Under "Related eServices" the page lists "Regular visa screening in Abu Dhabi" by the
+          Disease Prevention and Screening Centre, linking to the SEHA DPSC website
+          (dpsc.seha.ae), as the Abu Dhabi eService for residency visa screening.
+
+  - key: doh.standard_visa_screening_program
+    title: "Standard for Visa Screening Program"
+    url: https://www.doh.gov.ae/-/media/58A2D120CEEA4627BC887D28BDED902B.ashx
+    authority: authority.doh
+    source_type: regulation
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: null
+    last_updated: null
+    topics: [medical_fitness, residency]
+    verification: fetched
+    notes: >-
+      PDF, document ref DOH/SD/ADCPH/CD/VS/1.6, version 1.6. States publication and effective
+      date "September, 2023" (no day given, so effective_date is left null). Owner: Abu Dhabi
+      Public Health Center - Infectious Disease Sector. Applies to DoH-licensed visa screening
+      providers. Its stated revision date (July 2026) has passed, so check for a newer version.
+    passages:
+      - key: scope_expatriates_over_18
+        section: "1. Standard Scope"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          A medical examination is conducted for expatriates over the age of 18 years, which is
+          a necessary certificate to obtain or renew residency within the country.
+      - key: who_must_be_screened
+        section: "3. Applicants Case Mix and Identification"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          All visa applicants wishing to enter the Emirate of Abu Dhabi for residency purposes
+          (for work, study, or residence) are required to undertake medical visa screening. To
+          do so, applicants must either have a residence visa or entry permit issued from the
+          United Arab Emirates.
+      - key: approved_provider_only
+        section: "3. Applicants Case Mix and Identification"
+        excerpt: paraphrase
+        states_requirement: true
+        text: >-
+          All visa applicants must take the visa screening tests at an ADPHC/DoH-approved visa
+          screening healthcare provider. The standard allows limited exceptions for applicants
+          who are admitted to hospital or are immobile, and applicants on a visit visa are
+          excluded from visa screening.
+      - key: registration_documents
+        section: "3. Applicants Case Mix and Identification; Appendix 2"
+        excerpt: paraphrase
+        states_requirement: true
+        text: >-
+          At registration, applicants present their original passport plus their entry permit
+          (for work, residence or study) or, for residents renewing in Abu Dhabi, their residence
+          visa / Emirates ID, and where relevant a sponsor change document. Appendix 2 lists the
+          registration documents as original passport; entry permit, resident visa or Emirates
+          ID; and health insurance if the visa is from outside the Emirate of Abu Dhabi.
+      - key: other_emirate_visa_needs_insurance
+        section: "3. Applicants Case Mix and Identification"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          For all applicants who present a valid work or residency visa issued from other
+          emirates, a valid health insurance is required as part of the visa screening
+          requirements (Appendix 4).
+      - key: tests_and_steps
+        section: "5. Processes and operations; Appendix 2"
+        excerpt: paraphrase
+        states_requirement: true
+        text: >-
+          Screening has four steps for the applicant: registration, physical examination, blood
+          withdrawal and chest x-ray. For most occupations (Category A) it screens for leprosy,
+          pulmonary tuberculosis and HIV. Domestic workers and nursery caretakers, barbers,
+          beauticians and health club staff, and healthcare workers are also tested for
+          hepatitis B (and C for some groups) and syphilis, with a pregnancy test for female
+          domestic workers and hepatitis B vaccination where required. Under-18s are excluded
+          from the chest x-ray, and it is not performed on pregnant women.
+      - key: adphc_doh_role
+        section: "4.2 ADPHC/ DoH Role"
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          ADPHC/DoH set the requirements for the visa screening program in the Emirate of Abu
+          Dhabi, mandate standards for screening services, oversee and audit visa screening
+          providers, and control and authorise the issuance of fitness certificates. They can
+          terminate a provider's visa screening services for non-compliance.
+      - key: fitness_certificate_sent_to_icp
+        section: "Appendix 2: Visa screening general procedures for applicants"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          Fitness Certificate is released once applicant is free of the infectious diseases
+          tested and will be sent to Federal Authority for Identity & Citizenship, Customs &
+          Port Security automatically.
+
+  - key: doh.haad_new_visa_screening_centers
+    title: "HAAD opens two new centers for visa screening tests in Abu Dhabi"
+    url: https://www.doh.gov.ae/en/news/haad-opens-two-new-centers-for-visa-screening
+    authority: authority.doh
+    source_type: news
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: 2015-08-08
+    last_updated: null
+    topics: [medical_fitness]
+    verification: fetched
+    notes: >-
+      News item dated August 2015 from the Health Authority - Abu Dhabi (HAAD, DoH's
+      predecessor). Opening hours, capacities and centre counts are deliberately NOT recorded
+      because they are out of date. Use only for the structural facts below.
+    passages:
+      - key: seha_ahs_operates_dpsc
+        section: null
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          The first facility – a Visa Disease Prevention and Screening Center (DPSC) - was
+          opened by the Ambulatory Healthcare Services (AHS), a SEHA health system facility.
+      - key: non_seha_screening_provider
+        section: null
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          The article also describes the Capital Health Screening Center, a wholly owned
+          subsidiary of Mubadala Development Company, which works in coordination with HAAD and
+          offers residency visa screening services, among others.
+      - key: diseases_screened
+        section: null
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          Visa screening tests are held for diseases such as HIV, Pulmonary Tuberculosis,
+          Leprosy, as well as Hepatitis B and Syphilis in some professionals groups.
+
+  # ---------------------------------------------------------------- health insurance
+  - key: doh.health_insurance_law_23_2005
+    title: "Law No. (23) of 2005 Concerning Health Insurance in the Emirate of Abu Dhabi and the Implementing Regulation"
+    url: https://www.doh.gov.ae/-/media/0BE585B5E6814D81913697DD6E644C02.ashx
+    authority: authority.doh
+    source_type: regulation
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: 2005-09-10
+    last_updated: null
+    topics: [health_insurance, residency, family_residency]
+    verification: fetched
+    notes: >-
+      Compiled PDF ("Book 2: Health Insurance") on doh.gov.ae containing Law No. 23 of 2005
+      (issued 10 September 2005) and its Implementing Regulation (Executive Council Decision
+      No. 25 of 2006), with amending decisions up to 2010. "The Authority" in the text is the
+      General Authority for Health Services, a predecessor body. Later amendments may exist and
+      this compilation does not show them.
+    passages:
+      - key: compulsory_for_expat_residents
+        section: "Law No. 23 of 2005, Article 4"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          Subject to articles (2) and (3) hereof, subscription to the health insurance scheme
+          is compulsory for non-UAE nationals and their families who are residing in the
+          Emirate, and optional for others.
+      - key: employer_sponsor_duty_and_residence_permit
+        section: "Law No. 23 of 2005, Article 5"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          The Employer shall undertake to provide health insurance coverage for all his
+          employees/workers and their family members including an employee's/worker's wife and
+          three children under 18 years of age. Every sponsor shall undertake to provide
+          insurance coverage for those sponsored by him who are not covered by the Employers, as
+          of the date of arrival in the State. A non-UAE national may not obtain a residence
+          permit or renewal thereof, nor may he be employed, unless after enrollment into the
+          health insurance scheme.
+      - key: exempted_categories
+        section: "Law No. 23 of 2005, Article 3"
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          The law exempts from the health insurance scheme, among others: non-UAE national women
+          married to UAE nationals, children of UAE national women married to non-UAE nationals,
+          arrivals on a tourist visa, and employees of establishments that have their own
+          licensed medical facilities and are exempted by the Authority.
+      - key: sponsor_responsible_at_all_times
+        section: "Implementing Regulation, Article 12"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          A Sponsor shall be responsible for ensuring that all Expatriate Residents on his
+          sponsorship are covered by valid Health insurance policies at all times.
+      - key: policy_needed_for_residence_permit
+        section: "Implementing Regulation, Article 12"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          A Sponsor shall undertake to submit the Health Insurance Policies when obtaining or
+          renewing residence permits. Departments of Immigration and Residency in the Emirate
+          must not issue or renew any residence permit unless the Health Insurance Policy is
+          enclosed with the application. Residence permits shall not be renewed without
+          submitting evidence of health insurance subscription for the previous applicable
+          period.
+      - key: obligation_start
+        section: "Implementing Regulation, Article 12"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          The obligation of an Employer and Sponsor to subscribe to the Health Insurance Scheme
+          for an Employee or a sponsored person shall commence after seven working days
+          following the arrival of the Employee or the sponsored person to the Emirate or from
+          the date on which the medical examination card is obtained, whichever occurs first.
+      - key: employer_covers_dependants
+        section: "Implementing Regulation, Article 11"
+        excerpt: paraphrase
+        states_requirement: true
+        text: >-
+          An employer must provide basic health insurance for its employees and their
+          dependants, even dependants it does not sponsor, and must keep them covered at all
+          times. This covers one wife (the first wife unless the employee names another in
+          writing) and the first three children under 18 who live permanently in the UAE. The
+          employer may not pass the cost on to employees. An employer may not apply for a work
+          visa without evidence of health insurance subscription.
+      - key: policy_types
+        section: "Implementing Regulation, Article 6"
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          The regulation sets three types of policy. The Basic Health Insurance Policy is only
+          for persons with limited income (below a salary threshold set in the regulation) and
+          their dependants, and for dependants of an expatriate resident who are not covered by
+          the employer's insurance. A policy for urgent cases covers visit-visa entrants and
+          certain children. The Enhanced Health Insurance Policy is available to all
+          categories.
+
+  - key: doh.faq_flexible_health_insurance
+    title: "FAQs | Department of Health Abu Dhabi"
+    url: https://www.doh.gov.ae/en/faq
+    authority: authority.doh
+    source_type: faq
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: null
+    last_updated: null
+    topics: [health_insurance]
+    verification: fetched
+    notes: >-
+      Only the "Flexible Health Insurance" FAQ section is used. The page footer shows "Last
+      updated" with today's date on every DoH page, so it looks auto-generated and is not
+      recorded. Price and benefit figures on the page are deliberately omitted.
+    passages:
+      - key: what_is_flexible_policy
+        section: "Flexible Health Insurance"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          The 'flexible health insurance' policy is an insurance option introduced by the
+          Department of Health – Abu Dhabi (DoH) in cooperation with the Abu Dhabi Department of
+          Economic Development (ADDED).
+      - key: eligible_groups
+        section: "Flexible Health Insurance"
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          Having aligned with the Department of Health – Abu Dhabi (DoH), health insurance
+          providers will evaluate the condition and medical record of the insured to determine
+          whether to accept for inclusion in the 'flexible health insurance' policy. The
+          categories include willing investors and owners of freelance business licenses and
+          their families and employees, expatriate residents in the Emirate who work in the
+          private sector (provided that their monthly income exceeds AED 5,000) and their family
+          and employees who are not covered by the health insurance by the employer whether in
+          the public or private sector.
+      - key: ineligible_groups
+        section: "Flexible Health Insurance"
+        excerpt: paraphrase
+        states_requirement: true
+        text: >-
+          People who cannot get the flexible policy include those with a monthly income below
+          AED 5,000, people rejected by health insurance companies for justifiable reasons (who
+          must be told in writing), and people already covered by health insurance through a
+          government entity.
+      - key: other_options_remain
+        section: "Flexible Health Insurance"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          No, the 'flexible health insurance' policy is added to the health insurance options
+          currently available in the Emirate, including the enhanced health insurance and basic
+          health insurance.
+      - key: how_to_subscribe
+        section: "Flexible Health Insurance"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          Companies or individuals wishing to subscribe to the 'flexible health insurance'
+          policy must contact health insurance companies as their current health insurance
+          policy is about to expire to obtain more details and apply to the 'flexible health
+          insurance' if the listing conditions are met.
+      - key: all_certified_insurers
+        section: "Flexible Health Insurance"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          All certified health insurance companies in the Emirate of Abu Dhabi can issue the
+          'flexible health insurance' policy.
+
+  - key: doh.golden_visa_health_insurance
+    title: "Department of Health–Abu Dhabi announces health insurance requirements for Golden Visas"
+    url: https://www.doh.gov.ae/en/news/Doh-announces-health-insurance-requirements-for-Golden-Visas
+    authority: authority.doh
+    source_type: news
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: 2021-10-31
+    last_updated: null
+    topics: [health_insurance, residency]
+    verification: fetched
+    notes: >-
+      News item dated 31 October 2021, announced with the Abu Dhabi Residents Office (ADRO).
+      Confirm the current Golden Visa health insurance rules before treating them as binding.
+    passages:
+      - key: employees_covered_by_employer
+        section: null
+        excerpt: paraphrase
+        states_requirement: true
+        text: >-
+          The guidelines have two categories. For the first, Golden Visa holders employed in Abu
+          Dhabi, employers must keep paying for their health insurance under Health Insurance
+          Law No. 23/2005, as amended, and its executive regulations.
+      - key: other_applicants_self_and_family
+        section: null
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          The second category includes Golden Visa applicants other than the first category who
+          will be required to present health insurance coverage for themselves and their family
+          members while ensuring the validity of the health insurance throughout the duration of
+          the period that they reside in the UAE.
+      - key: undertaking_if_uninsured
+        section: null
+        excerpt: quote
+        states_requirement: true
+        text: >-
+          In case of not having the health insurance cover, the applicant for Golden Visa must
+          sign an undertaking to provide the health insurance cover else he will bear all costs
+          related to their healthcare & medical services, if needed.
+      - key: eligible_candidates
+        section: null
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          Eligible Golden Visa candidates include professionals in the fields of science and
+          knowledge; such as doctors, specialists, scientists, inventors, creative and sporting
+          talent; as well as business, start-up and real estate investors.
+
+  # ---------------------------------------------------------------- healthcare access
+  - key: doh.about
+    title: "About DoH | Department of Health Abu Dhabi"
+    url: https://www.doh.gov.ae/en/about
+    authority: authority.doh
+    source_type: guidance_page
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: null
+    last_updated: null
+    topics: [healthcare, health_insurance]
+    verification: fetched
+    passages:
+      - key: regulator_of_health_sector
+        section: "About The Department of Health"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          Department of Health - Abu Dhabi is the regulative body of the Healthcare Sector in
+          the Emirate of Abu Dhabi and ensures excellence in Healthcare for the community by
+          monitoring the health status of the population.
+      - key: regulatory_framework
+        section: "About The Department of Health"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          In addition DoH shapes the regulatory framework for the health system, inspects
+          against regulations, enforce standards, and encourages adoption of world – class best
+          practices and performance targets by all healthcare service providers in the Emirate.
+      - key: regulates_premiums
+        section: "About The Department of Health"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          DoH also drives programs to increase awareness and adoption of healthy living
+          standards among the residents of the Emirate of Abu Dhabi in addition to regulating
+          scope of services, premiums and reimbursement rates of the health system in the
+          Emirate of Abu Dhabi.
+
+  - key: uae.healthcare_providers
+    title: "Healthcare providers"
+    url: https://u.ae/en/information-and-services/health-and-fitness/Healthcare-access-and-insurance/healthcare-providers
+    authority: authority.uae_government
+    source_type: guidance_page
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: null
+    last_updated: 2026-09-08
+    topics: [healthcare, newcomer]
+    verification: fetched
+    passages:
+      - key: find_facility_abu_dhabi
+        section: "Find a healthcare facility"
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          The UAE has clinics, hospitals and primary healthcare centres. For Abu Dhabi, the page
+          points to the facility finder of the Abu Dhabi Health Services Company (SEHA) at
+          login.seha.ae as one of the websites that list them.
+      - key: find_doctor_abu_dhabi
+        section: "Find a doctor"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          The website of Abu Dhabi Health Services Co (SEHA) offer facility for searching
+          doctors in the emirate of Abu Dhabi.
+      - key: find_pharmacy_abu_dhabi
+        section: "Find a pharmacy"
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          The page links to a list of pharmacies in the emirate of Abu Dhabi hosted on TAMM
+          (a Department of Health "find a pharmacy" page).
+      - key: health_portals
+        section: "Book an appointment online"
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          The page says many health portals let patients view their health profiles and medical
+          results and book appointments online. For Abu Dhabi it lists the e-Malaffi portal,
+          which it labels "SEHA, Abu Dhabi".
+
+  - key: uae.handling_emergencies
+    title: "Handling emergencies"
+    url: https://u.ae/en/information-and-services/justice-safety-and-the-law/Safety/handling-emergencies
+    authority: authority.uae_government
+    source_type: guidance_page
+    language: en
+    retrieved_at: 2026-09-29
+    effective_date: null
+    last_updated: 2026-09-02
+    topics: [healthcare, newcomer]
+    verification: fetched
+    passages:
+      - key: emergency_numbers
+        section: "Emergency phone numbers and apps"
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          In an emergency anywhere in the UAE, call 999 for police, 998 for ambulance and 997
+          for the fire department (civil defence).
+      - key: ambulance_998
+        section: "Medical emergencies"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          Call for the ambulance on 998 (from anywhere in the UAE). An air ambulance may be sent
+          for the patient if needed.
+      - key: ad999_app
+        section: "Emergency phone numbers and apps"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          In Abu Dhabi, use Abu Dhabi Police's AD999 app to report a fire, request for an
+          ambulance or call the emergency helpline immediately by pressing the SOS button.
+      - key: hospitals_accept_emergencies
+        section: "Medical emergencies"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          UAE's hospitals can handle any medical emergency. During medical emergencies, a
+          hospital will accept you for initial treatment and may transfer you to a hospital
+          better equipped to deal with your problem.
+      - key: stabilisation_treatment
+        section: "Medical emergencies"
+        excerpt: quote
+        states_requirement: false
+        text: >-
+          The UAE provides standard medical care and visitors can easily obtain medical
+          treatment from either private or government hospitals. In case of emergency, treatment
+          to stabilise the case is free. Other treatment must be paid for by cash, credit card
+          or insurance.
+      - key: istijaba_inpatient_line
+        section: "Medical emergencies"
+        excerpt: paraphrase
+        states_requirement: false
+        text: >-
+          The Department of Health - Abu Dhabi runs the Istijaba call centre for emergency
+          requests from inpatients at healthcare facilities across the emirate, for example an
+          urgent check-up, a bed for a critical condition or a rare blood type. It can be
+          reached on the toll-free number 8001717.
+
+# ---------------------------------------------------------------------------------------
+# PENDING REVIEW: seha.ae records. They are commented out because seha.ae is not yet in
+# OFFICIAL_DOMAIN_SUFFIXES (app/domain/provenance.py), so load_corpus() would reject them
+# and fail the whole corpus. authority.seha is already registered in app/knowledge/sources.py.
+# Uncomment once seha.ae is accepted as an official health channel.
+#
+#  - key: seha.faq
+#    title: "Seha - Hospitals"
+#    url: https://www.seha.ae/faq
+#    authority: authority.seha
+#    source_type: faq
+#    language: en
+#    retrieved_at: 2026-09-29
+#    effective_date: null
+#    last_updated: null
+#    topics: [healthcare, medical_fitness]
+#    verification: fetched
+#    notes: >-
+#      SEHA FAQ page (the HTML <title> is the generic "Seha - Hospitals").
+#    passages:
+#      - key: seha_vs_doh
+#        section: "What is the difference between Department of Health (DoH) Abu Dhabi and SEHA?"
+#        excerpt: quote
+#        states_requirement: false
+#        text: >-
+#          SEHA is responsible for the management of public healthcare hospitals and centers,
+#          while the Department of Health – Abu Dhabi regulates the public and private
+#          healthcare sector.
+#      - key: seha_owner_operator
+#        section: "When and why was SEHA created?"
+#        excerpt: quote
+#        states_requirement: false
+#        text: >-
+#          The Abu Dhabi Healthcare Company (SEHA) was established by Emiri Decree No 10 of
+#          2007, as an independent public joint stock company. It is the owner and operator of
+#          all public hospitals and clinics in Abu Dhabi and was set-up to provide the UAE
+#          residents and citizens integrated and outstanding healthcare services with the
+#          highest international quality and safety standards.
+#      - key: seha_screening_centres
+#        section: "How many hospitals and clinics are there within your network?"
+#        excerpt: paraphrase
+#        states_requirement: false
+#        text: >-
+#          The SEHA Health System includes hospitals, primary healthcare clinics and Disease
+#          Prevention and Screening Centers. The FAQ says these screening centres are managed
+#          by SEHA's Ambulatory Healthcare Services (AHS).
+#
+#  - key: seha.dpsc_visa_screening_app
+#    title: "Abu Dhabi residents can now book visa screening ..."
+#    url: https://dpsc.seha.ae/EN-US/NewsCenter/Pages/SEHA-Visa-Screening-App.aspx
+#    authority: authority.seha
+#    source_type: news
+#    language: en
+#    retrieved_at: 2026-09-29
+#    effective_date: null
+#    last_updated: null
+#    topics: [medical_fitness]
+#    verification: search_snippet
+#    notes: >-
+#      dpsc.seha.ae returns a Cloudflare 403 to automated clients. Only the search-result
+#      title (truncated) and summary were readable. The article is undated and may be old.
+#    passages:
+#      - key: book_via_app
+#        section: null
+#        excerpt: paraphrase
+#        states_requirement: false
+#        text: >-
+#          A SEHA Disease Prevention and Screening Centre news item says Abu Dhabi residents
+#          can book their visa screening appointment at SEHA visa screening centres through
+#          the SEHA Visa Screening App.

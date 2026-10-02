@@ -1,0 +1,1125 @@
+# Abu Dhabi governance graph: founder relocation journey (residency, family, health,
+# company formation, ADGM, housing, transport, UAE PASS, healthcare access).
+#
+# NO CITATION, NO FACT. Every node and every relationship cites at least one passage from
+# the curated official corpus (`corpus/*.yaml`) as `<source_key>#<passage_key>`. The loader
+# (`app/knowledge/graph_seed.py`) rejects unresolvable citations, wrong endpoint types and
+# dependency cycles. If a source does not state a relationship, it is not here, even when
+# it seems obvious. Researched and curated 2026-09-29.
+#
+# Edge properties used by the requirement evaluator:
+#   party: applicant (default) | sponsor | beneficiary | household
+#          beneficiary facts are read with the `subject` prefix, e.g. `spouse.documents.passport`
+#   when:  a condition; the requirement applies only when it holds (skipped when it cannot)
+#   when_party: whose facts `when` reads, if not the edge's own party
+#
+# Nodes with `informational: true` are checked by the authority during processing: they
+# are shown to the user but never block a plan.
+
+version: 2
+
+nodes:
+  # ---------------------------------------------------------------- authorities
+  - key: authority.icp
+    type: authority
+    label: Federal Authority for Identity, Citizenship, Customs & Port Security (ICP)
+    summary: Federal authority that issues entry permits, residence permits, Emirates ID cards and establishment cards.
+    official_url: https://icp.gov.ae
+    publisher: authority.icp
+    evidence: [uae.emirates_id#what_is, icp.issuing_establishment_card#channels_uae_pass_result]
+  - key: authority.added
+    type: authority
+    label: Abu Dhabi Department of Economic Development (ADDED)
+    summary: Licenses businesses on the Abu Dhabi mainland; its licensing services are offered through TAMM.
+    official_url: https://www.added.gov.ae
+    publisher: authority.added
+    evidence: [added.licensing_requirements#apply_via_tamm, added.licensing_requirements#primary_services]
+  - key: authority.adgm_ra
+    type: authority
+    label: ADGM Registration Authority
+    summary: Registers, incorporates and licenses legal entities in Abu Dhabi Global Market and handles their government services.
+    official_url: https://www.adgm.com/registration-authority
+    publisher: authority.adgm
+    evidence: [adgm.registration_authority#ra_role]
+  - key: authority.adphc
+    type: authority
+    label: Abu Dhabi Public Health Centre (ADPHC)
+    summary: With the Department of Health, sets and oversees the requirements of the visa screening programme.
+    official_url: https://www.adphc.gov.ae
+    publisher: authority.adphc
+    evidence: [doh.standard_visa_screening_program#adphc_doh_role]
+  - key: authority.doh
+    type: authority
+    label: Department of Health – Abu Dhabi (DoH)
+    summary: Regulator of the healthcare sector and of the health insurance scheme in Abu Dhabi.
+    official_url: https://www.doh.gov.ae
+    publisher: authority.doh
+    evidence: [doh.about#regulator_of_health_sector, doh.about#regulatory_framework]
+  - key: authority.seha
+    type: authority
+    label: SEHA – Abu Dhabi Health Services Company
+    summary: Government health-services company; its Ambulatory Healthcare Services run the visa Disease Prevention and Screening Centres.
+    evidence: [doh.haad_new_visa_screening_centers#seha_ahs_operates_dpsc, uae.healthcare_providers#find_doctor_abu_dhabi]
+  - key: authority.mofa
+    type: authority
+    label: UAE Ministry of Foreign Affairs (MoFA)
+    summary: Attests official documents inside the UAE through digital channels and abroad through UAE missions.
+    official_url: https://www.mofa.gov.ae
+    publisher: authority.mofa
+    evidence: [mofa.documents_attestation#about, uae.preparing_to_work#where_mofa_attests]
+  - key: authority.adrec
+    type: authority
+    label: Abu Dhabi Real Estate Centre (ADREC)
+    summary: Provides lease services (register, renew, modify, close or cancel tenancy contracts) and runs Tawtheeq registration.
+    official_url: https://adrec.gov.ae
+    publisher: authority.adrec
+    evidence: [adrec.home#adrec_mandate, adrec.home#lease_services]
+  - key: authority.ad_mobility
+    type: authority
+    label: Integrated Transport Centre (Abu Dhabi Mobility)
+    summary: Provides driver and vehicle licensing, public buses (Hafilat) and the Darb toll system in Abu Dhabi.
+    official_url: https://admobility.gov.ae
+    publisher: authority.ad_mobility
+    evidence: [admobility.driver_licensing_services#itc_provides_licensing]
+  - key: authority.fta
+    type: authority
+    label: Federal Tax Authority (FTA)
+    summary: Registers persons subject to UAE Corporate Tax and issues Corporate Tax Registration Numbers.
+    official_url: https://tax.gov.ae
+    publisher: authority.fta
+    evidence: [fta.corporate_tax_registration#service_description]
+  - key: authority.tdra
+    type: authority
+    label: Telecommunications and Digital Government Regulatory Authority (TDRA)
+    summary: One of the government partners behind UAE PASS, the national digital identity.
+    official_url: https://tdra.gov.ae
+    publisher: authority.tdra
+    evidence: [uae.uae_pass_app#operators]
+  - key: authority.adro
+    type: authority
+    label: Abu Dhabi Residents Office (ADRO)
+    summary: A division of ADDED that supports residents with visa services, guides for residents and Golden Visa nominations.
+    official_url: https://www.adro.gov.ae
+    publisher: authority.adro
+    evidence: [adro.about#mandate, adro.about#services]
+  - key: authority.addc
+    type: authority
+    label: Abu Dhabi Distribution Company (ADDC)
+    summary: Delivers water and electricity services in Abu Dhabi.
+    evidence: [adro.settling_into_abu_dhabi#utilities_after_tawtheeq]
+
+  # ---------------------------------------------------------------- portals
+  - key: portal.tamm
+    type: portal
+    label: TAMM
+    summary: Abu Dhabi Government's one-stop portal for all government services, on the web, in the TAMM app and at TAMM centres. You sign in with UAE PASS.
+    official_url: https://www.tamm.abudhabi
+    publisher: authority.abu_dhabi_government
+    properties: {requires_uae_pass: true}
+    evidence: [uae.abu_dhabi_digital#tamm_one_stop_shop, uae.abu_dhabi_digital#tamm_channels, tamm.login#uae_pass_sign_in]
+  - key: portal.icp_smart_services
+    type: portal
+    label: ICP smart services (website and UAEICP app)
+    summary: ICP's online channels for visa, residence and Emirates ID services. Sign-in with UAE PASS.
+    official_url: https://smartservices.icp.gov.ae
+    publisher: authority.icp
+    properties: {requires_uae_pass: true}
+    evidence: [uae.where_to_apply_for_entry_permits#online_channels, icp.issuing_residency_permit#channels]
+  - key: portal.icp_typing_centres
+    type: portal
+    label: ICP-registered typing centres
+    summary: Offline channel where visa and Emirates ID applications are typed and submitted.
+    publisher: authority.icp
+    evidence: [uae.where_to_apply_for_entry_permits#typing_centres, icp.faq#visa_channels]
+  - key: portal.icp_service_centres
+    type: portal
+    label: ICP customer happiness centres
+    summary: ICP service centres, used for fingerprint and signature capture by appointment.
+    publisher: authority.icp
+    evidence: [icp.faq#appointment_biometrics, icp.chc_khalifa_city#about]
+  - key: portal.icp_authorized_service_providers
+    type: portal
+    label: ICP authorised service providers
+    summary: Applications for the establishment card are submitted exclusively through authorised service providers.
+    publisher: authority.icp
+    evidence: [icp.issuing_establishment_card#authorized_service_providers]
+  - key: portal.mofa_digital
+    type: portal
+    label: MoFA website and UAE MOFA app
+    summary: MoFA's attestation channels. Sign-in with UAE PASS.
+    official_url: https://www.mofa.gov.ae
+    publisher: authority.mofa
+    properties: {requires_uae_pass: true}
+    evidence: [mofa.faqs#channels, uae.preparing_to_work#mofa_channels, mofa.documents_attestation#uae_pass_and_channels]
+  - key: portal.uae_missions_abroad
+    type: portal
+    label: UAE embassies and consulates abroad
+    summary: Attest documents in the country that issued them, where the mission offers the service.
+    publisher: authority.mofa
+    evidence: [mofa.faqs#channels, mofa.documents_attestation#missions_availability]
+  - key: portal.adgm_online_registry
+    type: portal
+    label: ADGM Online Registry Solution
+    summary: ADGM's digital platform to register, incorporate and maintain companies online.
+    official_url: https://www.adgm.com/operating-in-adgm/e-services/online-registry-solution
+    publisher: authority.adgm
+    evidence: [adgm.online_registry_solution#register_online, adgm.non_financial_incorporation_guide#digital_application]
+  - key: portal.accessadgm
+    type: portal
+    label: ACCESSADGM
+    summary: Portal through which the ADGM Registration Authority processes work permits for employees of ADGM entities.
+    publisher: authority.adgm
+    evidence: [adgm.ra_work_permit_guide#accessadgm_channel]
+  - key: portal.emaratax
+    type: portal
+    label: FTA EmaraTax
+    summary: FTA's online platform for tax registration. FTA services are only available through UAE PASS.
+    official_url: https://tax.gov.ae
+    publisher: authority.fta
+    properties: {requires_uae_pass: true}
+    evidence: [fta.corporate_tax_registration#channel_emaratax, fta.corporate_tax_registration#procedure_steps]
+  - key: portal.municipal_customer_happiness_centres
+    type: portal
+    label: Municipality customer happiness centres
+    summary: In-person channel for lease-contract services such as registration, renewal and cancellation.
+    publisher: authority.dmt
+    evidence: [dmt.aam_tawtheeq#lease_services_channels]
+  - key: portal.seha_screening_centres
+    type: portal
+    label: SEHA Disease Prevention and Screening Centres
+    summary: The listed eService for regular visa screening in Abu Dhabi.
+    evidence: [uae.health_conditions_residence_visa#abu_dhabi_screening_eservice, doh.haad_new_visa_screening_centers#seha_ahs_operates_dpsc]
+  - key: portal.certified_health_insurers
+    type: portal
+    label: DoH-certified health insurance companies
+    summary: Where health insurance policies are bought or renewed.
+    evidence: [doh.faq_flexible_health_insurance#how_to_subscribe, doh.faq_flexible_health_insurance#all_certified_insurers]
+  - key: portal.uae_pass_app
+    type: portal
+    label: UAE PASS app
+    summary: Register, verify your identity with face recognition, sign in to services and sign documents.
+    official_url: https://dgov.tdra.gov.ae/services/uae-pass
+    publisher: authority.tdra
+    evidence: [tdra.uae_pass#how_to_register, uae.uae_pass_app#what_is_uae_pass]
+  - key: portal.uae_pass_kiosk
+    type: portal
+    label: UAE PASS kiosks
+    summary: Walk-in kiosks to register or verify a UAE PASS account with an Emirates ID.
+    publisher: authority.tdra
+    evidence: [tdra.uae_pass#how_to_register]
+  - key: portal.darb
+    type: portal
+    label: Darb portal
+    summary: Registration and account management for the Darb road-toll system.
+    official_url: https://darb.itc.gov.ae
+    publisher: authority.ad_mobility
+    evidence: [admobility.darb#registration_portal]
+  - key: portal.hafilat_sales_points
+    type: portal
+    label: Hafilat card sales points
+    summary: Ticket machines, partner outlets and customer service offices that sell Hafilat cards.
+    publisher: authority.ad_mobility
+    evidence: [admobility.hafilat_smart_cards#anonymous_card_purchase_locations]
+  - key: portal.emergency_998
+    type: portal
+    label: Ambulance – 998
+    summary: Call 998 for an ambulance from anywhere in the UAE (999 police, 997 civil defence).
+    evidence: [uae.handling_emergencies#ambulance_998, uae.handling_emergencies#emergency_numbers]
+  - key: portal.ad999_app
+    type: portal
+    label: AD999 app (Abu Dhabi Police)
+    summary: Report a fire, request an ambulance or call the emergency helpline in Abu Dhabi.
+    evidence: [uae.handling_emergencies#ad999_app]
+  - key: portal.seha_facility_finder
+    type: portal
+    label: SEHA doctor and facility finder
+    summary: Search for doctors and healthcare facilities in Abu Dhabi.
+    evidence: [uae.healthcare_providers#find_facility_abu_dhabi, uae.healthcare_providers#find_doctor_abu_dhabi]
+
+  # ---------------------------------------------------------------- locations
+  - key: location.abu_dhabi_mainland
+    type: location
+    label: Abu Dhabi mainland
+    summary: Businesses with a standard ADDED economic licence practise across the Emirate of Abu Dhabi.
+    publisher: authority.added
+    evidence: [added.licensing_requirements#standard_licence]
+  - key: location.adgm
+    type: location
+    label: Abu Dhabi Global Market (Al Maryah Island)
+    summary: Financial free zone; an ADGM company needs a physical registered office here.
+    publisher: authority.adgm
+    evidence: [adgm.non_financial_incorporation_guide#physical_address]
+  - key: location.icp_khalifa_city_centre
+    type: location
+    label: ICP Customer Happiness Center – Khalifa City A
+    summary: One of ICP's main service centres in Abu Dhabi, offering fingerprint capture.
+    publisher: authority.icp
+    evidence: [icp.chc_khalifa_city#location, icp.chc_khalifa_city#services_offered]
+
+  # ---------------------------------------------------------------- documents
+  - key: document.passport
+    type: document
+    label: Passport
+    summary: Valid for at least six months for visa and residence applications.
+    evidence: [icp.faq#visa_general_documents, icp.issuing_residency_permit#validity_and_entry_window]
+  - key: document.photo
+    type: document
+    label: Personal photo
+    summary: Recent coloured photo with a white background (ICAO standard for the Emirates ID).
+    evidence: [icp.faq#visa_general_documents, icp.new_identity_card_issuance#resident_documents_channels]
+  - key: document.entry_permit
+    type: document
+    label: Entry permit
+    summary: Entry permit issued to complete residence procedures; needed to register for visa screening.
+    evidence: [icp.issuance_of_a_visa#about, doh.standard_visa_screening_program#registration_documents]
+  - key: document.residence_visa
+    type: document
+    label: Residence permit
+    summary: UAE residence permit, issued together with the Emirates ID application.
+    evidence: [icp.issuing_residency_permit#about_and_steps, uae.general_provisions_residence_visa#validity]
+  - key: document.emirates_id
+    type: document
+    label: Emirates ID
+    summary: Identity card issued by ICP; a legal requirement for residents.
+    evidence: [uae.emirates_id#what_is]
+  - key: document.medical_fitness_certificate
+    type: document
+    label: Medical fitness certificate
+    summary: Released after visa screening and sent to ICP.
+    evidence: [doh.standard_visa_screening_program#fitness_certificate_sent_to_icp]
+  - key: document.health_insurance_policy
+    type: document
+    label: Health insurance policy
+    summary: Submitted by the sponsor when a residence permit is issued or renewed.
+    evidence: [doh.health_insurance_law_23_2005#policy_needed_for_residence_permit]
+  - key: document.marriage_certificate_attested
+    type: document
+    label: Attested marriage certificate
+    summary: Proof of kinship for a spouse; foreign certificates are attested abroad and then by UAE MoFA.
+    evidence: [icp.issuing_residency_permit#family_required_documents, mofa.faqs#personal_documents_in_scope]
+  - key: document.birth_certificate_attested
+    type: document
+    label: Attested birth certificate
+    summary: Proof of kinship and age for sponsored children.
+    evidence: [icp.issuing_residency_permit#family_required_documents, uae.general_provisions_residence_visa#documents_dependent]
+  - key: document.salary_certificate
+    type: document
+    label: Employment (salary) certificate
+    summary: Shows the family's monthly income and housing provision.
+    evidence: [icp.issuing_residency_permit#family_required_documents]
+  - key: document.tenancy_contract_registered
+    type: document
+    label: Registered tenancy contract (Tawtheeq)
+    summary: A lease registered in Tawtheeq, Abu Dhabi's register of tenancy contracts.
+    evidence: [uae.leasing_a_property_in_the_uae#abu_dhabi_landlord_registers_tawtheeq]
+  - key: document.property_ownership_proof
+    type: document
+    label: Proof of owning a residence
+    summary: Accepted instead of a lease as proof of housing for family sponsorship.
+    evidence: [uae.general_provisions_residence_visa#documents_sponsor_and_housing]
+  - key: document.commercial_license
+    type: document
+    label: Company licence
+    summary: The company's economic licence (mainland) or ADGM commercial licence.
+    evidence: [added.establish_your_business#business_licence, icp.issuing_establishment_card#trade_licence]
+  - key: document.trade_name_certificate
+    type: document
+    label: Trade name certificate
+    summary: Issued when a trade name is registered with the economic department.
+    evidence: [uae.steps_to_start_a_business_on_the_mainland#trade_name_registration]
+  - key: document.initial_approval
+    type: document
+    label: Initial approval
+    summary: Confirms the government has no objection to the business being established.
+    evidence: [uae.steps_to_start_a_business_on_the_mainland#initial_approval_meaning]
+  - key: document.commercial_tenancy_contract
+    type: document
+    label: Business premises tenancy contract
+    summary: Lease for the business location, needed for a mainland licence.
+    evidence: [added.establish_your_business#business_location, uae.steps_to_start_a_business_on_the_mainland#business_location]
+  - key: document.memorandum_of_association
+    type: document
+    label: Memorandum of Association
+    summary: Required for LLCs, limited partnerships, PJSCs and PrJSCs.
+    evidence: [uae.steps_to_start_a_business_on_the_mainland#moa_lsa]
+  - key: document.articles_of_association
+    type: document
+    label: Articles of Association (ADGM)
+    summary: Model, amended or bespoke articles filed with an ADGM incorporation.
+    evidence: [adgm.non_financial_incorporation_guide#documents_to_prepare]
+  - key: document.incorporation_resolution
+    type: document
+    label: Incorporation resolution (ADGM)
+    summary: Resolution appointing signatories and directors (template available).
+    evidence: [adgm.non_financial_incorporation_guide#documents_to_prepare]
+  - key: document.adgm_office_lease
+    type: document
+    label: Signed ADGM office lease
+    summary: Lease for the registered office in ADGM, uploaded with the incorporation application.
+    evidence: [adgm.non_financial_incorporation_guide#documents_to_prepare, adgm.non_financial_incorporation_guide#physical_address]
+  - key: document.establishment_card
+    type: document
+    label: Establishment card
+    summary: Electronic card with the establishment's registered data, issued by ICP.
+    evidence: [icp.issuing_establishment_card#about]
+  - key: document.corporate_tax_registration_number
+    type: document
+    label: Corporate Tax Registration Number
+    summary: Issued by the FTA on corporate tax registration.
+    evidence: [fta.corporate_tax_registration#service_description]
+  - key: document.partnership_or_investment_agreement
+    type: document
+    label: Partnership or investment agreement
+    summary: Required for the Green Residence investor category.
+    evidence: [icp.issuing_residency_permit#green_investor_documents]
+  - key: document.incubator_nomination
+    type: document
+    label: Business incubator nomination
+    summary: Required for every entrepreneur route to the Golden Visa.
+    evidence: [adro.golden_visa_entrepreneurs#incubator_nomination]
+  - key: document.uae_driving_licence
+    type: document
+    label: UAE driving licence
+    evidence: [tamm.get_a_driving_licence_journey#replace_foreign_licence, tamm.get_a_driving_licence_journey#issue_licence_after_test]
+  - key: document.eye_test_report
+    type: document
+    label: Eye test report
+    summary: From a centre approved by the traffic department; needed to open a driving file.
+    evidence: [uae.getting_a_driving_licence#traffic_file_documents]
+
+  # ---------------------------------------------------------------- requirements
+  - key: requirement.family_accommodation
+    type: requirement
+    label: Adequate housing for the family
+    summary: Owned or rented housing in proportion to the property's capacity, shown by a certified lease or proof of ownership.
+    properties:
+      condition:
+        any:
+          - {fact: documents.tenancy_contract_registered, op: truthy}
+          - {fact: documents.property_ownership_proof, op: truthy}
+    evidence: [icp.issuing_residency_permit#adequate_housing, uae.general_provisions_residence_visa#documents_sponsor_and_housing]
+  - key: requirement.security_check
+    type: requirement
+    label: Security check
+    summary: Residence visa applicants must pass a security check.
+    properties: {informational: true, note: "ICP runs the security check while processing the application."}
+    evidence: [uae.general_provisions_residence_visa#medical_test_security_eid]
+  - key: requirement.emirates_id_application
+    type: requirement
+    label: Emirates ID application (unified with the residence permit)
+    summary: Residence permit and Emirates ID are completed through one unified application.
+    properties: {informational: true, note: "Part of the same ICP application: nothing to do separately."}
+    evidence: [adro.types_of_visas#residence_visa_requirements, icp.new_identity_card_issuance#resident_unified_application]
+  - key: requirement.free_of_communicable_diseases
+    type: requirement
+    label: Free of communicable diseases
+    summary: Residence applicants must be free of communicable diseases such as HIV and TB; Abu Dhabi screens for TB with a chest X-ray.
+    properties: {informational: true, note: "Determined by the visa screening; nothing to prepare in advance."}
+    evidence: [uae.health_conditions_residence_visa#free_of_communicable_diseases, uae.health_conditions_residence_visa#abu_dhabi_chest_xray]
+  - key: requirement.signatory_eid_or_unified_number
+    type: requirement
+    label: Authorised signatory's Emirates ID or Unified Number
+    summary: A valid Emirates ID, or a Unified Number for visitors without one, for one of the authorised signatories.
+    evidence: [icp.issuing_establishment_card#signatory_eid_or_unified_number]
+  - key: requirement.free_zone_authority_submission
+    type: requirement
+    label: Apply through the free zone authority
+    summary: Free zone companies submit the establishment card request through their free zone authority.
+    properties: {informational: true, note: "For ADGM companies the request goes through ADGM."}
+    evidence: [icp.issuing_establishment_card#free_zone_companies]
+  - key: requirement.foreign_investor_residency_approval
+    type: requirement
+    label: Residency directorate approval for foreign investors
+    summary: Foreign investors need approval from the General Directorate of Residency and Foreigners' Affairs before the initial approval.
+    evidence: [uae.steps_to_start_a_business_on_the_mainland#initial_approval_prerequisites]
+  - key: requirement.activity_approvals
+    type: requirement
+    label: Activity-specific approvals
+    summary: Some activities need approvals from other entities, such as the Municipality or the Department of Health.
+    evidence: [added.establish_your_business#additional_approvals, uae.steps_to_start_a_business_on_the_mainland#initial_approval_prerequisites]
+  - key: requirement.home_country_attestation
+    type: requirement
+    label: Attested by the issuing country's foreign ministry
+    summary: A foreign document is first attested by the Ministry of Foreign Affairs of the country that issued it.
+    evidence: [mofa.faqs#issued_outside_uae_chain, uae.preparing_to_work#issued_outside_uae]
+  - key: requirement.attestation_document_rules
+    type: requirement
+    label: Document rules for attestation
+    summary: The original in Arabic or English (or with an official translation), attested by the right authorities.
+    evidence: [mofa.faqs#attestation_requirements]
+  - key: requirement.uae_mobile_number
+    type: requirement
+    label: Active UAE mobile number
+    summary: Needed with a valid Emirates ID to register for UAE PASS as a resident.
+    evidence: [tdra.uae_pass#eligibility_citizens_residents]
+  - key: requirement.active_traffic_file
+    type: requirement
+    label: Active traffic file
+    summary: TAMM licensing transactions need UAE PASS and an active traffic file in the licensing system.
+    evidence: [admobility.driver_licensing_services#tamm_uae_pass_traffic_file]
+
+  # ---------------------------------------------------------------- eligibility rules
+  - key: eligibility_rule.family_sponsor_income
+    type: eligibility_rule
+    label: Sponsor's minimum income
+    summary: The sponsor earns at least AED 4,000 a month, or AED 3,000 plus employer-provided housing.
+    official_url: https://icp.gov.ae/en/services-details/?serviceid=64afe3c1035448005bd52e64
+    properties:
+      condition:
+        any:
+          - {fact: finance.monthly_income_aed, op: gte, value: 4000}
+          - all:
+              - {fact: finance.monthly_income_aed, op: gte, value: 3000}
+              - {fact: housing.accommodation_provided, op: eq, value: true}
+    evidence: [icp.issuing_residency_permit#financial_solvency, uae.residence_visa_for_family_members#sponsor_income]
+  - key: eligibility_rule.family_eligible_members
+    type: eligibility_rule
+    label: Who a resident can sponsor
+    summary: A spouse, unmarried daughters, sons under 25, and children with special needs.
+    properties:
+      condition:
+        any:
+          - {fact: person.relationship_to_sponsor, op: eq, value: spouse}
+          - all:
+              - {fact: person.relationship_to_sponsor, op: eq, value: daughter}
+              - {fact: person.married, op: eq, value: false}
+          - all:
+              - {fact: person.relationship_to_sponsor, op: eq, value: son}
+              - {fact: person.age, op: lt, value: 25}
+          - all:
+              - {fact: person.relationship_to_sponsor, op: in, value: [son, daughter]}
+              - {fact: person.special_needs, op: eq, value: true}
+    evidence: [icp.issuing_residency_permit#family_eligible_members, uae.residence_visa_for_family_members#eligible_family_members]
+  - key: eligibility_rule.adgm_signatory_residency
+    type: eligibility_rule
+    label: A resident authorised signatory (ADGM)
+    summary: At least one authorised signatory is a GCC national or holds a valid UAE residence visa.
+    properties:
+      condition: {fact: company.has_resident_signatory, op: eq, value: true}
+    evidence: [adgm.non_financial_incorporation_guide#signatory_residency]
+  - key: eligibility_rule.foreign_ownership
+    type: eligibility_rule
+    label: Activity open to foreign ownership
+    summary: Foreign investors may fully own most mainland companies; the Cabinet restricts some strategic activities.
+    evidence: [uae.full_foreign_ownership_of_commercial_companies#full_ownership, uae.full_foreign_ownership_of_commercial_companies#restricted_activities]
+  - key: eligibility_rule.trade_name_rules
+    type: eligibility_rule
+    label: Trade name rules
+    summary: Carries the legal-form suffix, respects public morals, is unique and matches the activity.
+    evidence: [uae.steps_to_start_a_business_on_the_mainland#trade_name_rules]
+  - key: eligibility_rule.green_investor_contribution
+    type: eligibility_rule
+    label: Investor contribution of at least AED 1,000,000
+    summary: For the Green Residence investor category, the contribution to the company is at least AED 1 million in cash or equivalent.
+    properties:
+      condition: {fact: company.investment_aed, op: gte, value: 1000000}
+    evidence: [icp.issuing_residency_permit#green_investor_contribution]
+  - key: eligibility_rule.golden_visa_entrepreneur
+    type: eligibility_rule
+    label: Golden Visa entrepreneur criteria
+    summary: An approved pioneering project, a qualifying SME, or a founder of sold projects, nominated by a UAE business incubator.
+    evidence: [adro.golden_visa_entrepreneurs#eligibility]
+  - key: eligibility_rule.minimum_driving_age
+    type: eligibility_rule
+    label: Minimum age for a car licence
+    summary: 18 for cars and light vehicles (17 motorcycles, 20 heavy vehicles, 21 buses).
+    properties:
+      condition: {fact: person.age, op: gte, value: 18}
+    evidence: [uae.getting_a_driving_licence#minimum_age]
+  - key: eligibility_rule.licence_exchange
+    type: eligibility_rule
+    label: Licence eligible for exchange
+    summary: A valid licence from an eligible country (GCC or designated countries), and the holder is at least 18.
+    properties:
+      condition:
+        all:
+          - {fact: driving.licence_exchangeable, op: eq, value: true}
+          - {fact: person.age, op: gte, value: 18}
+    evidence: [uae.getting_a_driving_licence#exchange_home_country_licence, tamm.get_a_driving_licence_journey#replace_foreign_licence]
+
+  # ---------------------------------------------------------------- dependencies (OR groups)
+  - key: dependency.company_licence
+    type: dependency
+    label: A company licence (Abu Dhabi mainland or ADGM)
+    summary: Satisfied by either a mainland economic licence or ADGM incorporation.
+    evidence: [icp.issuing_establishment_card#trade_licence, fta.corporate_tax_registration#required_documents]
+
+  # ---------------------------------------------------------------- appointments
+  - key: appointment.visa_screening
+    type: appointment
+    label: Visa screening visit
+    summary: Registration, physical examination, blood test and chest X-ray at an approved screening provider.
+    evidence: [doh.standard_visa_screening_program#tests_and_steps, doh.standard_visa_screening_program#approved_provider_only]
+  - key: appointment.emirates_id_biometrics
+    type: appointment
+    label: Emirates ID fingerprints and signature
+    summary: Applicants aged 15 and over attend an ICP service centre at their booked appointment.
+    evidence: [icp.new_identity_card_issuance#biometrics_step, icp.new_identity_card_issuance#resident_appointment, icp.faq#appointment_biometrics]
+  - key: appointment.uae_mission_visit
+    type: appointment
+    label: Visit to the UAE mission
+    summary: Needed where the UAE mission abroad does not offer attestation online.
+    evidence: [mofa.documents_attestation#missions_availability]
+  - key: appointment.eye_test
+    type: appointment
+    label: Eye test
+    summary: At an optician or centre approved by the traffic department.
+    evidence: [uae.getting_a_driving_licence#learning_to_drive_process, tamm.get_a_driving_licence_journey#supporting_tools]
+  - key: appointment.driving_test
+    type: appointment
+    label: Driving test
+    evidence: [tamm.get_a_driving_licence_journey#driving_test_appointment]
+
+  # ---------------------------------------------------------------- legal instruments
+  - key: legal_instrument.health_insurance_law_2005
+    type: legal_instrument
+    label: Abu Dhabi Law No. 23 of 2005 (health insurance)
+    summary: Makes health insurance compulsory for expatriate residents and their families.
+    official_url: https://www.doh.gov.ae/-/media/0BE585B5E6814D81913697DD6E644C02.ashx
+    publisher: authority.doh
+    evidence: [doh.health_insurance_law_23_2005#compulsory_for_expat_residents]
+
+  # ---------------------------------------------------------------- services: company formation
+  - key: service.trade_name_reservation
+    type: service
+    label: Reserve a trade name (mainland)
+    summary: Register a unique trade name with ADDED, alongside the initial approval.
+    official_url: https://www.added.gov.ae/en/set-up/establish-your-business
+    publisher: authority.added
+    aliases: [company name, business name]
+    evidence: [added.establish_your_business#trade_name, uae.steps_to_start_a_business_on_the_mainland#trade_name_registration]
+  - key: service.initial_approval
+    type: service
+    label: Get initial approval (mainland)
+    summary: Confirms the government has no objection to the business; applied for with ADDED alongside the trade name.
+    official_url: https://www.added.gov.ae/en/set-up/establish-your-business
+    publisher: authority.added
+    evidence: [added.establish_your_business#initial_approval, uae.steps_to_start_a_business_on_the_mainland#initial_approval_meaning]
+  - key: service.commercial_license_mainland
+    type: service
+    label: Issue an economic licence (mainland)
+    summary: The business licence for an Abu Dhabi mainland company, issued by ADDED through TAMM.
+    official_url: https://www.added.gov.ae/en/set-up/establish-your-business/licensing-requirements
+    publisher: authority.added
+    aliases: [trade licence, business licence, mainland company, set up a company]
+    evidence: [added.establish_your_business#business_licence, added.licensing_requirements#standard_licence]
+  - key: service.adgm_business_application
+    type: service
+    label: Submit an ADGM business application
+    summary: The first online form; the incorporation application opens once it is approved.
+    publisher: authority.adgm
+    evidence: [adgm.non_financial_incorporation_guide#application_sequence]
+  - key: service.company_registration_adgm
+    type: service
+    label: Incorporate a company in ADGM
+    summary: Register a non-financial company with the ADGM Registration Authority and obtain its commercial licence.
+    official_url: https://www.adgm.com/registration-authority
+    publisher: authority.adgm
+    aliases: [free zone company, ADGM licence, startup]
+    evidence: [adgm.non_financial_incorporation_guide#scope, adgm.registration_authority#ra_role]
+  - key: service.establishment_card
+    type: service
+    label: Get an establishment card
+    summary: ICP's electronic card holding the company's registered data; needed before sponsoring employee visas.
+    official_url: https://icp.gov.ae/en/services-details/?serviceid=64afe3c1035448005bd52e6d
+    publisher: authority.icp
+    aliases: [immigration card, company immigration file]
+    evidence: [icp.issuing_establishment_card#about]
+  - key: service.adgm_employee_work_permit
+    type: service
+    label: ADGM work permits and employee visas
+    summary: The ADGM Registration Authority facilitates employment visas and issues work permits for ADGM entities' employees.
+    publisher: authority.adgm
+    evidence: [adgm.ra_work_permit_guide#work_permit_definition, adgm.ra_work_permit_guide#sponsored_employees]
+  - key: service.corporate_tax_registration
+    type: service
+    label: Register for corporate tax
+    summary: All juridical persons subject to Corporate Tax register with the FTA and obtain a registration number.
+    official_url: https://tax.gov.ae/en/services/corporate.tax.registration.aspx
+    publisher: authority.fta
+    properties: {requires_uae_pass: true}
+    evidence: [fta.corporate_tax_registration#service_description, fta.corporate_tax_registration#juridical_persons_must_register]
+  - key: service.golden_visa_entrepreneur_nomination
+    type: service
+    label: Golden Visa nomination for entrepreneurs
+    summary: A 10-year residence route for entrepreneurs; residents apply for nomination through the Abu Dhabi Residents Office.
+    official_url: https://www.adro.gov.ae/en/Visas/Types-of-Visas/Abu-Dhabi-Golden-Visa/Entrepreneurs
+    publisher: authority.adro
+    evidence: [adro.golden_visa_entrepreneurs#overview, adro.golden_visa_entrepreneurs#how_to_apply]
+
+  # ---------------------------------------------------------------- services: residency
+  - key: service.entry_permit_investor
+    type: service
+    label: Get an entry permit to complete residency
+    summary: ICP's entry permit to enter and complete residence procedures; enter within its 60-day validity.
+    official_url: https://icp.gov.ae/en/services-details/?serviceid=64afe3c1035448005bd52e60
+    publisher: authority.icp
+    properties: {requires_uae_pass: true}
+    aliases: [entry visa, visa to enter]
+    evidence: [icp.issuance_of_a_visa#about, adro.types_of_visas#entry_permit_60_days]
+  - key: service.medical_fitness
+    type: service
+    label: Residency medical screening
+    summary: Screening at an ADPHC/DoH-approved centre for residency applicants over 18; the fitness certificate goes to ICP.
+    publisher: authority.doh
+    aliases: [medical test, medical fitness test, visa medical]
+    evidence: [doh.standard_visa_screening_program#scope_expatriates_over_18, doh.standard_visa_screening_program#who_must_be_screened]
+  - key: service.health_insurance
+    type: service
+    label: Get health insurance
+    summary: Compulsory for expatriate residents; employers and sponsors provide cover for employees and sponsored family through DoH-certified insurers.
+    publisher: authority.doh
+    aliases: [medical insurance, health cover]
+    evidence: [doh.health_insurance_law_23_2005#compulsory_for_expat_residents, doh.health_insurance_law_23_2005#employer_sponsor_duty_and_residence_permit]
+  - key: service.residence_visa_investor
+    type: service
+    label: Get your residence visa
+    summary: ICP issues the residence permit through a unified application with the Emirates ID, after entry, medical screening and a security check.
+    official_url: https://icp.gov.ae/en/services-details/?serviceid=64afe3c1035448005bd52e64
+    publisher: authority.icp
+    properties: {requires_uae_pass: true}
+    aliases: [residency, residence permit, founder visa, partner visa, investor visa]
+    evidence: [icp.issuing_residency_permit#about_and_steps, adro.types_of_visas#residence_visa_issued_inside]
+  - key: service.residence_visa_green_investor
+    type: service
+    label: Green residence for investors and partners
+    summary: A renewable five-year residence without a UAE sponsor for investors in a UAE business.
+    official_url: https://icp.gov.ae/en/services/uae-green-residency/
+    publisher: authority.icp
+    aliases: [green visa]
+    evidence: [icp.green_residence_guide#what_is, icp.green_residence_guide#investors_business_partners]
+  - key: service.emirates_id
+    type: service
+    label: Get your Emirates ID
+    summary: A new identity card issued with the residence permit; fingerprints and signature at an ICP centre for applicants 15 and over.
+    official_url: https://icp.gov.ae/en/services-details/?serviceid=64afe3c1035448005bd52e5a
+    publisher: authority.icp
+    properties: {requires_uae_pass: true}
+    aliases: [ID card, eid, biometrics]
+    evidence: [icp.new_identity_card_issuance#about, uae.emirates_id#what_is]
+
+  # ---------------------------------------------------------------- services: family
+  - key: service.sponsor_file
+    type: service
+    label: Open a sponsor file
+    summary: A one-time sponsor file that lets a resident apply for visas and residence for family members.
+    publisher: authority.abu_dhabi_government
+    evidence: [tamm.open_sponsorship_file#first_step, tamm.open_sponsorship_file#opened_once]
+  - key: service.family_entry_permit
+    type: service
+    label: Get an entry permit for a family member
+    summary: Entry permit for a relative to enter and complete residence procedures.
+    official_url: https://icp.gov.ae/en/services-details/?serviceid=64afe3c1035448005bd52e60
+    publisher: authority.icp
+    properties: {requires_uae_pass: true}
+    evidence: [icp.issuance_of_a_visa#about, icp.issuance_of_a_visa#required_documents]
+  - key: service.family_residence_visa
+    type: service
+    label: Sponsor a family member's residence visa
+    summary: Residence permit for a spouse or children, sponsored by a UAE resident and linked to the sponsor's own permit.
+    official_url: https://icp.gov.ae/en/services-details/?serviceid=64afe3c1035448005bd52e64
+    publisher: authority.icp
+    properties: {requires_uae_pass: true}
+    aliases: [spouse visa, wife visa, husband visa, family visa, dependant visa, sponsor my family]
+    evidence: [icp.issuing_residency_permit#family_eligible_members, uae.residence_visa_for_family_members#who_can_sponsor]
+  - key: service.mofa_attestation
+    type: service
+    label: Attest a foreign document at UAE MoFA
+    summary: MoFA attests foreign documents such as marriage and birth certificates after they are attested abroad.
+    official_url: https://www.mofa.gov.ae/en/services/attestation
+    publisher: authority.mofa
+    properties: {requires_uae_pass: true}
+    aliases: [attestation, legalisation, marriage certificate]
+    evidence: [mofa.documents_attestation#about, mofa.faqs#issued_outside_uae_chain]
+  - key: service.uae_mission_attestation
+    type: service
+    label: Attestation by the UAE mission in the issuing country
+    summary: The step between the issuing country's foreign ministry and UAE MoFA, applied for online or at the mission.
+    publisher: authority.mofa
+    evidence: [mofa.faqs#issued_outside_uae_chain, mofa.documents_attestation#issued_outside_uae_steps]
+
+  # ---------------------------------------------------------------- services: housing
+  - key: service.tawtheeq
+    type: service
+    label: Register a tenancy contract (Tawtheeq)
+    summary: Landlords register residential leases in Tawtheeq; the tenant provides passport, residence visa and Emirates ID to sign the lease.
+    official_url: https://adrec.gov.ae/en
+    publisher: authority.adrec
+    properties: {registered_by: landlord}
+    aliases: [rent, lease, apartment, housing, tenancy]
+    evidence: [uae.leasing_a_property_in_the_uae#abu_dhabi_landlord_registers_tawtheeq, adrec.home#lease_services]
+  - key: service.utilities_connection
+    type: service
+    label: Connect water and electricity
+    summary: Open a utilities account once the lease is registered in Tawtheeq.
+    aliases: [electricity, water, utilities, ADDC]
+    evidence: [adro.settling_into_abu_dhabi#utilities_after_tawtheeq, uae.leasing_a_property_in_the_uae#registration_needed_for_utilities]
+
+  # ---------------------------------------------------------------- services: transport
+  - key: service.open_driving_file
+    type: service
+    label: Open a driving licence file
+    summary: A traffic file to take driving classes and tests.
+    publisher: authority.ad_mobility
+    evidence: [uae.getting_a_driving_licence#traffic_file_documents, tamm.get_a_driving_licence_journey#open_file_for_training]
+  - key: service.driving_licence_new
+    type: service
+    label: Get a driving licence through lessons and tests
+    summary: Classes at a driving institute and passing the traffic department's tests.
+    publisher: authority.ad_mobility
+    aliases: [learn to drive, driving test]
+    evidence: [uae.getting_a_driving_licence#new_licence_via_classes_and_tests, tamm.get_a_driving_licence_journey#issue_licence_after_test]
+  - key: service.driving_licence_exchange
+    type: service
+    label: Exchange a foreign driving licence
+    summary: Replace an eligible foreign or GCC licence with an Abu Dhabi licence through TAMM.
+    publisher: authority.ad_mobility
+    properties: {requires_uae_pass: true}
+    aliases: [convert licence, transfer licence, driving licence]
+    evidence: [tamm.get_a_driving_licence_journey#replace_foreign_licence, uae.getting_a_driving_licence#exchange_home_country_licence]
+  - key: service.hafilat_card
+    type: service
+    label: Get a Hafilat public transport card
+    summary: Pay bus fares in Abu Dhabi; the anonymous card has no prerequisites.
+    official_url: https://admobility.gov.ae/en/pb-bus-service/hafilat-cards
+    publisher: authority.ad_mobility
+    aliases: [bus card, public transport]
+    evidence: [admobility.hafilat_smart_cards#what_hafilat_is, admobility.hafilat_smart_cards#anonymous_card_no_prerequisites]
+  - key: service.darb_registration
+    type: service
+    label: Register your vehicle for Darb road tolls
+    summary: Register with the Darb toll system; unregistered vehicles are fined after a grace period.
+    official_url: https://admobility.gov.ae/en/darb
+    publisher: authority.ad_mobility
+    aliases: [toll, road toll]
+    evidence: [admobility.darb#what_darb_is, admobility.darb#unregistered_vehicle_fine]
+
+  # ---------------------------------------------------------------- services: identity & newcomer
+  - key: service.uae_pass_registration
+    type: service
+    label: Create and verify your UAE PASS
+    summary: The national digital identity used to sign in to TAMM and federal services; residents register with a valid Emirates ID and a UAE mobile number.
+    official_url: https://dgov.tdra.gov.ae/services/uae-pass
+    publisher: authority.tdra
+    aliases: [uae pass, digital identity, login]
+    evidence: [tdra.uae_pass#how_to_register, uae.uae_pass_app#what_is_uae_pass]
+  - key: service.adro_resident_services
+    type: service
+    label: Abu Dhabi Residents Office services
+    summary: Smart services for visa applications and enquiries, guides for residents and resident engagement.
+    official_url: https://www.adro.gov.ae
+    publisher: authority.adro
+    aliases: [newcomer, residents office]
+    evidence: [adro.about#services]
+
+  # ---------------------------------------------------------------- services: healthcare access
+  - key: service.emergency_ambulance
+    type: service
+    label: Call an ambulance
+    summary: Hospitals in the UAE accept medical emergencies for initial treatment.
+    aliases: [emergency, ambulance, "998"]
+    evidence: [uae.handling_emergencies#ambulance_998, uae.handling_emergencies#hospitals_accept_emergencies]
+  - key: service.find_healthcare
+    type: service
+    label: Find a doctor, clinic or pharmacy
+    summary: SEHA's finder for doctors and facilities, and the pharmacy list on TAMM.
+    aliases: [doctor, clinic, hospital, pharmacy]
+    evidence: [uae.healthcare_providers#find_facility_abu_dhabi, uae.healthcare_providers#find_doctor_abu_dhabi]
+
+edges:
+  # ================================================================ company formation
+  - [authority.added, provides, service.trade_name_reservation, [added.establish_your_business#trade_name, added.licensing_requirements#primary_services]]
+  - [service.trade_name_reservation, available_at, portal.tamm, [added.licensing_requirements#apply_via_tamm]]
+  - [service.trade_name_reservation, produces, document.trade_name_certificate, [uae.steps_to_start_a_business_on_the_mainland#trade_name_registration]]
+  - [eligibility_rule.trade_name_rules, applies_to, service.trade_name_reservation, [uae.steps_to_start_a_business_on_the_mainland#trade_name_rules]]
+
+  - [authority.added, provides, service.initial_approval, [added.establish_your_business#initial_approval]]
+  - [service.initial_approval, available_at, portal.tamm, [added.licensing_requirements#apply_via_tamm]]
+  - [service.initial_approval, requires, requirement.foreign_investor_residency_approval, [uae.steps_to_start_a_business_on_the_mainland#initial_approval_prerequisites]]
+  - [service.initial_approval, requires, requirement.activity_approvals, [uae.steps_to_start_a_business_on_the_mainland#initial_approval_prerequisites, added.establish_your_business#additional_approvals]]
+  - [eligibility_rule.foreign_ownership, applies_to, service.initial_approval, [uae.full_foreign_ownership_of_commercial_companies#restricted_activities]]
+  - [service.initial_approval, produces, document.initial_approval, [uae.steps_to_start_a_business_on_the_mainland#initial_approval_meaning]]
+
+  - [authority.added, provides, service.commercial_license_mainland, [added.licensing_requirements#primary_services]]
+  - [service.commercial_license_mainland, available_at, portal.tamm, [added.licensing_requirements#apply_via_tamm, added.establish_your_business#online_via_tamm]]
+  - [service.commercial_license_mainland, depends_on, service.trade_name_reservation, [uae.steps_to_start_a_business_on_the_mainland#standard_process_steps, uae.steps_to_start_a_business_on_the_mainland#licence_documents]]
+  - [service.commercial_license_mainland, depends_on, service.initial_approval, [uae.steps_to_start_a_business_on_the_mainland#initial_approval_meaning, uae.steps_to_start_a_business_on_the_mainland#licence_documents]]
+  - [service.commercial_license_mainland, requires, document.commercial_tenancy_contract, [added.establish_your_business#business_location, uae.steps_to_start_a_business_on_the_mainland#business_location]]
+  - source: service.commercial_license_mainland
+    relation: requires
+    target: document.memorandum_of_association
+    properties:
+      when: {fact: company.legal_form, op: in, value: [llc, limited_partnership, pjsc, prjsc]}
+    evidence: [uae.steps_to_start_a_business_on_the_mainland#moa_lsa]
+  - [service.commercial_license_mainland, produces, document.commercial_license, [added.establish_your_business#business_licence, uae.steps_to_start_a_business_on_the_mainland#licence_documents]]
+  - [service.commercial_license_mainland, located_in, location.abu_dhabi_mainland, [added.licensing_requirements#standard_licence]]
+
+  - [authority.adgm_ra, provides, service.adgm_business_application, [adgm.registration_authority#ra_role, adgm.non_financial_incorporation_guide#application_sequence]]
+  - [service.adgm_business_application, available_at, portal.adgm_online_registry, [adgm.non_financial_incorporation_guide#digital_application]]
+  - [authority.adgm_ra, provides, service.company_registration_adgm, [adgm.registration_authority#ra_role]]
+  - [service.company_registration_adgm, available_at, portal.adgm_online_registry, [adgm.online_registry_solution#register_online, adgm.non_financial_incorporation_guide#digital_application]]
+  - [service.company_registration_adgm, depends_on, service.adgm_business_application, [adgm.non_financial_incorporation_guide#application_sequence]]
+  - [service.company_registration_adgm, requires, document.passport, [adgm.non_financial_incorporation_guide#documents_to_prepare]]
+  - [service.company_registration_adgm, requires, document.articles_of_association, [adgm.non_financial_incorporation_guide#documents_to_prepare]]
+  - [service.company_registration_adgm, requires, document.incorporation_resolution, [adgm.non_financial_incorporation_guide#documents_to_prepare]]
+  - [service.company_registration_adgm, requires, document.adgm_office_lease, [adgm.non_financial_incorporation_guide#documents_to_prepare, adgm.non_financial_incorporation_guide#physical_address]]
+  - [eligibility_rule.adgm_signatory_residency, applies_to, service.company_registration_adgm, [adgm.non_financial_incorporation_guide#signatory_residency]]
+  - [service.company_registration_adgm, produces, document.commercial_license, [adgm.non_financial_incorporation_guide#physical_address, adgm.registration_authority#ra_role]]
+  - [service.company_registration_adgm, located_in, location.adgm, [adgm.non_financial_incorporation_guide#physical_address]]
+  - [authority.adgm_ra, located_in, location.adgm, [adgm.non_financial_incorporation_guide#physical_address]]
+
+  - source: dependency.company_licence
+    relation: satisfied_by
+    target: service.commercial_license_mainland
+    properties:
+      when: {fact: company.jurisdiction, op: eq, value: mainland}
+    evidence: [added.establish_your_business#business_licence]
+  - source: dependency.company_licence
+    relation: satisfied_by
+    target: service.company_registration_adgm
+    properties:
+      when: {fact: company.jurisdiction, op: eq, value: adgm}
+    evidence: [adgm.registration_authority#ra_role, adgm.non_financial_incorporation_guide#physical_address]
+
+  - [authority.icp, provides, service.establishment_card, [icp.issuing_establishment_card#channels_uae_pass_result]]
+  - [service.establishment_card, available_at, portal.icp_smart_services, [icp.issuing_establishment_card#channels_uae_pass_result]]
+  - [service.establishment_card, available_at, portal.icp_authorized_service_providers, [icp.issuing_establishment_card#authorized_service_providers]]
+  - [service.establishment_card, depends_on, dependency.company_licence, [icp.issuing_establishment_card#trade_licence, uae.recruiting_on_the_mainland#licence_then_company_file]]
+  - [service.establishment_card, requires, requirement.signatory_eid_or_unified_number, [icp.issuing_establishment_card#signatory_eid_or_unified_number]]
+  - source: service.establishment_card
+    relation: requires
+    target: requirement.free_zone_authority_submission
+    properties:
+      when: {fact: company.jurisdiction, op: eq, value: adgm}
+    evidence: [icp.issuing_establishment_card#free_zone_companies]
+  - [service.establishment_card, produces, document.establishment_card, [icp.issuing_establishment_card#about]]
+
+  - [authority.adgm_ra, provides, service.adgm_employee_work_permit, [adgm.ra_work_permit_guide#work_permit_definition]]
+  - [service.adgm_employee_work_permit, available_at, portal.accessadgm, [adgm.ra_work_permit_guide#accessadgm_channel]]
+  - [service.adgm_employee_work_permit, depends_on, service.establishment_card, [adgm.ra_work_permit_guide#establishment_card_prerequisite]]
+  - [service.adgm_employee_work_permit, depends_on, service.company_registration_adgm, [adgm.ra_work_permit_guide#work_permit_definition]]
+
+  - [authority.fta, provides, service.corporate_tax_registration, [fta.corporate_tax_registration#service_description]]
+  - [service.corporate_tax_registration, available_at, portal.emaratax, [fta.corporate_tax_registration#channel_emaratax, fta.corporate_tax_registration#procedure_steps]]
+  - [service.corporate_tax_registration, depends_on, dependency.company_licence, [fta.corporate_tax_registration#required_documents]]
+  - [service.corporate_tax_registration, requires, document.passport, [fta.corporate_tax_registration#required_documents]]
+  - [service.corporate_tax_registration, requires, document.emirates_id, [fta.corporate_tax_registration#required_documents]]
+  - [service.corporate_tax_registration, produces, document.corporate_tax_registration_number, [fta.corporate_tax_registration#service_description]]
+
+  - [authority.adro, provides, service.golden_visa_entrepreneur_nomination, [adro.golden_visa_entrepreneurs#how_to_apply]]
+  - [service.golden_visa_entrepreneur_nomination, available_at, portal.tamm, [adro.golden_visa_entrepreneurs#how_to_apply]]
+  - [service.golden_visa_entrepreneur_nomination, requires, document.incubator_nomination, [adro.golden_visa_entrepreneurs#incubator_nomination]]
+  - [service.golden_visa_entrepreneur_nomination, requires, document.commercial_license, [adro.golden_visa_entrepreneurs#owner_partner_documents]]
+  - [eligibility_rule.golden_visa_entrepreneur, applies_to, service.golden_visa_entrepreneur_nomination, [adro.golden_visa_entrepreneurs#eligibility]]
+
+  # ================================================================ founder residency
+  - [authority.icp, provides, service.entry_permit_investor, [icp.issuance_of_a_visa#about]]
+  - [service.entry_permit_investor, available_at, portal.icp_smart_services, [icp.issuance_of_a_visa#channels, uae.where_to_apply_for_entry_permits#online_channels]]
+  - [service.entry_permit_investor, available_at, portal.icp_typing_centres, [uae.where_to_apply_for_entry_permits#typing_centres, icp.faq#visa_channels]]
+  - [service.entry_permit_investor, requires, document.passport, [icp.faq#visa_general_documents]]
+  - [service.entry_permit_investor, requires, document.photo, [icp.faq#visa_general_documents]]
+  - [service.entry_permit_investor, requires, document.health_insurance_policy, [icp.faq#visa_general_documents, icp.issuance_of_a_visa#entity_category_conditions]]
+  - [service.entry_permit_investor, produces, document.entry_permit, [icp.issuance_of_a_visa#about]]
+
+  - [authority.adphc, provides, service.medical_fitness, [doh.standard_visa_screening_program#adphc_doh_role]]
+  - [authority.seha, provides, service.medical_fitness, [doh.haad_new_visa_screening_centers#seha_ahs_operates_dpsc]]
+  - [service.medical_fitness, available_at, portal.seha_screening_centres, [uae.health_conditions_residence_visa#abu_dhabi_screening_eservice]]
+  - [service.medical_fitness, requires, document.passport, [doh.standard_visa_screening_program#registration_documents]]
+  - [service.medical_fitness, requires, document.entry_permit, [doh.standard_visa_screening_program#registration_documents, doh.standard_visa_screening_program#who_must_be_screened]]
+  - [service.medical_fitness, may_require, appointment.visa_screening, [doh.standard_visa_screening_program#tests_and_steps, doh.standard_visa_screening_program#approved_provider_only]]
+  - [appointment.visa_screening, available_at, portal.seha_screening_centres, [uae.health_conditions_residence_visa#abu_dhabi_screening_eservice]]
+  - [service.medical_fitness, produces, document.medical_fitness_certificate, [doh.standard_visa_screening_program#fitness_certificate_sent_to_icp]]
+
+  - [service.health_insurance, available_at, portal.certified_health_insurers, [doh.faq_flexible_health_insurance#how_to_subscribe]]
+  - [service.health_insurance, produces, document.health_insurance_policy, [doh.health_insurance_law_23_2005#policy_needed_for_residence_permit]]
+  - [service.health_insurance, governed_by, legal_instrument.health_insurance_law_2005, [doh.health_insurance_law_23_2005#compulsory_for_expat_residents]]
+
+  - [authority.icp, provides, service.residence_visa_investor, [icp.issuing_residency_permit#about_and_steps]]
+  - [service.residence_visa_investor, available_at, portal.icp_smart_services, [icp.issuing_residency_permit#channels]]
+  - [service.residence_visa_investor, depends_on, service.entry_permit_investor, [adro.types_of_visas#residence_visa_issued_inside, icp.issuance_of_a_visa#about]]
+  - [service.residence_visa_investor, depends_on, service.medical_fitness, [uae.general_provisions_residence_visa#medical_test_security_eid, adro.types_of_visas#residence_visa_requirements]]
+  - [service.residence_visa_investor, depends_on, service.health_insurance, [doh.health_insurance_law_23_2005#employer_sponsor_duty_and_residence_permit, doh.health_insurance_law_23_2005#policy_needed_for_residence_permit]]
+  - [service.residence_visa_investor, requires, requirement.security_check, [uae.general_provisions_residence_visa#medical_test_security_eid]]
+  - [service.residence_visa_investor, requires, requirement.emirates_id_application, [adro.types_of_visas#residence_visa_requirements, icp.new_identity_card_issuance#resident_unified_application]]
+  - [service.residence_visa_investor, requires, requirement.free_of_communicable_diseases, [uae.health_conditions_residence_visa#free_of_communicable_diseases]]
+  - [service.residence_visa_investor, produces, document.residence_visa, [icp.issuing_residency_permit#about_and_steps]]
+
+  - [authority.icp, provides, service.residence_visa_green_investor, [icp.issuing_residency_permit#green_investor_terms]]
+  - [service.residence_visa_green_investor, available_at, portal.icp_smart_services, [icp.issuing_residency_permit#channels]]
+  - [eligibility_rule.green_investor_contribution, applies_to, service.residence_visa_green_investor, [icp.issuing_residency_permit#green_investor_contribution]]
+  - [service.residence_visa_green_investor, requires, document.commercial_license, [icp.issuing_residency_permit#green_investor_documents]]
+  - [service.residence_visa_green_investor, requires, document.partnership_or_investment_agreement, [icp.issuing_residency_permit#green_investor_documents]]
+  - [service.residence_visa_green_investor, requires, document.passport, [icp.issuing_residency_permit#green_investor_terms, icp.issuing_residency_permit#green_investor_documents]]
+  - [service.residence_visa_green_investor, depends_on, service.medical_fitness, [uae.general_provisions_residence_visa#medical_test_security_eid]]
+  - [service.residence_visa_green_investor, produces, document.residence_visa, [icp.green_residence_guide#what_is]]
+
+  - [authority.icp, provides, service.emirates_id, [uae.emirates_id#what_is]]
+  - [service.emirates_id, available_at, portal.icp_smart_services, [icp.new_identity_card_issuance#resident_documents_channels, uae.emirates_id#getting_emirates_id]]
+  - [service.emirates_id, available_at, portal.icp_typing_centres, [uae.emirates_id#getting_emirates_id]]
+  - [service.emirates_id, depends_on, service.residence_visa_investor, [icp.new_identity_card_issuance#dependency, icp.issuing_residency_permit#steps_eid_issuance]]
+  - [service.emirates_id, depends_on, service.medical_fitness, [icp.new_identity_card_issuance#resident_medical_fit]]
+  - [service.emirates_id, requires, document.passport, [icp.new_identity_card_issuance#resident_documents_channels]]
+  - [service.emirates_id, requires, document.photo, [icp.new_identity_card_issuance#resident_documents_channels]]
+  - [service.emirates_id, may_require, appointment.emirates_id_biometrics, [icp.new_identity_card_issuance#biometrics_step, icp.faq#appointment_biometrics]]
+  - [appointment.emirates_id_biometrics, available_at, portal.icp_service_centres, [icp.new_identity_card_issuance#biometrics_step, icp.chc_khalifa_city#services_offered]]
+  - [portal.icp_service_centres, located_in, location.icp_khalifa_city_centre, [icp.chc_khalifa_city#about, icp.chc_khalifa_city#location]]
+  - [service.emirates_id, produces, document.emirates_id, [icp.new_identity_card_issuance#about, icp.new_identity_card_issuance#card_delivery]]
+
+  # ================================================================ family sponsorship
+  - [authority.icp, provides, service.sponsor_file, [tamm.open_sponsorship_file#opened_once]]
+  - [service.sponsor_file, available_at, portal.tamm, [tamm.open_sponsorship_file#first_step]]
+
+  - [authority.icp, provides, service.family_entry_permit, [icp.issuance_of_a_visa#about]]
+  - [service.family_entry_permit, available_at, portal.icp_smart_services, [icp.issuance_of_a_visa#channels]]
+  - [service.family_entry_permit, depends_on, service.sponsor_file, [icp.issuance_of_a_visa#active_sponsor_file, tamm.open_sponsorship_file#first_step]]
+  - source: service.family_entry_permit
+    relation: requires
+    target: document.passport
+    properties: {party: beneficiary}
+    evidence: [icp.issuance_of_a_visa#insurance_and_passport, icp.issuance_of_a_visa#required_documents]
+  - source: service.family_entry_permit
+    relation: requires
+    target: document.photo
+    properties: {party: beneficiary}
+    evidence: [icp.issuance_of_a_visa#required_documents]
+  - source: service.family_entry_permit
+    relation: requires
+    target: document.health_insurance_policy
+    properties: {party: beneficiary}
+    evidence: [icp.issuance_of_a_visa#insurance_and_passport]
+  - [service.family_entry_permit, requires, requirement.family_accommodation, [icp.issuance_of_a_visa#required_documents]]
+  - [service.family_entry_permit, produces, document.entry_permit, [icp.issuance_of_a_visa#about]]
+
+  - [authority.icp, provides, service.family_residence_visa, [icp.issuing_residency_permit#about_and_steps, tamm.family_residency_visa_private#provider]]
+  - [service.family_residence_visa, available_at, portal.icp_smart_services, [icp.issuing_residency_permit#channels]]
+  - [service.family_residence_visa, available_at, portal.tamm, [tamm.family_residency_visa_private#scope]]
+  - [eligibility_rule.family_sponsor_income, applies_to, service.family_residence_visa, [icp.issuing_residency_permit#financial_solvency, uae.residence_visa_for_family_members#sponsor_income]]
+  - source: eligibility_rule.family_eligible_members
+    relation: applies_to
+    target: service.family_residence_visa
+    properties: {party: beneficiary}
+    evidence: [icp.issuing_residency_permit#family_eligible_members, uae.residence_visa_for_family_members#eligible_family_members]
+  - source: service.family_residence_visa
+    relation: requires
+    target: document.residence_visa
+    properties: {party: sponsor}
+    evidence: [icp.issuing_residency_permit#sponsor_valid_residence, uae.general_provisions_residence_visa#documents_sponsor_and_housing]
+  - [service.family_residence_visa, requires, requirement.family_accommodation, [icp.issuing_residency_permit#adequate_housing, uae.general_provisions_residence_visa#documents_sponsor_and_housing]]
+  - source: service.family_residence_visa
+    relation: requires
+    target: document.salary_certificate
+    properties: {party: sponsor}
+    evidence: [icp.issuing_residency_permit#family_required_documents]
+  - source: service.family_residence_visa
+    relation: requires
+    target: document.passport
+    properties: {party: beneficiary}
+    evidence: [icp.issuing_residency_permit#family_required_documents, icp.issuing_residency_permit#validity_and_entry_window]
+  - source: service.family_residence_visa
+    relation: requires
+    target: document.photo
+    properties: {party: beneficiary}
+    evidence: [icp.issuing_residency_permit#family_required_documents]
+  - source: service.family_residence_visa
+    relation: requires
+    target: document.marriage_certificate_attested
+    properties:
+      party: household
+      when_party: beneficiary
+      when: {fact: person.relationship_to_sponsor, op: eq, value: spouse}
+    evidence: [icp.issuing_residency_permit#family_required_documents]
+  - source: service.family_residence_visa
+    relation: requires
+    target: document.birth_certificate_attested
+    properties:
+      party: household
+      when_party: beneficiary
+      when: {fact: person.relationship_to_sponsor, op: in, value: [son, daughter]}
+    evidence: [icp.issuing_residency_permit#family_required_documents, uae.general_provisions_residence_visa#documents_dependent]
+  - source: service.family_residence_visa
+    relation: requires
+    target: document.health_insurance_policy
+    properties: {party: beneficiary}
+    evidence: [icp.issuing_residency_permit#family_required_documents, doh.health_insurance_law_23_2005#sponsor_responsible_at_all_times]
+  - source: service.family_residence_visa
+    relation: requires
+    target: document.medical_fitness_certificate
+    properties:
+      party: beneficiary
+      when: {fact: person.age, op: gte, value: 18}
+    evidence: [uae.residence_visa_for_family_members#medical_fitness_18_plus, doh.standard_visa_screening_program#scope_expatriates_over_18]
+  - source: service.family_residence_visa
+    relation: depends_on
+    target: service.family_entry_permit
+    properties: {party: beneficiary}
+    evidence: [uae.general_provisions_residence_visa#documents_dependent, icp.issuance_of_a_visa#about]
+  - [service.family_residence_visa, produces, document.residence_visa, [icp.issuing_residency_permit#about_and_steps]]
+  - [service.family_residence_visa, produces, document.emirates_id, [icp.issuing_residency_permit#about_and_steps]]
+
+  - [authority.mofa, provides, service.mofa_attestation, [mofa.documents_attestation#about]]
+  - [service.mofa_attestation, available_at, portal.mofa_digital, [mofa.faqs#channels, uae.preparing_to_work#mofa_channels]]
+  - [service.mofa_attestation, depends_on, service.uae_mission_attestation, [mofa.faqs#issued_outside_uae_chain, uae.preparing_to_work#issued_outside_uae]]
+  - [service.mofa_attestation, requires, requirement.attestation_document_rules, [mofa.faqs#attestation_requirements]]
+  - [service.mofa_attestation, produces, document.marriage_certificate_attested, [mofa.faqs#personal_documents_in_scope, uae.preparing_to_work#document_types]]
+  - [service.mofa_attestation, produces, document.birth_certificate_attested, [mofa.faqs#personal_documents_in_scope, uae.preparing_to_work#document_types]]
+  - [authority.mofa, provides, service.uae_mission_attestation, [mofa.documents_attestation#about]]
+  - [service.uae_mission_attestation, available_at, portal.mofa_digital, [mofa.documents_attestation#issued_outside_uae_steps]]
+  - [service.uae_mission_attestation, available_at, portal.uae_missions_abroad, [mofa.documents_attestation#missions_availability]]
+  - [service.uae_mission_attestation, requires, requirement.home_country_attestation, [mofa.faqs#issued_outside_uae_chain, uae.preparing_to_work#issued_outside_uae]]
+  - [service.uae_mission_attestation, may_require, appointment.uae_mission_visit, [mofa.documents_attestation#missions_availability]]
+  - [appointment.uae_mission_visit, available_at, portal.uae_missions_abroad, [mofa.documents_attestation#missions_availability]]
+
+  # ================================================================ housing
+  - [authority.adrec, provides, service.tawtheeq, [adrec.home#lease_services, dmt.occupancy_certificate_grace_period#tawtheeq_blocked_without_occupancy_certificate]]
+  - [service.tawtheeq, available_at, portal.tamm, [dmt.aam_tawtheeq#lease_services_channels]]
+  - [service.tawtheeq, available_at, portal.municipal_customer_happiness_centres, [dmt.aam_tawtheeq#lease_services_channels]]
+  - [service.tawtheeq, requires, document.passport, [uae.leasing_a_property_in_the_uae#tenant_identification_documents, adro.settling_into_abu_dhabi#lease_documents]]
+  - [service.tawtheeq, requires, document.emirates_id, [adro.settling_into_abu_dhabi#lease_documents, uae.leasing_a_property_in_the_uae#tenant_identification_documents]]
+  - [service.tawtheeq, requires, document.residence_visa, [adro.settling_into_abu_dhabi#lease_documents, uae.leasing_a_property_in_the_uae#tenant_identification_documents]]
+  - [service.tawtheeq, produces, document.tenancy_contract_registered, [uae.leasing_a_property_in_the_uae#abu_dhabi_landlord_registers_tawtheeq]]
+  - [authority.addc, provides, service.utilities_connection, [adro.settling_into_abu_dhabi#utilities_after_tawtheeq]]
+  - [service.utilities_connection, depends_on, service.tawtheeq, [uae.leasing_a_property_in_the_uae#registration_needed_for_utilities, adro.settling_into_abu_dhabi#utilities_after_tawtheeq]]
+
+  # ================================================================ transport
+  - [authority.ad_mobility, provides, service.open_driving_file, [admobility.driver_licensing_services#itc_provides_licensing]]
+  - [service.open_driving_file, available_at, portal.tamm, [uae.getting_a_driving_licence#abu_dhabi_tamm_links, tamm.get_a_driving_licence_journey#open_file_for_training]]
+  - [service.open_driving_file, requires, document.passport, [uae.getting_a_driving_licence#traffic_file_documents]]
+  - [service.open_driving_file, requires, document.emirates_id, [uae.getting_a_driving_licence#traffic_file_documents]]
+  - [service.open_driving_file, requires, document.photo, [uae.getting_a_driving_licence#traffic_file_documents]]
+  - [service.open_driving_file, requires, document.eye_test_report, [uae.getting_a_driving_licence#traffic_file_documents]]
+  - [service.open_driving_file, may_require, appointment.eye_test, [uae.getting_a_driving_licence#learning_to_drive_process]]
+  - [appointment.eye_test, available_at, portal.tamm, [tamm.get_a_driving_licence_journey#supporting_tools]]
+
+  - [authority.ad_mobility, provides, service.driving_licence_new, [admobility.driver_licensing_services#itc_provides_licensing]]
+  - [service.driving_licence_new, available_at, portal.tamm, [tamm.get_a_driving_licence_journey#journey_scope, admobility.driver_licensing_services#all_services_on_tamm]]
+  - [service.driving_licence_new, depends_on, service.open_driving_file, [uae.getting_a_driving_licence#learning_to_drive_process, tamm.get_a_driving_licence_journey#open_file_for_training]]
+  - [service.driving_licence_new, may_require, appointment.driving_test, [tamm.get_a_driving_licence_journey#driving_test_appointment]]
+  - [appointment.driving_test, available_at, portal.tamm, [tamm.get_a_driving_licence_journey#driving_test_appointment]]
+  - [eligibility_rule.minimum_driving_age, applies_to, service.driving_licence_new, [uae.getting_a_driving_licence#minimum_age]]
+  - [service.driving_licence_new, produces, document.uae_driving_licence, [tamm.get_a_driving_licence_journey#issue_licence_after_test]]
+
+  - [authority.ad_mobility, provides, service.driving_licence_exchange, [admobility.driver_licensing_services#foreign_licence_exchange_covered]]
+  - [service.driving_licence_exchange, available_at, portal.tamm, [tamm.get_a_driving_licence_journey#journey_scope, admobility.driver_licensing_services#all_services_on_tamm]]
+  - [eligibility_rule.licence_exchange, applies_to, service.driving_licence_exchange, [uae.getting_a_driving_licence#exchange_home_country_licence, tamm.get_a_driving_licence_journey#replace_foreign_licence]]
+  - [service.driving_licence_exchange, requires, requirement.active_traffic_file, [admobility.driver_licensing_services#tamm_uae_pass_traffic_file]]
+  - [service.driving_licence_exchange, may_require, appointment.eye_test, [tamm.get_a_driving_licence_journey#eligibility_eye_test_translation]]
+  - [service.driving_licence_exchange, produces, document.uae_driving_licence, [tamm.get_a_driving_licence_journey#replace_foreign_licence]]
+
+  - [authority.ad_mobility, provides, service.hafilat_card, [admobility.hafilat_smart_cards#what_hafilat_is]]
+  - [service.hafilat_card, available_at, portal.hafilat_sales_points, [admobility.hafilat_smart_cards#anonymous_card_purchase_locations]]
+  - [authority.ad_mobility, provides, service.darb_registration, [admobility.darb#what_darb_is]]
+  - [service.darb_registration, available_at, portal.darb, [admobility.darb#registration_portal]]
+
+  # ================================================================ identity, newcomer, healthcare access
+  - [authority.tdra, provides, service.uae_pass_registration, [uae.uae_pass_app#operators]]
+  - [service.uae_pass_registration, available_at, portal.uae_pass_app, [tdra.uae_pass#how_to_register]]
+  - [service.uae_pass_registration, available_at, portal.uae_pass_kiosk, [tdra.uae_pass#how_to_register]]
+  - [service.uae_pass_registration, requires, document.emirates_id, [tdra.uae_pass#eligibility_citizens_residents, tdra.uae_pass#verify_account]]
+  - [service.uae_pass_registration, requires, requirement.uae_mobile_number, [tdra.uae_pass#eligibility_citizens_residents]]
+  - [authority.adro, provides, service.adro_resident_services, [adro.about#services, adro.about#mandate]]
+
+  - [service.emergency_ambulance, available_at, portal.emergency_998, [uae.handling_emergencies#ambulance_998]]
+  - [service.emergency_ambulance, available_at, portal.ad999_app, [uae.handling_emergencies#ad999_app]]
+  - [authority.seha, provides, service.find_healthcare, [uae.healthcare_providers#find_doctor_abu_dhabi]]
+  - [service.find_healthcare, available_at, portal.seha_facility_finder, [uae.healthcare_providers#find_facility_abu_dhabi, uae.healthcare_providers#find_doctor_abu_dhabi]]
+  - [service.find_healthcare, available_at, portal.tamm, [uae.healthcare_providers#find_pharmacy_abu_dhabi]]

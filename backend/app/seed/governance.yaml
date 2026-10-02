@@ -1,0 +1,484 @@
+# Governance knowledge graph — INTERIM curated seed for the primary demo (a tech founder
+# relocating to Abu Dhabi with a spouse). `python -m app.seed` uses it only while the
+# knowledge layer's cited graph (`app/knowledge/governance_graph.yaml`, seeded by
+# `app.knowledge.seed`) is not available.
+#
+# Trust level: every node is `official_guidance` citing the responsible authority's official
+# site, with a "confirm on the official page" note. No fees or processing times are asserted.
+#
+# Vocabulary (app/domain/enums.py): node types authority, service, requirement,
+# eligibility_rule, document, dependency, appointment, portal, location. Relations:
+# provides (authority->service), requires, depends_on (service->service|dependency),
+# satisfied_by (dependency->service; any one satisfies it), produces, applies_to,
+# available_at (->portal), may_require (service->appointment), located_in.
+
+version: 2
+nodes:
+- key: authority.icp
+  type: authority
+  label: Federal Authority for Identity, Citizenship, Customs & Port Security (ICP)
+  summary: Federal authority for entry permits, residence visas and Emirates ID.
+  official_url: https://icp.gov.ae
+- key: authority.added
+  type: authority
+  label: Abu Dhabi Department of Economic Development (ADDED)
+  summary: Licenses businesses on the Abu Dhabi mainland.
+  official_url: https://added.gov.ae
+- key: authority.adgm_ra
+  type: authority
+  label: ADGM Registration Authority
+  summary: Registers and licenses companies in the Abu Dhabi Global Market free zone.
+  official_url: https://www.adgm.com
+- key: authority.doh
+  type: authority
+  label: Department of Health – Abu Dhabi (DoH)
+  summary: Regulates healthcare, mandatory health insurance and medical fitness screening in Abu Dhabi.
+  official_url: https://www.doh.gov.ae
+- key: authority.mofa
+  type: authority
+  label: UAE Ministry of Foreign Affairs (MoFA)
+  summary: Attests foreign-issued documents for use in the UAE.
+  official_url: https://www.mofa.gov.ae
+- key: authority.dmt
+  type: authority
+  label: Department of Municipalities and Transport – Abu Dhabi (DMT)
+  summary: Oversees tenancy contract registration (Tawtheeq) in Abu Dhabi.
+  official_url: https://www.dmt.gov.ae
+- key: authority.fta
+  type: authority
+  label: Federal Tax Authority (FTA)
+  summary: Administers UAE corporate tax and VAT registration.
+  official_url: https://tax.gov.ae
+- key: portal.tamm
+  type: portal
+  label: TAMM
+  summary: Abu Dhabi government services platform. Sign-in with UAE PASS.
+  official_url: https://www.tamm.abudhabi
+  properties:
+    requires_uae_pass: true
+- key: portal.icp_services
+  type: portal
+  label: ICP smart services
+  summary: ICP website and app for visa and Emirates ID services.
+  official_url: https://icp.gov.ae
+  properties:
+    requires_uae_pass: true
+- key: portal.adgm_portal
+  type: portal
+  label: ADGM online registry
+  summary: Online incorporation and registry services for ADGM entities.
+  official_url: https://www.adgm.com
+- key: portal.fta_portal
+  type: portal
+  label: FTA EmaraTax
+  summary: Online tax registration and filing.
+  official_url: https://tax.gov.ae
+- key: location.abu_dhabi_mainland
+  type: location
+  label: Abu Dhabi mainland
+  summary: Businesses licensed by ADDED; can trade across the emirate.
+  official_url: https://added.gov.ae
+- key: location.adgm
+  type: location
+  label: Abu Dhabi Global Market (ADGM)
+  summary: International financial free zone on Al Maryah and Al Reem islands with its own registration
+    authority.
+  official_url: https://www.adgm.com
+- key: document.passport
+  type: document
+  label: Passport
+  summary: Valid passport; many services expect at least six months of validity remaining.
+  official_url: https://icp.gov.ae
+- key: document.photo
+  type: document
+  label: Passport-style photo
+  summary: Recent photo meeting ICP specifications.
+  official_url: https://icp.gov.ae
+- key: document.marriage_certificate_attested
+  type: document
+  label: Attested marriage certificate
+  summary: Marriage certificate attested in the issuing country, then by UAE MoFA. A legal Arabic translation
+    may be requested.
+  official_url: https://www.mofa.gov.ae
+- key: document.tenancy_contract_registered
+  type: document
+  label: Registered tenancy contract (Tawtheeq)
+  summary: Lease registered with Tawtheeq; used as proof of accommodation.
+  official_url: https://www.tamm.abudhabi
+- key: document.commercial_license
+  type: document
+  label: Commercial licence
+  summary: Licence issued to the company by ADDED (mainland) or ADGM (free zone).
+  official_url: https://added.gov.ae
+- key: document.establishment_card
+  type: document
+  label: Establishment (immigration) card
+  summary: Registers the company with immigration so it can sponsor residence visas.
+  official_url: https://icp.gov.ae
+- key: document.medical_fitness_certificate
+  type: document
+  label: Medical fitness certificate
+  summary: Result of the residency medical screening at an approved centre.
+  official_url: https://www.doh.gov.ae
+- key: document.health_insurance_policy
+  type: document
+  label: Health insurance policy
+  summary: Health insurance compliant with Abu Dhabi requirements; mandatory for residents.
+  official_url: https://www.doh.gov.ae
+- key: document.emirates_id
+  type: document
+  label: Emirates ID
+  summary: National identity card for UAE residents.
+  official_url: https://icp.gov.ae
+- key: document.residence_visa
+  type: document
+  label: Residence permit
+  summary: UAE residency, linked to the Emirates ID.
+  official_url: https://icp.gov.ae
+- key: requirement.home_country_attestation
+  type: requirement
+  label: Attestation in the issuing country
+  summary: Foreign civil documents are usually attested by the issuing country's authorities and the UAE
+    embassy or consulate there before UAE MoFA attestation.
+  official_url: https://www.mofa.gov.ae
+- key: requirement.registered_premises
+  type: requirement
+  label: Registered business premises
+  summary: Mainland licences generally require a registered office or approved premises arrangement.
+  official_url: https://added.gov.ae
+- key: eligibility_rule.family_sponsor_income
+  type: eligibility_rule
+  label: Sponsor income threshold
+  summary: Residents sponsoring a spouse must meet a minimum monthly income, with a lower threshold when
+    accommodation is provided.
+  official_url: https://u.ae
+  properties:
+    threshold_aed: 4000
+    threshold_with_accommodation_aed: 3000
+    verify_on_official_page: true
+- key: service.trade_name_reservation
+  type: service
+  label: Reserve a trade name (mainland)
+  summary: Reserve the company's trade name before applying for initial approval.
+  official_url: https://www.tamm.abudhabi
+  properties:
+    requires_uae_pass: true
+    jurisdiction: mainland
+- key: service.initial_approval
+  type: service
+  label: Initial approval (mainland)
+  summary: Approval in principle for the proposed business activity and legal form.
+  official_url: https://www.tamm.abudhabi
+  properties:
+    requires_uae_pass: true
+    jurisdiction: mainland
+- key: service.commercial_license_mainland
+  type: service
+  label: Issue a commercial licence (mainland)
+  summary: Final licence for a mainland company after initial approval and premises registration.
+  official_url: https://www.tamm.abudhabi
+  properties:
+    requires_uae_pass: true
+    jurisdiction: mainland
+- key: service.company_registration_adgm
+  type: service
+  label: Incorporate a company in ADGM
+  summary: Register a company and obtain a commercial licence in the ADGM free zone.
+  official_url: https://www.adgm.com
+  properties:
+    jurisdiction: adgm
+- key: service.establishment_card
+  type: service
+  label: Get an establishment card
+  summary: Registers the company with immigration so it can sponsor the founder's residence visa.
+  official_url: https://icp.gov.ae
+  properties:
+    requires_uae_pass: true
+- key: service.entry_permit_investor
+  type: service
+  label: Entry permit (investor / partner)
+  summary: Permit to enter the UAE to complete residency formalities as a company owner or partner.
+  official_url: https://icp.gov.ae
+  properties:
+    requires_uae_pass: true
+- key: service.medical_fitness
+  type: service
+  label: Medical fitness test
+  summary: Residency medical screening at an approved centre in Abu Dhabi.
+  official_url: https://www.doh.gov.ae
+- key: service.health_insurance
+  type: service
+  label: Get health insurance
+  summary: Buy a compliant health insurance policy; required for residency in Abu Dhabi.
+  official_url: https://www.doh.gov.ae
+- key: service.emirates_id
+  type: service
+  label: Emirates ID biometrics
+  summary: Give fingerprints and a photo for the Emirates ID, usually as part of the residency application.
+  official_url: https://icp.gov.ae
+  properties:
+    requires_uae_pass: true
+- key: service.residence_visa_investor
+  type: service
+  label: Residence visa (investor / partner)
+  summary: Residency for the founder, sponsored through their own company.
+  official_url: https://icp.gov.ae
+  properties:
+    requires_uae_pass: true
+- key: service.tawtheeq
+  type: service
+  label: Register a tenancy contract (Tawtheeq)
+  summary: Register the home lease; needed as proof of accommodation for family sponsorship and utilities.
+  official_url: https://www.tamm.abudhabi
+  properties:
+    requires_uae_pass: true
+- key: service.mofa_attestation
+  type: service
+  label: Attest a foreign document (MoFA)
+  summary: UAE attestation of foreign civil documents such as marriage certificates.
+  official_url: https://www.mofa.gov.ae
+  properties:
+    requires_uae_pass: true
+- key: service.family_residence_visa
+  type: service
+  label: Sponsor your spouse's residence visa
+  summary: Family residence visa for a spouse, sponsored by a UAE resident.
+  official_url: https://icp.gov.ae
+  properties:
+    requires_uae_pass: true
+- key: service.corporate_tax_registration
+  type: service
+  label: Register for corporate tax
+  summary: UAE companies must register for corporate tax with the FTA.
+  official_url: https://tax.gov.ae
+  properties:
+    requires_uae_pass: true
+- key: dependency.company_licence
+  type: dependency
+  label: A company licence (mainland or ADGM)
+  summary: Satisfied by either a mainland commercial licence or ADGM incorporation.
+  official_url: https://www.tamm.abudhabi
+- key: appointment.medical_screening
+  type: appointment
+  label: Medical fitness screening visit
+  summary: In-person screening at an approved medical centre as part of the residency process.
+  official_url: https://www.doh.gov.ae
+- key: appointment.biometrics
+  type: appointment
+  label: Emirates ID biometrics visit
+  summary: In-person visit to give fingerprints and a photo for the Emirates ID.
+  official_url: https://icp.gov.ae
+edges:
+- - authority.added
+  - provides
+  - service.trade_name_reservation
+- - authority.added
+  - provides
+  - service.initial_approval
+- - authority.added
+  - provides
+  - service.commercial_license_mainland
+- - authority.adgm_ra
+  - provides
+  - service.company_registration_adgm
+- - authority.icp
+  - provides
+  - service.establishment_card
+- - authority.icp
+  - provides
+  - service.entry_permit_investor
+- - authority.doh
+  - provides
+  - service.medical_fitness
+- - authority.doh
+  - provides
+  - service.health_insurance
+- - authority.icp
+  - provides
+  - service.emirates_id
+- - authority.icp
+  - provides
+  - service.residence_visa_investor
+- - authority.dmt
+  - provides
+  - service.tawtheeq
+- - authority.mofa
+  - provides
+  - service.mofa_attestation
+- - authority.icp
+  - provides
+  - service.family_residence_visa
+- - authority.fta
+  - provides
+  - service.corporate_tax_registration
+- - service.trade_name_reservation
+  - available_at
+  - portal.tamm
+- - service.initial_approval
+  - available_at
+  - portal.tamm
+- - service.commercial_license_mainland
+  - available_at
+  - portal.tamm
+- - service.company_registration_adgm
+  - available_at
+  - portal.adgm_portal
+- - service.establishment_card
+  - available_at
+  - portal.icp_services
+- - service.entry_permit_investor
+  - available_at
+  - portal.icp_services
+- - service.residence_visa_investor
+  - available_at
+  - portal.icp_services
+- - service.emirates_id
+  - available_at
+  - portal.icp_services
+- - service.tawtheeq
+  - available_at
+  - portal.tamm
+- - service.mofa_attestation
+  - available_at
+  - portal.tamm
+- - service.family_residence_visa
+  - available_at
+  - portal.icp_services
+- - service.corporate_tax_registration
+  - available_at
+  - portal.fta_portal
+- - service.commercial_license_mainland
+  - located_in
+  - location.abu_dhabi_mainland
+- - service.company_registration_adgm
+  - located_in
+  - location.adgm
+- - authority.adgm_ra
+  - located_in
+  - location.adgm
+- - service.initial_approval
+  - depends_on
+  - service.trade_name_reservation
+- - service.commercial_license_mainland
+  - depends_on
+  - service.initial_approval
+- - service.commercial_license_mainland
+  - requires
+  - requirement.registered_premises
+- - service.company_registration_adgm
+  - requires
+  - document.passport
+- - service.commercial_license_mainland
+  - produces
+  - document.commercial_license
+- - service.company_registration_adgm
+  - produces
+  - document.commercial_license
+- - service.establishment_card
+  - requires
+  - document.commercial_license
+- - service.establishment_card
+  - produces
+  - document.establishment_card
+- - service.entry_permit_investor
+  - depends_on
+  - service.establishment_card
+- - service.entry_permit_investor
+  - requires
+  - document.passport
+- - service.entry_permit_investor
+  - requires
+  - document.photo
+- - service.medical_fitness
+  - requires
+  - document.passport
+- - service.medical_fitness
+  - produces
+  - document.medical_fitness_certificate
+- - service.health_insurance
+  - produces
+  - document.health_insurance_policy
+- - service.emirates_id
+  - requires
+  - document.passport
+- - service.emirates_id
+  - produces
+  - document.emirates_id
+- - service.residence_visa_investor
+  - depends_on
+  - service.entry_permit_investor
+- - service.residence_visa_investor
+  - depends_on
+  - service.medical_fitness
+- - service.residence_visa_investor
+  - depends_on
+  - service.emirates_id
+- - service.residence_visa_investor
+  - requires
+  - document.health_insurance_policy
+- - service.residence_visa_investor
+  - requires
+  - document.medical_fitness_certificate
+- - service.residence_visa_investor
+  - produces
+  - document.residence_visa
+- - service.tawtheeq
+  - requires
+  - document.passport
+- - service.tawtheeq
+  - produces
+  - document.tenancy_contract_registered
+- - service.mofa_attestation
+  - requires
+  - requirement.home_country_attestation
+- - service.mofa_attestation
+  - produces
+  - document.marriage_certificate_attested
+- - service.family_residence_visa
+  - depends_on
+  - service.residence_visa_investor
+- - service.family_residence_visa
+  - depends_on
+  - service.tawtheeq
+- - service.family_residence_visa
+  - depends_on
+  - service.mofa_attestation
+- - service.family_residence_visa
+  - requires
+  - document.marriage_certificate_attested
+- - service.family_residence_visa
+  - requires
+  - document.tenancy_contract_registered
+- - service.family_residence_visa
+  - requires
+  - document.health_insurance_policy
+- - service.family_residence_visa
+  - requires
+  - document.medical_fitness_certificate
+- - service.family_residence_visa
+  - requires
+  - document.passport
+- - eligibility_rule.family_sponsor_income
+  - applies_to
+  - service.family_residence_visa
+- - service.corporate_tax_registration
+  - depends_on
+  - dependency.company_licence
+- - service.establishment_card
+  - depends_on
+  - dependency.company_licence
+- - dependency.company_licence
+  - satisfied_by
+  - service.commercial_license_mainland
+- - dependency.company_licence
+  - satisfied_by
+  - service.company_registration_adgm
+- - service.medical_fitness
+  - may_require
+  - appointment.medical_screening
+- - service.emirates_id
+  - may_require
+  - appointment.biometrics
+- - appointment.biometrics
+  - available_at
+  - portal.icp_services
